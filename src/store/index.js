@@ -1,26 +1,17 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import user from './user'
+import app from './app'
+import permission from './permission'
+import getters from './getters'
 
 Vue.use(Vuex)
 const store = new Vuex.Store({
-  state: {
-    count: 1
+  modules: {
+    user,
+    app,
+    permission
   },
-  getters: {
-    count: state => {
-      console.log('getters_', state.count)
-      return state.count
-    }
-  },
-  mutations: {
-    increment (state) {
-      state.count = state.count + 1
-      console.log('sotreState_', state.count)
-    },
-    decrement (state) {
-      state.count = state.count - 1
-      console.log('sotreState_', state.count)
-    }
-  }
+  getters
 })
 export default store
