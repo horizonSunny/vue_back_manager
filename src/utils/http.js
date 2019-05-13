@@ -10,7 +10,7 @@ const http = axios.create({
 http.interceptors.request.use(
   config => {
     if (getToken) {
-      config.headers['AuthorizationA'] = getToken
+      config.headers['Authorization'] = getToken
     }
     return config
   },
