@@ -1,4 +1,4 @@
-const dev = 'http://106.14.50.239/'
+const dev = 'http://47.103.47.170:8080/brainPlatform/'
 // const test = 'www.baidu.com'
 // const build = 'www.baidu.com'
 const baseUrl = dev

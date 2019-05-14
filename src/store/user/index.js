@@ -18,8 +18,8 @@ const user = {
       return new Promise((resolve, reject) => {
         userInfo()
           .then(response => {
-            commit('SET_PERMISSIONS', response.body.permissions)
-            commit('SET_USER', response.body.user)
+            commit('SET_PERMISSIONS', response.data.body.permissions)
+            commit('SET_USER', response.data.body.user)
             resolve()
           })
           .catch(error => {

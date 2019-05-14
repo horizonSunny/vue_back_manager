@@ -16,29 +16,31 @@ const whiteList = ['/login']
 // 全局的路由监听，对路由进行处理
 router.beforeEach((to, from, next) => {
   const token = getToken()
-  console.log('token_', token)
   // 路由前看是否拿到token值,没有的话返回登陆页请求拿到token
   if (!token) {
-    console.log('没进入获取user permission_', to.path)
     if (whiteList.indexOf(to.path) > -1) {
-      console.log('没进入获取user permission_1_', to.path)
       next()
     } else {
       next({ path: '/login' })
     }
   } else {
-    console.log('进入获取user permission_', to.path)
-    if (to.path === 'login') {
-      next('/login')
+    if (to.path === '/login') {
+      next()
     } else {
       // 这里代表拿到token了,看是否有userPermission权限
       if (store.getters.permissions === undefined) {
+        console.log(
+          'token_看是否有userPermission权限',
+          store.getters.permissions
+        )
         store.dispatch('GetUserInfo').then(() => {
           store.dispatch('AddRouter').then(() => {
             router.addRoutes(store.getters.addRouters) // 动态添加可访问路由表
             next({ ...to }) // hack方法 确保addRoutes已完成
           })
         })
+      } else {
+        next()
       }
     }
   }

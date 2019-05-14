@@ -1,29 +1,37 @@
 <template>
   <div>
-    <a-button @click="getToken" type="primary">Primary</a-button>
+    <a-button @click="login" type="primary">Primary</a-button>
   </div>
 </template>
 <script>
-import { token } from '@/api/login_module/index'
+import { token as getToken } from '@/api/login_module/index'
+import { setToken, removeToken } from '@/utils/token'
 
 export default {
   data () {
     return {
-      admin: 'qinzhen@green-valley.com',
+      admin: 'zhanshengbai@green-valley.com',
       password: '123456',
       userType: 0
     }
   },
 
   methods: {
-    getToken () {
+    login () {
+      removeToken()
       const user = {
         userName: this.admin,
         password: this.password,
         userType: this.userType
       }
-      token(user).then(() => {
+      getToken(user).then((response) => {
         console.log(123)
+        const accesstoken = response.headers.token
+        console.log('accesstoken_', accesstoken)
+        setToken(accesstoken)
+        this.$router.push({// 你需要接受路由的参数再跳转
+          path: '/main'
+        })
       })
     }
   }

@@ -11,7 +11,7 @@ http.interceptors.request.use(
   config => {
     console.log('http_gettoken_', getToken())
     if (getToken()) {
-      config.headers['Authorization'] = getToken
+      config.headers['Token'] = getToken()
     }
     return config
   },
