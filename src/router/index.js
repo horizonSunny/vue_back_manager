@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import mainComponent from '../views/main_module/AppMain'
 // import HelloWorld from '@/view/HelloWorld'
 // 必须设置node环境变量
 const _import = require('./import_' + process.env.NODE_ENV)
@@ -8,7 +9,7 @@ const _import = require('./import_' + process.env.NODE_ENV)
 Vue.use(Router)
 
 export const constRouter = [
-  { path: '/', redirect: '/main' },
+  { path: '/', redirect: '/login' },
   {
     path: '/login',
     component: _import('login_module/login/index'),
@@ -23,11 +24,6 @@ export const constRouter = [
     path: '/404',
     component: _import('error/404'),
     hidden: true
-  },
-  {
-    path: '/main',
-    component: _import('main_module/AppMain'),
-    hidden: true
   }
 ]
 
@@ -35,7 +31,7 @@ export const asyncRouter = [
   {
     path: '/record',
     permissionCode: 1,
-    component: _import('main_module/record_module/RecordMain'),
+    component: mainComponent,
     children: [
       {
         path: '/recordInfo',
@@ -56,11 +52,12 @@ export const asyncRouter = [
   },
   {
     path: '/system',
-    permissionCode: '2',
-    component: _import('main_module/system_module/SystemMain'),
+    permissionCode: 18,
+    component: mainComponent,
     children: [
       {
         path: '/backManagerList',
+        permissionCode: 18,
         component: _import('main_module/system_module/backManagerList/index')
       },
       {
@@ -84,7 +81,7 @@ export const asyncRouter = [
   {
     path: '/evaluation',
     permissionCode: '3',
-    component: _import('main_module/evaluation_module/EvaluationMain'),
+    component: mainComponent,
     children: [
       {
         path: '/evaluationList',
@@ -108,7 +105,7 @@ export const asyncRouter = [
   },
   {
     path: '/user',
-    component: _import('main_module/user_module/UserMain'),
+    component: mainComponent,
     children: [
       {
         path: '/userList',

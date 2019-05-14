@@ -9,7 +9,8 @@ const http = axios.create({
 
 http.interceptors.request.use(
   config => {
-    if (getToken) {
+    console.log('http_gettoken_', getToken())
+    if (getToken()) {
       config.headers['Authorization'] = getToken
     }
     return config

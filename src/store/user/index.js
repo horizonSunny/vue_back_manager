@@ -14,12 +14,13 @@ const user = {
     }
   },
   actions: {
-    getUserInfo ({ commit }) {
+    GetUserInfo ({ commit }) {
       return new Promise((resolve, reject) => {
         userInfo()
           .then(response => {
             commit('SET_PERMISSIONS', response.body.permissions)
             commit('SET_USER', response.body.user)
+            resolve()
           })
           .catch(error => {
             reject(error)
