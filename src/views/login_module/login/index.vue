@@ -6,6 +6,7 @@
 <script>
 import { token as getToken } from '@/api/login_module/index'
 import { setToken, removeToken } from '@/utils/token'
+import store from '@/store'
 
 export default {
   data () {
@@ -29,11 +30,15 @@ export default {
         const accesstoken = response.headers.token
         console.log('accesstoken_', accesstoken)
         setToken(accesstoken)
-        this.$router.push({// 你需要接受路由的参数再跳转
+        this.$router.push({// 你需要接受路由的参数再跳转，最终跳转是在main函数里面
           path: '/main'
         })
       })
     }
+  },
+  mounted: function () {
+    // 只要进入login页面就清空数据
+    store.commit('REMOVE_USRINFO')
   }
 }
 </script>

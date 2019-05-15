@@ -11,6 +11,10 @@ const user = {
     },
     SET_PERMISSIONS: (state, permissions) => {
       state.permissions = permissions
+    },
+    REMOVE_USRINFO: state => {
+      state.user = undefined
+      state.permissions = undefined
     }
   },
   actions: {

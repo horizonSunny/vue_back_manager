@@ -9,7 +9,7 @@ const _import = require('./import_' + process.env.NODE_ENV)
 Vue.use(Router)
 
 export const constRouter = [
-  { path: '/', redirect: '/login' },
+  { path: '/', redirect: '/forget' },
   {
     path: '/login',
     component: _import('login_module/login/index'),

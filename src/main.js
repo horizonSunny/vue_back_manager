@@ -27,6 +27,7 @@ router.beforeEach((to, from, next) => {
     if (to.path === '/login') {
       next()
     } else {
+      console.log('这里代表拿到token了,看是否有userPermission权限')
       // 这里代表拿到token了,看是否有userPermission权限
       if (store.getters.permissions === undefined) {
         console.log(
@@ -36,7 +37,10 @@ router.beforeEach((to, from, next) => {
         store.dispatch('GetUserInfo').then(() => {
           store.dispatch('AddRouter').then(() => {
             router.addRoutes(store.getters.addRouters) // 动态添加可访问路由表
-            next({ ...to }) // hack方法 确保addRoutes已完成
+            console.log('store.getters.addRouters_', store.getters.addRouters)
+            // 这边是获取到用户信息后到最终跳转
+            const routerPath = store.getters.addRouters[0]['path']
+            next({ path: routerPath }) // hack方法 确保addRoutes已完成
           })
         })
       } else {
