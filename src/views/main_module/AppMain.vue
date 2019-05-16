@@ -12,12 +12,13 @@
         }"
       >
         <template>
-          <a-cascader
+          <!-- <a-cascader
             :options="options"
             :displayRender="displayRender"
             @change="onChange"
             changeOnSelect
-          />
+          /> -->
+          <router-view></router-view>
         </template>
       </a-layout-content>
     </a-layout>

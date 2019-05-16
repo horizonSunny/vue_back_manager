@@ -1,7 +1,8 @@
 const app = {
   state: {
     sidebar: {
-      opened: true
+      opened: true,
+      permission: ['1', '11', '2', '21', '22', '3', '31', '4', '41', '42']
     }
   },
   mutations: {

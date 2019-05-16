@@ -37,10 +37,11 @@ router.beforeEach((to, from, next) => {
         store.dispatch('GetUserInfo').then(() => {
           store.dispatch('AddRouter').then(() => {
             router.addRoutes(store.getters.addRouters) // 动态添加可访问路由表
-            console.log('store.getters.addRouters_', store.getters.addRouters)
             // 这边是获取到用户信息后到最终跳转
-            const routerPath = store.getters.addRouters[0]['path']
-            next({ path: routerPath }) // hack方法 确保addRoutes已完成
+            store.dispatch('PemissionRouter')
+            const routerPath =
+              store.getters.addRouters[0]['path'] + '/noPermission'
+            next({ path: routerPath })
           })
         })
       } else {
