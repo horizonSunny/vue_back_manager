@@ -11,7 +11,7 @@
       >
         <a-input
           v-decorator="[
-            'username',
+            'userName',
             {
               rules: [
                 { required: true, message: '请输入用户名' },
@@ -106,11 +106,13 @@ export default {
       })
       console.log('login_userInfo_', user)
       getToken(user).then((response) => {
-        // 预留处理返回数据
-        // if (response.message === '用户信息不存在' && response.status === 0) {
-        //   this.validate(response.message)
-        //   console.log(123)
-        // }
+        // 预留处理返回数据,status为1是成功回掉
+        console.log('Number(response.body.status)_', Number(response.data.status))
+        if (Number(response.data.status) !== 1) {
+          this.validate(response.data.message)
+          console.log(123)
+          return
+        }
         const accesstoken = response.headers.token
         console.log('accesstoken_', accesstoken)
         setToken(accesstoken)
