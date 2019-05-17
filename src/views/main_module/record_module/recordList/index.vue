@@ -23,7 +23,7 @@
 </template>
 <script>
 const columns = [{
-  title: 'Name',
+  title: '姓名',
   dataIndex: 'name',
   scopedSlots: { customRender: 'name' }
 }, {
