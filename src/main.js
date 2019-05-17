@@ -40,10 +40,10 @@ router.beforeEach((to, from, next) => {
         store.dispatch('GetUserInfo').then(() => {
           store.dispatch('AddRouter').then(() => {
             router.addRoutes(store.getters.addRouters) // 动态添加可访问路由表
-            // 这边是获取到用户信息后到最终跳转
+            // 这边是获取到用户信息后到最终跳转，二级页面作为预留
             store.dispatch('PemissionRouter')
             const routerPath =
-              store.getters.addRouters[0]['path'] + '/noPermission'
+              store.getters.addRouters[0]['path'] + '/recordList'
             next({ path: routerPath })
           })
         })

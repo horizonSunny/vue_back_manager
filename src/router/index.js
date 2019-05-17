@@ -43,19 +43,19 @@ export const asyncRouter = [
         component: noPermission
       },
       {
-        path: '/recordInfo',
+        path: 'recordInfo',
         permissionCode: '111',
         sideBarName: '基本信息',
         component: _import('main_module/record_module/recordInfo/index')
       },
       {
-        path: '/recordList',
+        path: 'recordList',
         permissionCode: '11',
         sideBarName: '档案列表',
         component: _import('main_module/record_module/recordList/index')
       },
       {
-        path: '/recordReport',
+        path: 'recordReport',
         permissionCode: '112',
         sideBarName: '测评报告',
         component: _import('main_module/record_module/recordReport/index')
