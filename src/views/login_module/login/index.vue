@@ -2,7 +2,7 @@
 <template style="">
   <div class="background">
     <div class="title">燧人大脑</div>
-    <a-form class="form_background padding_top" :form="form">
+    <a-form class="form_background padding_top" :form="form" @submit="login">
       <a-form-item
         :label-col="formItemLayout.labelCol"
         :wrapper-col="formItemLayout.wrapperCol"
@@ -16,8 +16,7 @@
               rules: [
                 { required: true, message: '请输入用户名' },
                 {
-                  pattern:
-                    '^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$',
+                  type: 'email',
                   message: '邮箱格式错误'
                 }
               ]
@@ -36,24 +35,19 @@
           v-decorator="[
             'password',
             {
-              rules: [
-                { required: true, message: '请输入密码' },
-                {
-                  required: errorMessage,
-                  message: errorMessage.info
-                }
-              ]
+              rules: [{ required: true, message: '请输入密码' }]
             }
           ]"
           placeholder="密码"
         />
-        <a class="forget">忘记密码?</a>
+        <!-- <a class="forget">忘记密码?</a> -->
+        <router-link class="forget" to="/forget">忘记密码？</router-link>
       </a-form-item>
       <a-form-item
         :label-col="formTailLayout.labelCol"
         :wrapper-col="formTailLayout.wrapperCol"
       >
-        <a-button type="primary" @click="login">
+        <a-button type="primary" html-type="submit">
           登陆
         </a-button>
       </a-form-item>
@@ -75,20 +69,7 @@ const formTailLayout = {
   labelCol: { span: 8 },
   wrapperCol: { span: 8, offset: 8 }
 }
-const user = {
-  userName: {
-    value: '',
-    status: 'success',
-    help: '',
-    focus: false
-  },
-  password: {
-    value: '',
-    status: 'success',
-    help: '',
-    focus: false
-  }
-}
+const userType = 0
 export default {
   beforeCreate () {
     this.form = this.$form.createForm(this)
@@ -98,20 +79,38 @@ export default {
       form: this.$form.createForm(this),
       formItemLayout,
       formTailLayout,
-      user,
-      errorMessage: true
+      errorMessage: false
     }
   },
   methods: {
-    login () {
+    login (e) {
       removeToken()
+      // const user = {
+      //   userName: this.admin,
+      //   password: this.password,
+      //   userType: this.userType
+      // }
+      // this.form.setFields({
+      //   username: this.user.userName,
+      //   password: this.user.password
+      // })
+      e.preventDefault()
       const user = {
-        userName: this.admin,
-        password: this.password,
-        userType: this.userType
+        userType: userType
       }
+      this.form.validateFieldsAndScroll((err, values) => {
+        if (!err) {
+          console.log('Received values of form: ', values)
+          Object.assign(user, values)
+        }
+      })
+      console.log('login_userInfo_', user)
       getToken(user).then((response) => {
-        console.log(123)
+        // 预留处理返回数据
+        // if (response.message === '用户信息不存在' && response.status === 0) {
+        //   this.validate(response.message)
+        //   console.log(123)
+        // }
         const accesstoken = response.headers.token
         console.log('accesstoken_', accesstoken)
         setToken(accesstoken)
@@ -120,9 +119,16 @@ export default {
         })
       })
     },
-    validate (event) {
-      // var el = event.currentTarget
-      console.log('当前对象的内容：' + event.target.value)
+    validate (errorMessage) {
+      this.errorMessage = true
+      this.form.setFields({ 'password': {
+        'errors': [
+          {
+            'message': errorMessage,
+            'field': 'password'
+          }
+        ]
+      } })
     }
   },
   mounted: function () {

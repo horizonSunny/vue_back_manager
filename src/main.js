@@ -12,7 +12,7 @@ Vue.config.productionTip = false
 Vue.use(Antd)
 /* eslint-disable no-new */
 // 不需要token就能进入的页面白名单
-const whiteList = ['/login']
+const whiteList = ['/login', 'forget']
 // 全局的路由监听，对路由进行处理
 router.beforeEach((to, from, next) => {
   const token = getToken()
