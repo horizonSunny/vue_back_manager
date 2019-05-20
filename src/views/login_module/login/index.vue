@@ -113,7 +113,11 @@ export default {
           console.log(123)
           return
         }
-        const accesstoken = response.headers.token
+        // 这是mock测试数据，下面是上环境的数据
+        console.log('login_Module', response)
+        const accesstoken = response.data.Token
+        // const accesstoken = response.headers.token
+
         console.log('accesstoken_', accesstoken)
         setToken(accesstoken)
         this.$router.push({// 你需要接受路由的参数再跳转，最终跳转是在main函数里面

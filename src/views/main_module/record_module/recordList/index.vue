@@ -133,6 +133,15 @@ export default {
       this.pageSize = pageSize
     }
   }
+  // beforeRouteEnter (to, from, next) {
+
+  //   // console.log(this) // undefined，不能用this来获取vue实例
+  //   // console.log('组件路由钩子：beforeRouteEnter')
+  //   // next(vm => {
+  //   //   console.log(vm) // vm为vue的实例
+  //   //   console.log('组件路由钩子beforeRouteEnter的next')
+  //   // })
+  // }
 }
 </script>
 <style lang="scss">

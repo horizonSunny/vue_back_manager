@@ -7,7 +7,6 @@ import Antd from 'ant-design-vue'
 import 'ant-design-vue/dist/antd.css'
 import { getToken } from './utils/token'
 import store from './store'
-
 Vue.config.productionTip = false
 Vue.use(Antd)
 /* eslint-disable no-new */
