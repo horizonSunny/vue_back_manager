@@ -16,6 +16,7 @@
         :columns="columns"
         :dataSource="data"
         :pagination="pagination"
+        :customRow="testClick"
       >
         <a slot="name" slot-scope="text" href="javascript:;">{{ text }}</a>
       </a-table>
@@ -96,7 +97,20 @@ const filterFields = {
   patientSex: -1,
   sortKey: 'createTime'
 }
-
+// 从后端传回来的结果过滤患者的list，产生真实的data
+function patientListFilter (data) {
+  const patientList = []
+  for (let item = 0; item < data.length; item++) {
+    const listItem = Object.assign({ medicationNames: data[item]['medicationNames'],
+      medicalHistoryDegree: data[item]['medicalHistoryType'][0]['medicalHistoryDegree'],
+      key: data[item]['patient']['uid']
+    }, data[item]['patient'])
+    patientList.push(listItem)
+  }
+  return patientList
+}
+// 依据patient信息中的uid,查询到对应后端数据中那一个患者数据，传到详情页面
+// function patientDetails (uid, responseData) { }
 export default {
   data: function () {
     return {
@@ -121,6 +135,10 @@ export default {
         })
       }
     }
+
+    // rowKey (key) {
+    //   return (console.log('key_', key))
+    // }
   },
   methods: {
     onSearch (value) {
@@ -128,6 +146,16 @@ export default {
     },
     onShowSizeChange (current, pageSize) {
       this.pageSize = pageSize
+    },
+    testClick () {
+      // console.log('event_', event)
+      return {
+        on: {
+          click: () => {
+            console.log('123')
+          }
+        }
+      }
     }
   },
   beforeRouteEnter (to, from, next) {
@@ -136,7 +164,8 @@ export default {
     patientsList(filterResult).then((response) => {
       console.log('recordList_response', response)
       next(vm => {
-        vm.data = response.data.body.patients
+        // vm.data = response.data.body.patients
+        vm.data = patientListFilter(response.data.body.patients)
         console.log('vm.data_', vm.data)
       })
     })
