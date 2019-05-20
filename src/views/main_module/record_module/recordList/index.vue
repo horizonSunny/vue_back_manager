@@ -15,6 +15,7 @@
         :rowSelection="rowSelection"
         :columns="columns"
         :dataSource="data"
+        :pagination="pagination"
       >
         <a slot="name" slot-scope="text" href="javascript:;">{{ text }}</a>
       </a-table>
@@ -24,15 +25,50 @@
 <script>
 const columns = [{
   title: '姓名',
-  dataIndex: 'name',
+  dataIndex: 'patientName',
   scopedSlots: { customRender: 'name' }
 }, {
-  title: 'Age',
-  dataIndex: 'age'
+  title: '性别',
+  dataIndex: 'patientSex'
 }, {
-  title: 'Address',
+  title: '年龄',
+  dataIndex: 'patientAge'
+}, {
+  title: '手机号',
+  dataIndex: 'mobilephone'
+}, {
+  title: '测评报告',
+  dataIndex: 'status'
+}, {
+  title: '受教育程度',
+  dataIndex: 'education'
+}, {
+  title: '职业',
+  dataIndex: 'jobType'
+}, {
+  title: '婚姻',
+  dataIndex: 'marrige'
+}, {
+  title: '居住地',
   dataIndex: 'address'
+}, {
+  title: '是否确诊老年痴呆',
+  dataIndex: 'medicalHistoryDegree'
+}, {
+  title: '是否用过痴呆药物',
+  dataIndex: 'medicationNames'
+}, {
+  title: '建档时间',
+  dataIndex: 'createTime'
+}, {
+  title: '建档人',
+  dataIndex: 'testThree'
+}, {
+  title: '更新时间',
+  dataIndex: 'updateTime'
 }]
+
+// mock 数据
 const data = [{
   key: '1',
   name: 'John Brown',
@@ -54,16 +90,28 @@ const data = [{
   age: 99,
   address: 'Sidney No. 1 Lake Park'
 }]
+// 分页配置
+const pagination = {
+  showSizeChanger: true,
+  current: 10,
+  defaultCurrent: 1,
+  defaultPageSize: 10,
+  pageSize: 20,
+  pageSizeOptions: ['10', '20', '30', '40'],
+  total: 100,
+  showQuickJumper: true
+}
 export default {
   data: function () {
     return {
       data,
-      columns
+      columns,
+      pagination
     }
   },
   computed: {
     rowSelection () {
-      const { selectedRowKeys } = this
+      // const { selectedRowKeys } = this
       return {
         onChange: (selectedRowKeys, selectedRows) => {
           console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows)
@@ -80,6 +128,9 @@ export default {
   methods: {
     onSearch (value) {
       console.log(value)
+    },
+    onShowSizeChange (current, pageSize) {
+      this.pageSize = pageSize
     }
   }
 }
@@ -87,5 +138,8 @@ export default {
 <style lang="scss">
 .main_content {
   margin-top: 10px;
+}
+.ant-table-pagination.ant-pagination {
+  float: none;
 }
 </style>
