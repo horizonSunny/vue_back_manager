@@ -23,6 +23,8 @@
   </div>
 </template>
 <script>
+import { getTargetObject } from '@/utils/tools'
+import { patientsList } from '@/api/record_module/index'
 const columns = [{
   title: '姓名',
   dataIndex: 'patientName',
@@ -69,44 +71,39 @@ const columns = [{
 }]
 
 // mock 数据
-const data = [{
-  key: '1',
-  name: 'John Brown',
-  age: 32,
-  address: 'New York No. 1 Lake Park'
-}, {
-  key: '2',
-  name: 'Jim Green',
-  age: 42,
-  address: 'London No. 1 Lake Park'
-}, {
-  key: '3',
-  name: 'Joe Black',
-  age: 32,
-  address: 'Sidney No. 1 Lake Park'
-}, {
-  key: '4',
-  name: 'Disabled User',
-  age: 99,
-  address: 'Sidney No. 1 Lake Park'
-}]
+const data = []
 // 分页配置
 const pagination = {
   showSizeChanger: true,
-  current: 10,
+  // current: 10,
   defaultCurrent: 1,
   defaultPageSize: 10,
-  pageSize: 20,
+  // pageSize: 20,
   pageSizeOptions: ['10', '20', '30', '40'],
   total: 100,
   showQuickJumper: true
 }
+// 筛选条件初始化
+const filterFields = {
+  educationTime: '',
+  medicalHistory: '',
+  medicationName: '',
+  orderBy: 'ASC',
+  pageNumber: 1,
+  pageSize: 10,
+  patientAge: '',
+  patientName: '',
+  patientSex: -1,
+  sortKey: 'createTime'
+}
+
 export default {
   data: function () {
     return {
       data,
       columns,
-      pagination
+      pagination,
+      filterFields
     }
   },
   computed: {
@@ -132,16 +129,24 @@ export default {
     onShowSizeChange (current, pageSize) {
       this.pageSize = pageSize
     }
+  },
+  beforeRouteEnter (to, from, next) {
+    const filterResult = getTargetObject(filterFields, [''])
+    console.log('filterResult_', filterResult)
+    patientsList(filterResult).then((response) => {
+      console.log('recordList_response', response)
+      next(vm => {
+        vm.data = response.data.body.patients
+        console.log('vm.data_', vm.data)
+      })
+    })
+    // console.log(this) // undefined，不能用this来获取vue实例
+    // console.log('组件路由钩子：beforeRouteEnter')
+    // next(vm => {
+    //   console.log(vm) // vm为vue的实例
+    //   console.log('组件路由钩子beforeRouteEnter的next')
+    // })
   }
-  // beforeRouteEnter (to, from, next) {
-
-  //   // console.log(this) // undefined，不能用this来获取vue实例
-  //   // console.log('组件路由钩子：beforeRouteEnter')
-  //   // next(vm => {
-  //   //   console.log(vm) // vm为vue的实例
-  //   //   console.log('组件路由钩子beforeRouteEnter的next')
-  //   // })
-  // }
 }
 </script>
 <style lang="scss">

@@ -1,6 +1,6 @@
 import http from '@/utils/http'
 
-export function token (data) {
+export function patientsList (data) {
   return http({
     url: 'rest/backend/patients',
     method: 'post',
