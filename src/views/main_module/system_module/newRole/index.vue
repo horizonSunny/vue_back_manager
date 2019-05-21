@@ -24,18 +24,12 @@
         </a-col>
         <a-col class="marginTop" :span="20">
           <span>*分配权限：</span>
-          <!-- <a-checkbox @change="onChange">Checkbox</a-checkbox> -->
-          <!-- <a-row class="roleWidth">
-            <a-col class="contentRow" :span="12">col-12</a-col>
-            <a-col class="contentRow" :span="12">col-12</a-col>
-          </a-row> -->
         </a-col>
       </a-row>
     </div>
   </div>
 </template>
 <script>
-
 export default {
   data: function () {
     return {
@@ -82,6 +76,11 @@ export default {
       height: 55px;
       line-height: 55px;
       overflow: hidden;
+    }
+    .tabelStyle {
+      display: inline-block;
+      width: 70%;
+      vertical-align: middle;
     }
   }
 }
