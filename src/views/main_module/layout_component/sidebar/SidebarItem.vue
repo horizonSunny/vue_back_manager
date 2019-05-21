@@ -13,6 +13,7 @@
           :key="item.permissionCode"
           v-if="item.children.length === 1"
           class="text-aligin-left"
+          @click="toNextPath(item['children'][0]['path'])"
         >
           <a-icon type="inbox" />
           <span>{{ item["sideBarName"] }}</span>
@@ -28,9 +29,11 @@
             }}</span></span
           >
           <template v-for="subItem in item.children">
-            <a-menu-item :key="subItem.permissionCode" @click="toNextPath()">{{
-              subItem["sideBarName"]
-            }}</a-menu-item>
+            <a-menu-item
+              :key="subItem.permissionCode"
+              @click="toNextPath(subItem['path'])"
+              >{{ subItem["sideBarName"] }}</a-menu-item
+            >
           </template>
         </a-sub-menu>
       </template>
@@ -47,6 +50,7 @@ export default {
   methods: {
     toNextPath (path) {
       console.log('next_path', path)
+      this.$router.push({ path: path })
     }
   },
   props: ['menuMessage'],

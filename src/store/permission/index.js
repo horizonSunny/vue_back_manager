@@ -21,7 +21,9 @@ function filterPermissionRouter (accesRouter, parentPath) {
   const sidebar = accesRouter.filter(router => {
     // 判断过滤后的sidebar是否是字符串
     const permission = typeof router.permissionCode !== 'boolean'
-    router.path = parentPath + router.path
+    if (parentPath !== '') {
+      router.path = parentPath + '/' + router.path
+    }
     if (permission) {
       if (router.children && router.children.length) {
         router.children = filterPermissionRouter(router.children, router.path)

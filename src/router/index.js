@@ -72,33 +72,33 @@ export const asyncRouter = [
     children: [
       // 后台管理
       {
-        path: '/backManagerList',
+        path: 'backManagerList',
         permissionCode: '42',
         sideBarName: '后台用户',
         component: _import('main_module/system_module/backManagerList/index')
       },
       {
-        path: '/newBackUser',
+        path: 'newBackUser',
         permissionCode: '421',
         sideBarName: '新建后台用户',
         component: _import('main_module/system_module/newBackUser/index')
       },
       // 部门
       {
-        path: '/newDepartment',
+        path: 'newDepartment',
         permissionCode: '426',
         sideBarName: '新建部门',
         component: _import('main_module/system_module/newDepartment/index')
       },
       // 角色
       {
-        path: '/newRole',
+        path: 'newRole',
         permissionCode: '411',
         sideBarName: '新建角色',
         component: _import('main_module/system_module/newRole/index')
       },
       {
-        path: '/roleList',
+        path: 'roleList',
         permissionCode: '41',
         sideBarName: '角色管理',
         component: _import('main_module/system_module/roleList/index')
@@ -114,14 +114,14 @@ export const asyncRouter = [
     children: [
       // 测评量表
       {
-        path: '/evaluationList',
+        path: 'evaluationList',
         permissionCode: '21',
         sideBarName: '测评列表',
         component: _import('main_module/evaluation_module/evaluationList/index')
       },
       // 方案管理
       {
-        path: '/evaluationScheme',
+        path: 'evaluationScheme',
         permissionCode: '22',
         sideBarName: '方案管理',
         component: _import(
@@ -130,14 +130,14 @@ export const asyncRouter = [
       },
       // 新建测评
       {
-        path: '/newEvaluation',
+        path: 'newEvaluation',
         permissionCode: '211',
         sideBarName: '新建测评',
         component: _import('main_module/evaluation_module/newEvaluation/index')
       },
       // 新建方案
       {
-        path: '/newScheme',
+        path: 'newScheme',
         permissionCode: '221',
         sideBarName: '新建方案',
         component: _import('main_module/evaluation_module/newScheme/index')
@@ -152,13 +152,13 @@ export const asyncRouter = [
     sideBarName: '用户管理',
     children: [
       {
-        path: '/userList',
+        path: 'userList',
         permissionCode: '31',
         sideBarName: '脑健康管理师',
         component: _import('main_module/user_module/userList/index')
       },
       {
-        path: '/userManager',
+        path: 'userManager',
         permissionCode: '313',
         sideBarName: '新建用户',
         component: _import('main_module/user_module/userManager/index')
