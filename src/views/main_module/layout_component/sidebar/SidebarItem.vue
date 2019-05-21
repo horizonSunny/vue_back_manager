@@ -28,7 +28,7 @@
             }}</span></span
           >
           <template v-for="subItem in item.children">
-            <a-menu-item :key="subItem.permissionCode">{{
+            <a-menu-item :key="subItem.permissionCode" @click="toNextPath()">{{
               subItem["sideBarName"]
             }}</a-menu-item>
           </template>
@@ -42,6 +42,11 @@ export default {
   data: function () {
     return {
       isCollapsed: false
+    }
+  },
+  methods: {
+    toNextPath (path) {
+      console.log('next_path', path)
     }
   },
   props: ['menuMessage'],

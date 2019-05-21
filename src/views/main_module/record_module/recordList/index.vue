@@ -16,7 +16,7 @@
         :columns="columns"
         :dataSource="data"
         :pagination="pagination"
-        :customRow="testClick"
+        :customRow="rowClick"
       >
         <a slot="name" slot-scope="text" href="javascript:;">{{ text }}</a>
       </a-table>
@@ -110,14 +110,22 @@ function patientListFilter (data) {
   return patientList
 }
 // 依据patient信息中的uid,查询到对应后端数据中那一个患者数据，传到详情页面
-// function patientDetails (uid, responseData) { }
+// 因为后端传回来的数据结构，所以要做数据过滤，未先定义好接口,responseData是回返数据中的patients
+function patientDetails (uid, responseData) {
+  for (let item = 0; item < responseData.length; item++) {
+    if (responseData[item]['patient']['uid'] === uid) {
+      return responseData[item]
+    }
+  }
+}
 export default {
   data: function () {
     return {
       data,
       columns,
       pagination,
-      filterFields
+      filterFields,
+      responseData: {}
     }
   },
   computed: {
@@ -147,12 +155,15 @@ export default {
     onShowSizeChange (current, pageSize) {
       this.pageSize = pageSize
     },
-    testClick () {
+    rowClick (record) {
       // console.log('event_', event)
       return {
         on: {
           click: () => {
-            console.log('123')
+            console.log('record_', record)
+            const patientInfo = patientDetails(record['uid'], this.responseData)
+            console.log('patientInfo_', patientInfo)
+            this.$router.push({ name: 'recordInfo', params: { patientInfo } })
           }
         }
       }
@@ -165,6 +176,7 @@ export default {
       console.log('recordList_response', response)
       next(vm => {
         // vm.data = response.data.body.patients
+        vm.responseData = response.data.body.patients
         vm.data = patientListFilter(response.data.body.patients)
         console.log('vm.data_', vm.data)
       })

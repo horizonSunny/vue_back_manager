@@ -44,6 +44,7 @@ export const asyncRouter = [
       },
       {
         path: 'recordInfo',
+        name: 'recordInfo',
         permissionCode: '111',
         sideBarName: '基本信息',
         component: _import('main_module/record_module/recordInfo/index')
