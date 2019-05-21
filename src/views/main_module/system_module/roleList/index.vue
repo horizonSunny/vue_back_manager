@@ -111,7 +111,16 @@ export default {
         console.log('text_', text)
         record['status'] = record['status'] === 0 ? 1 : 0
       };
-      if (text === '编辑') { }
+      if (text === '编辑' || text === '查看') {
+        console.log('text_', text)
+        this.$router.push({// 你需要接受路由的参数再跳转，最终跳转是在main函数里面
+          name: 'newRole',
+          params: {
+            operate: text,
+            info: record
+          }
+        })
+      }
       if (text === '查看') { }
     }
   },

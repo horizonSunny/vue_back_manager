@@ -93,6 +93,7 @@ export const asyncRouter = [
       // 角色
       {
         path: 'newRole',
+        name: 'newRole',
         permissionCode: '411',
         sideBarName: '新建角色',
         component: _import('main_module/system_module/newRole/index')
