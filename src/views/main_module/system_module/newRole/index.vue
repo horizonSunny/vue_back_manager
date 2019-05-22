@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="title">
+    <div class="titleContent">
       <a class="float-left goBack" href="">返回</a>
       <span class="float-left patientInfo" @click="test"
         >{{ operate }}角色
@@ -122,10 +122,8 @@
               </tbody>
             </table>
           </a-checkbox-group>
-          <!-- </span> -->
-        </a-col>
-        <a-col :span="20">
           <a-checkbox @change="checkAll">全选</a-checkbox>
+          <!-- </span> -->
         </a-col>
       </a-row>
     </div>
@@ -173,6 +171,7 @@ export default {
       // 表示是选择还是取消
       const checked = checkedValues.length > this.hasChecked.length
       // 过滤后的添加或者取消的权限value值
+      // console.log('checkedValues_', checkedValues)
       const operatedPermission = getArrDifference(checkedValues, this.hasChecked)[0]
       // const operatedPermission = getArrDifference([1, 2, 3, 4, 5], [1, 2, 3])
       console.log('operatedPermission_', operatedPermission)
@@ -198,10 +197,9 @@ export default {
     },
     checkAll (e) {
       const allChecked = Object.keys(permission)
-      console.log('allChecked_', allChecked)
-      console.log(e.target.checked)
-      const checkAll = e.target.checked
-      if (checkAll) {
+      const checked = e.target.checked
+      console.log('checked_', checked)
+      if (checked) {
         this.hasChecked = allChecked
       } else {
         this.hasChecked = []
@@ -216,7 +214,7 @@ export default {
 }
 </script>
 <style lang="scss">
-.title {
+.titleContent {
   .patientInfo {
     font-size: 18px;
     margin-left: 20px;

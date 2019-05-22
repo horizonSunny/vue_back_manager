@@ -10,7 +10,7 @@
       <p class="drawer">基本信息</p>
       <p class="drawer">测评报告</p>
     </a-drawer>
-    <div class="title">
+    <div class="titleContent">
       <a class="float-left goBack" href="">返回</a>
       <span class="float-left patientInfo"
         >患者姓名：{{ patientInfo["patient"]["patientName"] }}</span
@@ -205,7 +205,7 @@ export default {
   border-bottom: 1px solid rgba(128, 128, 128, 0.7);
   cursor: pointer;
 }
-.title {
+.titleContent {
   .patientInfo {
     font-size: 18px;
     margin-left: 20px;
