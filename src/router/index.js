@@ -134,6 +134,7 @@ export const asyncRouter = [
       // 新建测评
       {
         path: 'newEvaluation',
+        name: 'newEvaluation',
         permissionCode: '211',
         sideBarName: '新建测评',
         component: _import('main_module/evaluation_module/newEvaluation/index')
@@ -141,6 +142,7 @@ export const asyncRouter = [
       // 新建方案
       {
         path: 'newScheme',
+        name: 'newScheme',
         permissionCode: '221',
         sideBarName: '新建方案',
         component: _import('main_module/evaluation_module/newScheme/index')

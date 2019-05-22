@@ -86,6 +86,7 @@ const columns = [
   {
     title: '操作',
     key: 'action',
+    width: '50%',
     scopedSlots: { customRender: 'action' }
   }
 ]
@@ -189,7 +190,7 @@ export default {
   .main_content {
     margin-top: 10px;
     td {
-      max-width: 100px;
+      max-width: 95px;
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
