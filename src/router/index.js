@@ -79,6 +79,7 @@ export const asyncRouter = [
       },
       {
         path: 'newBackUser',
+        name: 'newBackUser',
         permissionCode: '421',
         sideBarName: '新建后台用户',
         component: _import('main_module/system_module/newBackUser/index')
@@ -86,6 +87,7 @@ export const asyncRouter = [
       // 部门
       {
         path: 'newDepartment',
+        name: 'newDepartment',
         permissionCode: '426',
         sideBarName: '新建部门',
         component: _import('main_module/system_module/newDepartment/index')

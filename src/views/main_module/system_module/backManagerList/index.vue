@@ -12,7 +12,15 @@
           @search="onSearch"
           class="float-left"
         />
-        <a-button type="primary" class="float-right">+新增角色</a-button>
+        <a-button type="primary" class="float-right marginLeft"
+          >+新建后台用户</a-button
+        >
+        <a-button type="primary" class="float-right marginLeft"
+          >+添加部门</a-button
+        >
+        <a-button type="primary" class="float-right marginLeft"
+          >编辑部门</a-button
+        >
         <div class="clear-both"></div>
       </div>
       <div class="main_content">
@@ -74,9 +82,11 @@ const columns = [
   }, {
     title: '更新时间',
     dataIndex: 'updateTime'
-  }, {
+  },
+  {
     title: '操作',
-    dataIndex: ''
+    key: 'action',
+    scopedSlots: { customRender: 'action' }
   }
 ]
 
@@ -136,7 +146,7 @@ export default {
       if (text === '编辑' || text === '查看') {
         console.log('text_', text)
         this.$router.push({// 你需要接受路由的参数再跳转，最终跳转是在main函数里面
-          name: 'newRole',
+          name: 'newBackUser',
           params: {
             operate: text,
             info: record
@@ -178,9 +188,20 @@ export default {
   width: 79%;
   .main_content {
     margin-top: 10px;
+    td {
+      max-width: 100px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
   }
   .ant-table-pagination.ant-pagination {
     float: none;
+  }
+  .main_header {
+    .marginLeft {
+      margin-left: 10px;
+    }
   }
 }
 </style>

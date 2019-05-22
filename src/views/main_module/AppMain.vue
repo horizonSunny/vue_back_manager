@@ -18,6 +18,7 @@
             :displayRender="displayRender"
             @change="onChange"
             changeOnSelect
+            :defaultValue="defaultDepartment"
           /> -->
           <router-view></router-view>
         </template>
@@ -31,30 +32,7 @@ export default {
   name: 'mainComponent',
   data () {
     return {
-      collapsed: false,
-      options: [{
-        value: 'zhejiang',
-        label: 'Zhejiang',
-        children: [{
-          value: 'hangzhou',
-          label: 'Hangzhou',
-          children: [{
-            value: 'xihu',
-            label: 'West Lake'
-          }]
-        }]
-      }, {
-        value: 'jiangsu',
-        label: 'Jiangsu',
-        children: [{
-          value: 'nanjing',
-          label: 'Nanjing',
-          children: [{
-            value: 'zhonghuamen',
-            label: 'Zhong Hua Men'
-          }]
-        }]
-      }]
+      collapsed: false
     }
   },
   components: {
