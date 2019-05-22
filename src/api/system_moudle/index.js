@@ -1,3 +1,4 @@
 import { roleList } from './roleList'
 import { orgQuery } from './org'
-export { roleList, orgQuery }
+import { userQuery } from './userQuery'
+export { roleList, orgQuery, userQuery }
