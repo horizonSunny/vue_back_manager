@@ -1,2 +1,3 @@
 import { patientsList } from './recordList'
-export { patientsList }
+import { exportPatients } from './exportPatients'
+export { patientsList, exportPatients }

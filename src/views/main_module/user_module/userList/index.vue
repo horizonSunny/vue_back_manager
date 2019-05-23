@@ -9,7 +9,17 @@
       />
       <a-button type="primary" class="float-right marginLeft">+新建</a-button>
       <a-button type="primary" class="float-right marginLeft">+导出</a-button>
-      <a-button type="primary" class="float-right marginLeft">导入</a-button>
+      <!-- <a-button type="primary" class="float-right marginLeft">导入</a-button> -->
+      <a-upload
+        class="float-right marginLeft"
+        name="file"
+        :multiple="true"
+        action="//jsonplaceholder.typicode.com/posts/"
+        :headers="headers"
+        @change="upLoad"
+      >
+        <a-button type="primary">导入</a-button>
+      </a-upload>
       <a-button type="primary" class="float-right marginLeft"
         >下载模版</a-button
       >
@@ -184,7 +194,10 @@ export default {
       pagination,
       filterFields,
       visible: false,
-      responseData: {}
+      responseData: {},
+      headers: {
+        authorization: 'authorization-text'
+      }
     }
   },
   computed: {
@@ -235,7 +248,8 @@ export default {
     handleOk (e) {
       console.log(e)
       this.visible = false
-    }
+    },
+    upLoad () { }
   },
   beforeRouteEnter (to, from, next) {
     const filterResult = getTargetObject(filterFields, [''])

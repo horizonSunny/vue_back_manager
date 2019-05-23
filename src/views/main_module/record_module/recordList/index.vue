@@ -7,7 +7,9 @@
         @search="onSearch"
         class="float-left"
       />
-      <a-button type="primary" class="float-right">导出</a-button>
+      <a-button type="primary" @click="exportPatient" class="float-right"
+        >导出</a-button
+      >
       <div class="clear-both"></div>
     </div>
     <div class="main_content">
@@ -26,7 +28,8 @@
 </template>
 <script>
 import { getTargetObject } from '@/utils/tools'
-import { patientsList } from '@/api/record_module/index'
+import { patientsList, exportPatients } from '@/api/record_module/index'
+
 const columns = [{
   title: '姓名',
   dataIndex: 'patientName',
@@ -104,7 +107,7 @@ const columns = [{
   dataIndex: 'address'
 }, {
   title: '是否确诊老年痴呆',
-  dataIndex: 'medicalHistoryDegree',
+  dataIndex: 'medicalHistory',
   filterMultiple: false,
   filters: [
     { text: '不限', value: '' },
@@ -117,7 +120,7 @@ const columns = [{
   ]
 }, {
   title: '是否用过痴呆药物',
-  dataIndex: 'medicationNames',
+  dataIndex: 'medicationName',
   filterMultiple: false,
   filters: [
     { text: '不限', value: '不限' },
@@ -160,24 +163,16 @@ const pagination = {
 }
 // 筛选条件初始化
 const filterFields = {
-  educationTime: '',
-  medicalHistory: '',
-  medicationName: '',
-  orderBy: 'ASC',
-  pageNumber: 1,
-  pageSize: 10,
-  patientAge: '',
-  patientName: '',
-  patientSex: -1,
-  sortKey: 'createTime'
+  pageNumber: 0,
+  pageSize: 10
 }
 // 从后端传回来的结果过滤患者的list，产生真实的data
 function patientListFilter (data) {
   const patientList = []
   for (let item = 0; item < data.length; item++) {
     const listItem = Object.assign({
-      medicationNames: data[item]['medicationNames'],
-      medicalHistoryDegree: data[item]['medicalHistoryType'][0]['medicalHistoryDegree'],
+      medicationName: data[item]['medicationNames'],
+      medicalHistory: data[item]['medicalHistoryType'][0]['medicalHistoryDegree'],
       key: data[item]['patient']['uid']
     }, data[item]['patient'])
     patientList.push(listItem)
@@ -193,6 +188,7 @@ function patientDetails (uid, responseData) {
     }
   }
 }
+// const selectedRowKey = []
 export default {
   data: function () {
     return {
@@ -200,15 +196,24 @@ export default {
       columns,
       pagination,
       filterFields,
+      selectedRowKey: [],
       responseData: {}
     }
   },
   computed: {
     rowSelection () {
-      // const { selectedRowKeys } = this
+      const _this = this
       return {
         onChange: (selectedRowKeys, selectedRows) => {
           console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows)
+          _this.selectedRowKey = selectedRowKeys
+
+          // const data = { 'patientIds': selectedRowKeys }
+          // exportPatient(data).then((response) => {
+          //   this.responseData = response.data.body.patients
+          //   this.data = patientListFilter(response.data.body.patients)
+          //   this.pagination.total = response.data.body.totalElements
+          // })
         },
         getCheckboxProps: record => ({
           props: {
@@ -218,14 +223,19 @@ export default {
         })
       }
     }
-
-    // rowKey (key) {
-    //   return (console.log('key_', key))
-    // }
   },
   methods: {
+    // 依据姓名进行筛选
     onSearch (value) {
-      console.log(value)
+      const name = {
+        patientName: value
+      }
+      const requestFilter = getTargetObject(Object.assign(name, filterFields), [''])
+      patientsList(requestFilter).then((response) => {
+        this.responseData = response.data.body.patients
+        this.data = patientListFilter(response.data.body.patients)
+        this.pagination.total = response.data.body.totalElements
+      })
     },
     onShowSizeChange (current, pageSize) {
       this.pageSize = pageSize
@@ -244,32 +254,41 @@ export default {
       }
     },
     handleTableChange (pagination, filters, sorter) {
-      console.log('pagination_', pagination)
-      console.log('_filters_', filters)
-      console.log('_sorter_', sorter)
-      // requst 数据修改
+      // requst 数据整合
       const filter = {}
       for (let item in filters) {
-        if ((item === 'medicalHistory' || item === 'patientSex') && filters[item] !== '') {
+        if ((item === 'medicalHistory' || item === 'patientSex') && filters[item][0] !== '') {
+          console.log('进入的')
           filter[item] = Number(filters[item][0])
         } else {
+          console.log('没进的')
           filter[item] = filters[item][0]
         }
       }
-      console.log('filter_', filter)
-      // const filter = {
-      //   educationTime: ''
-      // }
-      // const pager = { ...this.pagination }
-      // pager.current = pagination.current
-      // this.pagination = pager
-      // this.fetch({
-      //   results: pagination.pageSize,
-      //   page: pagination.current,
-      //   sortField: sorter.field,
-      //   sortOrder: sorter.order,
-      //   ...filters
-      // })
+      const sort = {}
+      if (sorter['columnKey'] && sorter['order']) {
+        sort['orderBy'] = sorter['order'] === 'descend' ? 'DESC' : 'ASC'
+        sort['sortKey'] = sorter['columnKey']
+      }
+      const page = {
+        pageNumber: pagination['current'] - 1,
+        pageSize: pagination['pageSize']
+      }
+      const requestFilter = getTargetObject(Object.assign(page, sort, filter), [''])
+      console.log('requestFilter_', requestFilter)
+      patientsList(requestFilter).then((response) => {
+        this.responseData = response.data.body.patients
+        this.data = patientListFilter(response.data.body.patients)
+        this.pagination.total = response.data.body.totalElements
+      })
+    },
+    exportPatient () {
+      console.log(this.selectedRowKey)
+      exportPatients({ patientIds: this.selectedRowKey }).then(res => {
+        let blob = new Blob([res], { type: 'application/vnd.ms-excel' })
+        let objectUrl = URL.createObjectURL(blob)
+        window.location.href = objectUrl
+      })
     }
   },
   beforeRouteEnter (to, from, next) {
@@ -285,12 +304,6 @@ export default {
         console.log('vm.data_', vm.data)
       })
     })
-    // console.log(this) // undefined，不能用this来获取vue实例
-    // console.log('组件路由钩子：beforeRouteEnter')
-    // next(vm => {
-    //   console.log(vm) // vm为vue的实例
-    //   console.log('组件路由钩子beforeRouteEnter的next')
-    // })
   }
 }
 </script>
