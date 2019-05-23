@@ -7,7 +7,7 @@
       @close="onClose"
       :visible="visible"
     >
-      <p class="drawer">基本信息</p>
+      <p class="drawer" @click="onClose">基本信息</p>
       <p class="drawer">测评报告</p>
     </a-drawer>
     <div class="titleContent">
@@ -109,7 +109,7 @@
               <div :key="item.uid">
                 <div class="hasMedicine">
                   <a-icon
-                    v-if="item['medicationName'] === 0"
+                    v-if="item['medicationDegree'] === 1"
                     theme="filled"
                     style="color:rgba(0, 145, 255, 0.926)"
                     type="check-circle"
@@ -117,7 +117,7 @@
                   <a-icon v-else theme="filled" type="check-circle" />
                   <span>{{ item["medicationName"] }}</span>
                   <div
-                    v-if="item['medicationName'] !== 0"
+                    v-if="item['medicationDegree'] === 1"
                     class="hasMedicineDetails"
                   >
                     <div>
