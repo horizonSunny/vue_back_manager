@@ -2,7 +2,7 @@
   <div>
     <div class="main_header">
       <a-input-search
-        placeholder="请输入患者姓名搜索"
+        placeholder="请输入用户姓名搜索"
         style="width: 200px"
         @search="onSearch"
         class="float-left"
@@ -75,38 +75,39 @@
 </template>
 <script>
 import { getTargetObject } from '@/utils/tools'
-import { patientsList } from '@/api/record_module/index'
+import { userList } from '@/api/user_module/index'
 const columns = [{
   title: '姓名',
-  dataIndex: 'patientName',
+  dataIndex: 'fullname',
   scopedSlots: { customRender: 'name' }
 }, {
   title: '性别',
-  dataIndex: 'patientSex'
+  dataIndex: 'sex'
 }, {
   title: '年龄',
-  dataIndex: 'patientAge'
+  dataIndex: 'age'
 }, {
   title: '手机号码',
-  dataIndex: 'mobilephone'
+  dataIndex: 'mobilenumber'
 }, {
   title: '邮箱',
-  dataIndex: 'status'
+  dataIndex: 'registerEmail'
 }, {
   title: '所属医院',
-  dataIndex: 'education'
+  dataIndex: 'hospitals'
 }, {
   title: '已测试人数',
-  dataIndex: 'jobType'
+  dataIndex: 'recordsCount'
 }, {
   title: '状态',
-  dataIndex: 'marrige'
+  dataIndex: 'status'
 }, {
   title: '创建时间',
-  dataIndex: 'address'
+  dataIndex: 'createTime',
+  sorter: true
 }, {
   title: '创建人',
-  dataIndex: 'medicalHistoryDegree'
+  dataIndex: 'creator'
 }, {
   title: '操作',
   key: 'action',
@@ -114,29 +115,41 @@ const columns = [{
 }]
 const modalColumns = [{
   title: '姓名',
-  dataIndex: 'patientName',
+  dataIndex: 'fullname',
   scopedSlots: { customRender: 'name' }
 }, {
   title: '性别',
-  dataIndex: 'patientSex'
+  dataIndex: 'sex',
+  filterMultiple: false,
+  filters: [
+    { text: '不限', value: '' },
+    { text: '男', value: '0' },
+    { text: '女', value: '1' }
+  ]
 }, {
   title: '年龄',
-  dataIndex: 'patientAge'
+  dataIndex: 'age'
 }, {
   title: '手机号码',
-  dataIndex: 'mobilephone'
+  dataIndex: 'mobilenumber'
 }, {
   title: '邮箱',
-  dataIndex: 'status'
+  dataIndex: 'registerEmail'
 }, {
   title: '所属医院',
-  dataIndex: 'education'
+  dataIndex: 'hospitals'
 }, {
   title: '已测试人数',
-  dataIndex: 'jobType'
+  dataIndex: 'recordsCount'
 }, {
   title: '状态',
-  dataIndex: 'marrige'
+  dataIndex: 'status',
+  filterMultiple: false,
+  filters: [
+    { text: '不限', value: '' },
+    { text: '启用', value: '1' },
+    { text: '禁用', value: '0' }
+  ]
 }]
 // mock 数据
 const data = []
@@ -148,43 +161,25 @@ const pagination = {
   defaultPageSize: 10,
   // pageSize: 20,
   pageSizeOptions: ['10', '20', '30', '40'],
-  total: 100,
+  total: 0,
   showQuickJumper: true
 }
 // 筛选条件初始化
 const filterFields = {
-  educationTime: '',
-  medicalHistory: '',
-  medicationName: '',
-  orderBy: 'ASC',
-  pageNumber: 1,
-  pageSize: 10,
-  patientAge: '',
-  patientName: '',
-  patientSex: -1,
-  sortKey: 'createTime'
+  pageNumber: 0,
+  pageSize: 10
 }
 // 从后端传回来的结果过滤患者的list，产生真实的data
-function patientListFilter (data) {
-  const patientList = []
+function userListFilter (data) {
+  const userList = []
   for (let item = 0; item < data.length; item++) {
-    const listItem = Object.assign({ medicationNames: data[item]['medicationNames'],
-      medicalHistoryDegree: data[item]['medicalHistoryType'][0]['medicalHistoryDegree'],
-      key: data[item]['patient']['uid']
-    }, data[item]['patient'])
-    patientList.push(listItem)
+    const listItem = Object.assign({ index: item + 1,
+      key: data[item]['uid']
+    }, data[item], data[item]['doctorEntity'])
+    userList.push(listItem)
   }
-  return patientList
+  return userList
 }
-// 依据patient信息中的uid,查询到对应后端数据中那一个患者数据，传到详情页面
-// 因为后端传回来的数据结构，所以要做数据过滤，未先定义好接口,responseData是回返数据中的patients
-// function patientDetails (uid, responseData) {
-//   for (let item = 0; item < responseData.length; item++) {
-//     if (responseData[item]['patient']['uid'] === uid) {
-//       return responseData[item]
-//     }
-//   }
-// }
 export default {
   data: function () {
     return {
@@ -215,14 +210,45 @@ export default {
         })
       }
     }
-
-    // rowKey (key) {
-    //   return (console.log('key_', key))
-    // }
   },
   methods: {
     onSearch (value) {
-      console.log(value)
+      const name = {
+        fullname: value
+      }
+      const requestFilter = Object.assign(name, filterFields)
+      userList(requestFilter).then((response) => {
+        this.responseData = response.data.body.doctors
+        this.data = userListFilter(response.data.body.doctors)
+      })
+    },
+    handleTableChange (pagination, filters, sorter) {
+      // requst 数据整合
+      const filter = {}
+      // for (let item in filters) {
+      //   if (item === 'status' && filters[item][0] !== '') {
+      //     console.log('进入的')
+      //     filter[item] = Number(filters[item][0])
+      //   } else {
+      //     console.log('没进的')
+      //     filter[item] = filters[item][0]
+      //   }
+      // }
+      const sort = {}
+      // if (sorter['columnKey'] && sorter['order']) {
+      //   sort['orderBy'] = sorter['order'] === 'descend' ? 'DESC' : 'ASC'
+      //   sort['sortKey'] = sorter['columnKey']
+      // }
+      const filterField = {
+        pageNumber: pagination['current'] - 1,
+        pageSize: pagination['pageSize']
+      }
+      const requestFilter = getTargetObject(Object.assign(filterField, sort, filter), [''])
+      console.log('requestFilter_', requestFilter)
+      userList(requestFilter).then((response) => {
+        this.responseData = response.data.body.doctors
+        this.data = userListFilter(response.data.body.doctors)
+      })
     },
     onShowSizeChange (current, pageSize) {
       this.pageSize = pageSize
@@ -254,21 +280,14 @@ export default {
   beforeRouteEnter (to, from, next) {
     const filterResult = getTargetObject(filterFields, [''])
     console.log('filterResult_', filterResult)
-    patientsList(filterResult).then((response) => {
+    userList(filterResult).then((response) => {
       console.log('recordList_response', response)
       next(vm => {
-        // vm.data = response.data.body.patients
-        vm.responseData = response.data.body.patients
-        vm.data = patientListFilter(response.data.body.patients)
+        vm.responseData = response.data.body.doctors
+        vm.data = userListFilter(response.data.body.doctors)
         console.log('vm.data_', vm.data)
       })
     })
-    // console.log(this) // undefined，不能用this来获取vue实例
-    // console.log('组件路由钩子：beforeRouteEnter')
-    // next(vm => {
-    //   console.log(vm) // vm为vue的实例
-    //   console.log('组件路由钩子beforeRouteEnter的next')
-    // })
   }
 }
 </script>
