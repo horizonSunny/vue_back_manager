@@ -2,7 +2,7 @@
   <div>
     <div class="main_header">
       <a-input-search
-        placeholder="请输入患者姓名搜索"
+        placeholder="请输入测评姓名搜索"
         style="width: 200px"
         @search="onSearch"
         class="float-left"
@@ -11,7 +11,12 @@
       <div class="clear-both"></div>
     </div>
     <div class="main_content">
-      <a-table :columns="columns" :dataSource="data" :pagination="pagination">
+      <a-table
+        :columns="columns"
+        :dataSource="data"
+        :pagination="pagination"
+        @change="handleTableChange"
+      >
         <a slot="name" slot-scope="text" href="javascript:;">{{ text }}</a>
         <span
           slot="action"
@@ -81,7 +86,7 @@ const pagination = {
   defaultPageSize: 10,
   // pageSize: 20,
   pageSizeOptions: ['10', '20', '30', '40'],
-  total: 100,
+  total: 0,
   showQuickJumper: true
 }
 // 筛选条件初始化
@@ -141,7 +146,14 @@ export default {
   },
   methods: {
     onSearch (value) {
-      console.log(value)
+      const name = {
+        assessmentName: value
+      }
+      const requestFilter = Object.assign(name, filterFields)
+      evaluationList(requestFilter).then((response) => {
+        this.responseData = response.data.body.assessmentItems
+        this.data = evaluationListFilter(response.data.body.assessmentItems)
+      })
     },
     onShowSizeChange (current, pageSize) {
       this.pageSize = pageSize
@@ -160,6 +172,32 @@ export default {
         })
       }
       if (text === '查看') { }
+    },
+    handleTableChange (pagination, filters, sorter) {
+      // requst 数据整合
+      const filter = {}
+      // for (let item in filters) {
+      //   if ((item === 'medicalHistory' || item === 'patientSex') && filters[item][0] !== '') {
+      //     filter[item] = Number(filters[item][0])
+      //   } else {
+      //     filter[item] = filters[item][0]
+      //   }
+      // }
+      const sort = {}
+      if (sorter['columnKey'] && sorter['order']) {
+        sort['orderBy'] = sorter['order'] === 'descend' ? 'DESC' : 'ASC'
+        sort['sortKey'] = sorter['columnKey']
+      }
+      const page = {
+        pageNumber: pagination['current'] - 1,
+        pageSize: pagination['pageSize']
+      }
+      const requestFilter = getTargetObject(Object.assign(page, sort, filter), [''])
+      console.log('requestFilter_', requestFilter)
+      evaluationList(requestFilter).then((response) => {
+        this.responseData = response.data.body.assessmentItems
+        this.data = evaluationListFilter(response.data.body.assessmentItems)
+      })
     }
   },
   beforeRouteEnter (to, from, next) {
