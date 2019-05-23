@@ -36,7 +36,13 @@ const columns = [{
   dataIndex: 'assessmentName'
 }, {
   title: '分类',
-  dataIndex: 'patientAge'
+  dataIndex: 'patientAge',
+  filterMultiple: false,
+  filters: [
+    { text: '不限', value: '' },
+    { text: '基础版', value: '基础版' },
+    { text: '临床版', value: '临床版' }
+  ]
 }, {
   title: '用时',
   dataIndex: 'duration'
@@ -45,13 +51,16 @@ const columns = [{
   dataIndex: 'assessmentDescribe'
 }, {
   title: '已测评次数',
-  dataIndex: 'assessmentNum'
+  dataIndex: 'assessmentNum',
+  sorter: true
 }, {
   title: '已测评人数',
-  dataIndex: 'assessmentPatientNum'
+  dataIndex: 'assessmentPatientNum',
+  sorter: true
 }, {
   title: '创建时间',
-  dataIndex: 'createTime'
+  dataIndex: 'createTime',
+  sorter: true
 }, {
   title: '创建人',
   dataIndex: 'creator'
@@ -77,22 +86,14 @@ const pagination = {
 }
 // 筛选条件初始化
 const filterFields = {
-  educationTime: '',
-  medicalHistory: '',
-  medicationName: '',
-  orderBy: 'ASC',
-  pageNumber: 1,
-  pageSize: 10,
-  patientAge: '',
-  patientName: '',
-  patientSex: -1,
-  sortKey: 'createTime'
+  pageNumber: 0,
+  pageSize: 10
 }
 // 从后端传回来的结果过滤患者的list，产生真实的data
 function evaluationListFilter (data) {
   const patientList = []
   for (let item = 0; item < data.length; item++) {
-    const listItem = Object.assign({ index: item,
+    const listItem = Object.assign({ index: item + 1,
       key: data[item]['uid']
     }, data[item])
     patientList.push(listItem)

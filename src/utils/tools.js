@@ -19,3 +19,17 @@ export function getTargetObject (targetObject, propsArray) {
     })
   return result
 }
+
+// 依据子级内的属性获取父级对象的值的数组
+export function getMatchArr (targetObject, property, array) {
+  if (typeof targetObject !== 'object' || !Array.isArray(array)) {
+    throw new Error('参数格式不正确')
+  }
+  const result = {}
+  Object.keys(targetObject)
+    .filter(key => targetObject[key] !== '')
+    .forEach(key => {
+      result[key] = targetObject[key]
+    })
+  return result
+}

@@ -102,7 +102,7 @@ const filterFields = {
 function evaluationListFilter (data) {
   const patientList = []
   for (let item = 0; item < data.length; item++) {
-    const listItem = Object.assign({ index: item,
+    const listItem = Object.assign({ index: item + 1,
       key: data[item]['uid']
     }, data[item])
     patientList.push(listItem)

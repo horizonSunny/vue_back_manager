@@ -75,7 +75,7 @@ const pagination = {
 function roleListFilter (data) {
   const roleListList = []
   for (let item = 0; item < data.length; item++) {
-    const listItem = Object.assign({ key: data[item]['uid'], roleIndex: item }, data[item])
+    const listItem = Object.assign({ key: data[item]['uid'], roleIndex: item + 1 }, data[item])
     roleListList.push(listItem)
   }
   return roleListList
