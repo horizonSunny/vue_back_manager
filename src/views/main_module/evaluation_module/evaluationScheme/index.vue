@@ -33,7 +33,7 @@
 <script>
 import { getTargetObject } from '@/utils/tools'
 // import { patientsList } from '@/api/record_module/index'
-import { shcemeList, evaluationList } from '@/api/evaluation_module/index'
+import { evaluationList } from '@/api/evaluation_module/index'
 const columns = [{
   title: '序号',
   dataIndex: 'index'
@@ -82,7 +82,7 @@ const pagination = {
   defaultPageSize: 10,
   // pageSize: 20,
   pageSizeOptions: ['10', '20', '30', '40'],
-  total: 100,
+  total: 0,
   showQuickJumper: true
 }
 // 筛选条件初始化
@@ -111,13 +111,13 @@ function evaluationListFilter (data) {
 }
 // 依据patient信息中的uid,查询到对应后端数据中那一个患者数据，传到详情页面
 // 因为后端传回来的数据结构，所以要做数据过滤，未先定义好接口,responseData是回返数据中的patients
-function patientDetails (uid, responseData) {
-  for (let item = 0; item < responseData.length; item++) {
-    if (responseData[item]['patient']['uid'] === uid) {
-      return responseData[item]
-    }
-  }
-}
+// function patientDetails (uid, responseData) {
+//   for (let item = 0; item < responseData.length; item++) {
+//     if (responseData[item]['patient']['uid'] === uid) {
+//       return responseData[item]
+//     }
+//   }
+// }
 export default {
   data: function () {
     return {

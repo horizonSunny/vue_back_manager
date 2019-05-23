@@ -4,7 +4,7 @@ import baseUrl from './global'
 
 const http = axios.create({
   baseURL: process.env.baseURL || baseUrl,
-  timeout: 1000
+  timeout: 5000
 })
 
 http.interceptors.request.use(

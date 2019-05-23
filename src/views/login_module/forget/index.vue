@@ -111,6 +111,7 @@ export default {
         //   this.validate(response.message)
         //   console.log(123)
         // }
+        console.log('login_userInfo_response_', response)
         const accesstoken = response.headers.token
         console.log('accesstoken_', accesstoken)
         setToken(accesstoken)

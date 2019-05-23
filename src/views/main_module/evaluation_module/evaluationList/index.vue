@@ -92,7 +92,7 @@ const filterFields = {
 function evaluationListFilter (data) {
   const patientList = []
   for (let item = 0; item < data.length; item++) {
-    const listItem = Object.assign({      index: item,
+    const listItem = Object.assign({ index: item,
       key: data[item]['uid']
     }, data[item])
     patientList.push(listItem)
@@ -101,13 +101,13 @@ function evaluationListFilter (data) {
 }
 // 依据patient信息中的uid,查询到对应后端数据中那一个患者数据，传到详情页面
 // 因为后端传回来的数据结构，所以要做数据过滤，未先定义好接口,responseData是回返数据中的patients
-function patientDetails (uid, responseData) {
-  for (let item = 0; item < responseData.length; item++) {
-    if (responseData[item]['patient']['uid'] === uid) {
-      return responseData[item]
-    }
-  }
-}
+// function patientDetails (uid, responseData) {
+//   for (let item = 0; item < responseData.length; item++) {
+//     if (responseData[item]['patient']['uid'] === uid) {
+//       return responseData[item]
+//     }
+//   }
+// }
 export default {
   data: function () {
     return {
