@@ -21,10 +21,45 @@
         :columns="columns"
         :dataSource="data"
         :pagination="pagination"
-        :customRow="rowClick"
       >
         <a slot="name" slot-scope="text" href="javascript:;">{{ text }}</a>
+        <span
+          slot="action"
+          slot-scope="text, record"
+          @click.stop="operate($event, record)"
+        >
+          <a :disabled="record['status'] === 0" href="javascript:;">编辑</a>
+          <a-divider type="vertical" />
+          <a :disabled="record['status'] === 0" href="javascript:;">查看</a>
+          <a-divider type="vertical" />
+          <a href="javascript:;" v-if="record['status'] === 0">禁用</a>
+          <a href="javascript:;" v-if="record['status'] !== 0">启用</a>
+          <a-divider type="vertical" />
+          <a
+            :disabled="record['status'] === 0"
+            href="javascript:;"
+            @click="showModal"
+            >同步数据</a
+          >
+        </span>
       </a-table>
+    </div>
+    <div>
+      <!-- <a-button type="primary" @click="showModal">Open Modal</a-button> -->
+      <a-modal
+        title="请选择需要同步的数据，可多选"
+        v-model="visible"
+        @ok="handleOk"
+      >
+        <a-table
+          :rowSelection="rowSelection"
+          :columns="modalColumns"
+          :dataSource="data"
+          :pagination="false"
+        >
+          <a slot="name" slot-scope="text" href="javascript:;">{{ text }}</a>
+        </a-table>
+      </a-modal>
     </div>
   </div>
 </template>
@@ -42,40 +77,57 @@ const columns = [{
   title: '年龄',
   dataIndex: 'patientAge'
 }, {
-  title: '手机号',
+  title: '手机号码',
   dataIndex: 'mobilephone'
 }, {
-  title: '测评报告',
+  title: '邮箱',
   dataIndex: 'status'
 }, {
-  title: '受教育程度',
+  title: '所属医院',
   dataIndex: 'education'
 }, {
-  title: '职业',
+  title: '已测试人数',
   dataIndex: 'jobType'
 }, {
-  title: '婚姻',
+  title: '状态',
   dataIndex: 'marrige'
 }, {
-  title: '居住地',
+  title: '创建时间',
   dataIndex: 'address'
 }, {
-  title: '是否确诊老年痴呆',
+  title: '创建人',
   dataIndex: 'medicalHistoryDegree'
 }, {
-  title: '是否用过痴呆药物',
-  dataIndex: 'medicationNames'
-}, {
-  title: '建档时间',
-  dataIndex: 'createTime'
-}, {
-  title: '建档人',
-  dataIndex: 'testThree'
-}, {
-  title: '更新时间',
-  dataIndex: 'updateTime'
+  title: '操作',
+  key: 'action',
+  scopedSlots: { customRender: 'action' }
 }]
-
+const modalColumns = [{
+  title: '姓名',
+  dataIndex: 'patientName',
+  scopedSlots: { customRender: 'name' }
+}, {
+  title: '性别',
+  dataIndex: 'patientSex'
+}, {
+  title: '年龄',
+  dataIndex: 'patientAge'
+}, {
+  title: '手机号码',
+  dataIndex: 'mobilephone'
+}, {
+  title: '邮箱',
+  dataIndex: 'status'
+}, {
+  title: '所属医院',
+  dataIndex: 'education'
+}, {
+  title: '已测试人数',
+  dataIndex: 'jobType'
+}, {
+  title: '状态',
+  dataIndex: 'marrige'
+}]
 // mock 数据
 const data = []
 // 分页配置
@@ -128,8 +180,10 @@ export default {
     return {
       data,
       columns,
+      modalColumns,
       pagination,
       filterFields,
+      visible: false,
       responseData: {}
     }
   },
@@ -160,18 +214,27 @@ export default {
     onShowSizeChange (current, pageSize) {
       this.pageSize = pageSize
     },
-    rowClick (record) {
-      // console.log('event_', event)
-      return {
-        on: {
-          click: () => {
-            console.log('record_', record)
-            const patientInfo = patientDetails(record['uid'], this.responseData)
-            console.log('patientInfo_', patientInfo)
-            this.$router.push({ name: 'recordInfo', params: { patientInfo } })
+    operate (event, record) {
+      console.log('record_', record)
+      const text = event.target.innerText
+      if (text === '编辑') {
+        console.log('text_', text)
+        this.$router.push({// 你需要接受路由的参数再跳转，最终跳转是在main函数里面
+          name: 'userManager',
+          params: {
+            operate: text,
+            info: record
           }
-        }
+        })
       }
+      if (text === '查看') { }
+    },
+    showModal () {
+      this.visible = true
+    },
+    handleOk (e) {
+      console.log(e)
+      this.visible = false
     }
   },
   beforeRouteEnter (to, from, next) {

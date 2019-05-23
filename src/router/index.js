@@ -164,6 +164,7 @@ export const asyncRouter = [
       },
       {
         path: 'userManager',
+        name: 'userManager',
         permissionCode: '313',
         sideBarName: '新建用户',
         component: _import('main_module/user_module/userManager/index')

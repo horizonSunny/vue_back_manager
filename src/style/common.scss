@@ -29,3 +29,8 @@
 @mixin mix-width($width) {
   width: $width
 }
+
+// 模态框
+.ant-modal-content {
+  width: 150%
+}
