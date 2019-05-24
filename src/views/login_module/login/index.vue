@@ -85,15 +85,6 @@ export default {
   methods: {
     login (e) {
       removeToken()
-      // const user = {
-      //   userName: this.admin,
-      //   password: this.password,
-      //   userType: this.userType
-      // }
-      // this.form.setFields({
-      //   username: this.user.userName,
-      //   password: this.user.password
-      // })
       e.preventDefault()
       const user = {
         userType: userType

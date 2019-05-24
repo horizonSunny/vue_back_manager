@@ -7,7 +7,9 @@
         @search="onSearch"
         class="float-left"
       />
-      <a-button type="primary" class="float-right">新建测评</a-button>
+      <a-button type="primary" @click="newEvaluation" class="float-right"
+        >新建测评</a-button
+      >
       <div class="clear-both"></div>
     </div>
     <div class="main_content">
@@ -42,12 +44,12 @@ const columns = [{
 }, {
   // 未找到
   title: '分类',
-  dataIndex: 'patientAge',
+  dataIndex: 'classify',
   filterMultiple: false,
   filters: [
     { text: '不限', value: '' },
-    { text: '基础版', value: '基础版' },
-    { text: '临床版', value: '临床版' }
+    { text: '基础版', value: 0 },
+    { text: '临床版', value: 1 }
   ]
 }, {
   title: '用时',
@@ -198,6 +200,15 @@ export default {
       evaluationList(requestFilter).then((response) => {
         this.responseData = response.data.body.assessmentItems
         this.data = evaluationListFilter(response.data.body.assessmentItems)
+      })
+    },
+    newEvaluation () {
+      this.$router.push({// 你需要接受路由的参数再跳转，最终跳转是在main函数里面
+        name: 'newEvaluation',
+        params: {
+          operate: '新建',
+          info: ''
+        }
       })
     }
   },

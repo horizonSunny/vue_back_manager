@@ -14,8 +14,9 @@
         >
           <a-input
             v-decorator="[
-              'evaluationName',
+              'assessmentName',
               {
+                initialValue: this.assessmentName,
                 rules: [{ required: true, message: 'Please input your note!' }]
               }
             ]"
@@ -28,8 +29,9 @@
         >
           <a-textarea
             v-decorator="[
-              'note',
+              'assessmentContent',
               {
+                initialValue: this.assessmentContent,
                 rules: [{ required: true, message: 'Please input your note!' }]
               }
             ]"
@@ -42,8 +44,9 @@
         >
           <a-input
             v-decorator="[
-              'note',
+              'duration',
               {
+                initialValue: this.duration,
                 rules: [{ required: true, message: 'Please input your note!' }]
               }
             ]"
@@ -55,10 +58,10 @@
           :wrapper-col="{ span: 12 }"
         >
           <a-select
-            disabled
             v-decorator="[
-              'gender',
+              'classify',
               {
+                initialValue: this.classify + '',
                 rules: [
                   { required: true, message: 'Please select your gender!' }
                 ]
@@ -66,16 +69,16 @@
             ]"
             placeholder="Select a option and change input text above"
           >
-            <a-select-option value="male">
-              male
+            <a-select-option value="0">
+              基础版
             </a-select-option>
-            <a-select-option value="female">
-              female
+            <a-select-option value="1">
+              临床版
             </a-select-option>
           </a-select>
         </a-form-item>
         <a-form-item :wrapper-col="{ span: 12, offset: 5 }">
-          <a-button @click="checkedInfo()">
+          <a-button>
             取消
           </a-button>
           <span style="display:inline-block;width:10%"></span>
@@ -88,61 +91,45 @@
   </div>
 </template>
 <script>
-import { mapGetters } from 'vuex'
-// 涌来循环options，添加label 和 value 值
-function selectOptions (source) {
-  var sourceCopy = source instanceof Array ? [] : {}
-  if (Array.isArray(sourceCopy)) { } else {
-    source = Object.assign(source, { value: source['key'],
-      label: source['title'] })
-  }
-
-  for (var item in source) {
-    sourceCopy[item] =
-      typeof source[item] === 'object' ? selectOptions(source[item]) : source[item]
-  }
-  return sourceCopy
-}
+import { assessmentUpdata, assessmentInsert } from '@/api/evaluation_module/index'
 export default {
   data: function () {
     return {
       form: this.$form.createForm(this),
       operate: this.$route.params.operate,
-      checked: true,
-      hasChecked: [],
-      options: [],
-      defaultDepartment: ['zhejiang', 'hangzhou']
+      assessmentName: this.$route.params['info']['assessmentName'] || '',
+      assessmentContent: this.$route.params['info']['assessmentDescribe'] || '',
+      duration: this.$route.params['info']['duration'] || '',
+      classify: this.$route.params['info']['classify'] || ''
     }
   },
   computed: {
-    ...mapGetters(['organization'])
   },
   methods: {
-    checkedInfo () {
-      // console.log('this.organization_', this.organization)
-      // const data = selectOptions(this.organization)
-      // console.log('this.organization_', data)
-    },
     onChange (value) {
       console.log(value)
     },
-    handleSubmit () { },
+    handleSubmit (e) {
+      e.preventDefault()
+      let assessment = {}
+      this.form.validateFieldsAndScroll((err, values) => {
+        if (!err) {
+          console.log('Received values of form: ', values)
+          Object.assign(assessment, values)
+        }
+      })
+      if (this.operate === '新建') {
+        assessmentInsert(assessment).then((res) => { })
+      }
+      if (this.operate === '编辑') {
+        const updata = Object.assign(assessment, { uid: this.$route.params['info']['uid'] })
+        assessmentUpdata(updata).then((res) => { })
+      }
+    },
     displayRender ({ labels }) {
       return labels[labels.length - 1]
     }
-  },
-  created () {
-    this.options = selectOptions(this.organization)
   }
-  // beforeRouteEnter (to, from, next) {
-  //   roleList().then((response) => {
-  //     next(vm => {
-  //       vm.responseData = response.data.body
-  //       vm.data = roleListFilter(response.data.body)
-  //       console.log('vm.responseData_', vm.responseData)
-  //     })
-  //   })
-  // }
 }
 </script>
 <style lang="scss">
