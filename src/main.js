@@ -42,6 +42,7 @@ router.beforeEach((to, from, next) => {
             // 这边是获取到用户信息后到最终跳转，二级页面作为预留
             store.dispatch('PemissionRouter')
             store.dispatch('GetOrganization')
+            store.dispatch('GetHospitals')
             const routerPath =
               store.getters.addRouters[0]['path'] + '/recordList'
             next({ path: routerPath })

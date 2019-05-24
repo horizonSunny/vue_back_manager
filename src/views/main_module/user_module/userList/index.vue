@@ -7,7 +7,9 @@
         @search="onSearch"
         class="float-left"
       />
-      <a-button type="primary" class="float-right marginLeft">+新建</a-button>
+      <a-button type="primary" @click="newUser" class="float-right marginLeft"
+        >+新建</a-button
+      >
       <a-button
         type="primary"
         @click="exportUser"
@@ -172,7 +174,7 @@ const filterFields = {
 function userListFilter (data) {
   const userList = []
   for (let item = 0; item < data.length; item++) {
-    const listItem = Object.assign({      index: item + 1,
+    const listItem = Object.assign({ index: item + 1,
       key: data[item]['uid']
     }, data[item], data[item]['doctorEntity'])
     userList.push(listItem)
@@ -281,7 +283,7 @@ export default {
           record['status'] = record['status'] === 1 ? 2 : 1
         })
       };
-      if (text === '编辑') {
+      if (text === '编辑' || text === '查看') {
         console.log('text_', text)
         this.$router.push({// 你需要接受路由的参数再跳转，最终跳转是在main函数里面
           name: 'userManager',
@@ -291,7 +293,6 @@ export default {
           }
         })
       }
-      if (text === '查看') { }
     },
     showModal (uid) {
       console.log('this.data_', this.data)
@@ -330,7 +331,16 @@ export default {
         window.location.href = objectUrl
       })
     },
-    upLoad () { }
+    upLoad () { },
+    newUser () {
+      this.$router.push({// 你需要接受路由的参数再跳转，最终跳转是在main函数里面
+        name: 'userManager',
+        params: {
+          operate: '新建',
+          info: ''
+        }
+      })
+    }
   },
   beforeRouteEnter (to, from, next) {
     const filterResult = getTargetObject(filterFields, [''])

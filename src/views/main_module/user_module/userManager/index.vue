@@ -16,6 +16,7 @@
             v-decorator="[
               'fullname',
               {
+                initialValue: this.fullname,
                 rules: [{ required: true, message: 'Please input your note!' }]
               }
             ]"
@@ -28,8 +29,9 @@
         >
           <a-input
             v-decorator="[
-              'fullname',
+              'mobilenumber',
               {
+                initialValue: this.mobilenumber,
                 rules: [{ required: true, message: 'Please input your note!' }]
               }
             ]"
@@ -40,50 +42,29 @@
           :label-col="{ span: 5 }"
           :wrapper-col="{ span: 12 }"
         >
-          <a-select
-            disabled
+          <a-radio-group
             v-decorator="[
-              'gender',
+              'sex',
               {
-                rules: [
-                  { required: true, message: 'Please select your gender!' }
-                ]
+                initialValue: this.sex,
+                rules: [{ required: true, message: 'Please input your note!' }]
               }
             ]"
-            placeholder="Select a option and change input text above"
           >
-            <a-select-option value="male">
-              male
-            </a-select-option>
-            <a-select-option value="female">
-              female
-            </a-select-option>
-          </a-select>
+            <a-radio :value="1">女</a-radio>
+            <a-radio :value="0">男</a-radio>
+          </a-radio-group>
         </a-form-item>
         <a-form-item
           label="所属医院"
           :label-col="{ span: 5 }"
           :wrapper-col="{ span: 12 }"
         >
-          <a-select
-            disabled
-            v-decorator="[
-              'gender',
-              {
-                rules: [
-                  { required: true, message: 'Please select your gender!' }
-                ]
-              }
-            ]"
-            placeholder="Select a option and change input text above"
-          >
-            <a-select-option value="male">
-              male
-            </a-select-option>
-            <a-select-option value="female">
-              female
-            </a-select-option>
-          </a-select>
+          <a-cascader
+            :options="options"
+            @change="onChange"
+            placeholder="Please select"
+          />
         </a-form-item>
         <a-form-item
           label="邮箱"
@@ -92,8 +73,9 @@
         >
           <a-input
             v-decorator="[
-              'fullname',
+              'registerEmail',
               {
+                initialValue: this.registerEmail,
                 rules: [{ required: true, message: 'Please input your note!' }]
               }
             ]"
@@ -106,8 +88,9 @@
         >
           <a-input
             v-decorator="[
-              'fullname',
+              'idnumber',
               {
+                initialValue: this.idnumber,
                 rules: [{ required: true, message: 'Please input your note!' }]
               }
             ]"
@@ -120,15 +103,16 @@
         >
           <a-textarea
             v-decorator="[
-              'note',
+              'workePerience',
               {
+                initialValue: this.workePerience,
                 rules: [{ required: true, message: 'Please input your note!' }]
               }
             ]"
           />
         </a-form-item>
         <a-form-item :wrapper-col="{ span: 12, offset: 5 }">
-          <a-button @click="checkedInfo()">
+          <a-button @click="cancel()">
             取消
           </a-button>
           <span style="display:inline-block;width:10%"></span>
@@ -142,60 +126,56 @@
 </template>
 <script>
 import { mapGetters } from 'vuex'
+import { insertDoctor, updateDoctor } from '@/api/user_module/index'
 // 涌来循环options，添加label 和 value 值
-function selectOptions (source) {
-  var sourceCopy = source instanceof Array ? [] : {}
-  if (Array.isArray(sourceCopy)) { } else {
-    source = Object.assign(source, { value: source['key'],
-      label: source['title'] })
-  }
-
-  for (var item in source) {
-    sourceCopy[item] =
-      typeof source[item] === 'object' ? selectOptions(source[item]) : source[item]
-  }
-  return sourceCopy
-}
 export default {
   data: function () {
     return {
       form: this.$form.createForm(this),
       operate: this.$route.params.operate,
-      checked: true,
-      hasChecked: [],
       options: [],
-      defaultDepartment: ['zhejiang', 'hangzhou']
+      fullname: this.$route.params['info']['fullname'] || '',
+      hospital: [],
+      idnumber: this.$route.params['info']['idnumber'] || '',
+      mobilenumber: this.$route.params['info']['mobilenumber'] || '',
+      registerEmail: this.$route.params['info']['registerEmail'] || '',
+      sex: this.$route.params['info']['sex'] || '',
+      workePerience: this.$route.params['info']['workePerience'] || ''
     }
   },
   computed: {
-    ...mapGetters(['organization'])
+    ...mapGetters(['hospitals'])
   },
   methods: {
-    checkedInfo () {
-      // console.log('this.organization_', this.organization)
-      // const data = selectOptions(this.organization)
-      // console.log('this.organization_', data)
-    },
+    cancel () { },
     onChange (value) {
       console.log(value)
     },
-    handleSubmit () { },
+    handleSubmit (e) {
+      e.preventDefault()
+      let assessment = {}
+      this.form.validateFieldsAndScroll((err, values) => {
+        if (!err) {
+          console.log('Received values of form: ', values)
+          Object.assign(assessment, values)
+        }
+      })
+      if (this.operate === '新建') {
+        insertDoctor(assessment).then((res) => { })
+      }
+      if (this.operate === '编辑') {
+        const updata = Object.assign(assessment, { uid: this.$route.params['info']['uid'] })
+        updateDoctor(updata).then((res) => { })
+      }
+    },
     displayRender ({ labels }) {
       return labels[labels.length - 1]
     }
   },
   created () {
-    this.options = selectOptions(this.organization)
+    console.log('this.hospitals_', this.hospitals)
+    this.options = this.hospitals
   }
-  // beforeRouteEnter (to, from, next) {
-  //   roleList().then((response) => {
-  //     next(vm => {
-  //       vm.responseData = response.data.body
-  //       vm.data = roleListFilter(response.data.body)
-  //       console.log('vm.responseData_', vm.responseData)
-  //     })
-  //   })
-  // }
 }
 </script>
 <style lang="scss">

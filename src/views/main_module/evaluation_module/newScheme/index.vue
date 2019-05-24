@@ -14,8 +14,9 @@
         >
           <a-input
             v-decorator="[
-              'evaluationName',
+              'assessmentName',
               {
+                initialValue: this.assessmentName,
                 rules: [{ required: true, message: 'Please input your note!' }]
               }
             ]"
@@ -28,22 +29,9 @@
         >
           <a-textarea
             v-decorator="[
-              'note',
+              'assessmentContent',
               {
-                rules: [{ required: true, message: 'Please input your note!' }]
-              }
-            ]"
-          />
-        </a-form-item>
-        <a-form-item
-          label="分类"
-          :label-col="{ span: 5 }"
-          :wrapper-col="{ span: 12 }"
-        >
-          <a-input
-            v-decorator="[
-              'note',
-              {
+                initialValue: this.assessmentContent,
                 rules: [{ required: true, message: 'Please input your note!' }]
               }
             ]"
@@ -55,10 +43,10 @@
           :wrapper-col="{ span: 12 }"
         >
           <a-select
-            disabled
             v-decorator="[
-              'gender',
+              'classify',
               {
+                initialValue: this.classify + '',
                 rules: [
                   { required: true, message: 'Please select your gender!' }
                 ]
@@ -66,16 +54,45 @@
             ]"
             placeholder="Select a option and change input text above"
           >
-            <a-select-option value="male">
-              male
+            <a-select-option value="0">
+              基础版
             </a-select-option>
-            <a-select-option value="female">
-              female
+            <a-select-option value="1">
+              临床版
+            </a-select-option>
+          </a-select>
+        </a-form-item>
+        <a-form-item
+          label="所属医院"
+          :label-col="{ span: 5 }"
+          :wrapper-col="{ span: 12 }"
+        >
+          <a-cascader
+            :options="options"
+            @change="onChange"
+            placeholder="Please select"
+          />
+        </a-form-item>
+        <a-form-item
+          label="选择测评"
+          :label-col="{ span: 5 }"
+          :wrapper-col="{ span: 12 }"
+        >
+          <a-select
+            mode="multiple"
+            :size="size"
+            placeholder="Please select"
+            :defaultValue="['a1', 'b2']"
+            @change="handleChange"
+            @popupScroll="popupScroll"
+          >
+            <a-select-option v-for="i in 25" :key="(i + 9).toString(36) + i">
+              {{ (i + 9).toString(36) + i }}
             </a-select-option>
           </a-select>
         </a-form-item>
         <a-form-item :wrapper-col="{ span: 12, offset: 5 }">
-          <a-button @click="checkedInfo()">
+          <a-button>
             取消
           </a-button>
           <span style="display:inline-block;width:10%"></span>
