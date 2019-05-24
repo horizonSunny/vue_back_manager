@@ -14,9 +14,9 @@
         >
           <a-input
             v-decorator="[
-              'assessmentName',
+              'assessmentPlanName',
               {
-                initialValue: this.assessmentName,
+                initialValue: this.assessmentPlanName,
                 rules: [{ required: true, message: 'Please input your note!' }]
               }
             ]"
@@ -29,9 +29,9 @@
         >
           <a-textarea
             v-decorator="[
-              'assessmentContent',
+              'assessmentPlanDescribe',
               {
-                initialValue: this.assessmentContent,
+                initialValue: this.assessmentPlanDescribe,
                 rules: [{ required: true, message: 'Please input your note!' }]
               }
             ]"
@@ -69,8 +69,19 @@
         >
           <a-cascader
             :options="options"
-            @change="onChange"
-            placeholder="Please select"
+            v-decorator="[
+              'hospitalName',
+              {
+                initialValue: hospitalName,
+                rules: [
+                  {
+                    type: 'array',
+                    required: true,
+                    message: 'Please select your habitual residence!'
+                  }
+                ]
+              }
+            ]"
           />
         </a-form-item>
         <a-form-item
@@ -80,14 +91,23 @@
         >
           <a-select
             mode="multiple"
-            :size="size"
-            placeholder="Please select"
-            :defaultValue="['a1', 'b2']"
-            @change="handleChange"
-            @popupScroll="popupScroll"
+            v-decorator="[
+              'items',
+              {
+                initialValue: this.items,
+                rules: [
+                  { required: true, message: 'Please select your gender!' }
+                ]
+              }
+            ]"
+            placeholder="Select a option and change input text above"
           >
-            <a-select-option v-for="i in 25" :key="(i + 9).toString(36) + i">
-              {{ (i + 9).toString(36) + i }}
+            <a-select-option
+              v-for="item in assessmentOptions"
+              :key="item['uid']"
+              :value="item['uid']"
+            >
+              {{ item["assessmentName"] }}
             </a-select-option>
           </a-select>
         </a-form-item>
@@ -106,60 +126,80 @@
 </template>
 <script>
 import { mapGetters } from 'vuex'
+import { findAssitem } from '@/api/evaluation_module/index'
 // 涌来循环options，添加label 和 value 值
-function selectOptions (source) {
-  var sourceCopy = source instanceof Array ? [] : {}
-  if (Array.isArray(sourceCopy)) { } else {
-    source = Object.assign(source, { value: source['key'],
-      label: source['title'] })
-  }
-
-  for (var item in source) {
-    sourceCopy[item] =
-      typeof source[item] === 'object' ? selectOptions(source[item]) : source[item]
-  }
-  return sourceCopy
-}
 export default {
   data: function () {
     return {
       form: this.$form.createForm(this),
       operate: this.$route.params.operate,
-      checked: true,
-      hasChecked: [],
       options: [],
-      defaultDepartment: ['zhejiang', 'hangzhou']
+      assessmentOptions: [],
+      assessmentPlanDescribe: this.$route.params['info']['assessmentPlanDescribe'] || '',
+      assessmentPlanName: this.$route.params['info']['assessmentPlanName'] || '',
+      // 为0时候自动判断为false
+      classify: this.$route.params['info']['classify'] || ''
+      // items: this.$route.params['info']['items'] || ''
     }
   },
   computed: {
-    ...mapGetters(['organization'])
+    ...mapGetters(['hospitals']),
+    items: function () {
+      const items = this.$route.params['info']['items']
+      if (items) {
+        const item = []
+        for (let i = 0; i < items.length; i++) {
+          item.push(items[i]['uid'])
+        }
+        return item
+      } else {
+        return undefined
+      }
+    },
+    hospitalName: function () {
+      const items = this.$route.params['info']['items']
+      if (items) {
+        // 没看到hospatialId
+        const item = [items['provinceId'], items['cityId'], '']
+        return item
+      } else {
+        return undefined
+      }
+    }
   },
   methods: {
-    checkedInfo () {
-      // console.log('this.organization_', this.organization)
-      // const data = selectOptions(this.organization)
-      // console.log('this.organization_', data)
-    },
     onChange (value) {
       console.log(value)
     },
-    handleSubmit () { },
+    handleSubmit (e) {
+      e.preventDefault()
+      let assessmentPlan = {}
+      this.form.validateFieldsAndScroll((err, values) => {
+        if (!err) {
+          console.log('Received values of form: ', values)
+          Object.assign(assessmentPlan, values)
+        }
+      })
+      // if (this.operate === '新建') {
+      //   insertDoctor(assessmentPlan).then((res) => { })
+      // }
+      // if (this.operate === '编辑') {
+      //   const updata = Object.assign(assessmentPlan, { uid: this.$route.params['info']['uid'] })
+      //   updateDoctor(updata).then((res) => { })
+      // }
+    },
     displayRender ({ labels }) {
       return labels[labels.length - 1]
     }
   },
   created () {
-    this.options = selectOptions(this.organization)
+    console.log('this.hospitals_', this.hospitals)
+    this.options = this.hospitals
+    findAssitem().then((resp) => {
+      console.log('resp_', resp.data.body)
+      this.assessmentOptions = resp.data.body
+    })
   }
-  // beforeRouteEnter (to, from, next) {
-  //   roleList().then((response) => {
-  //     next(vm => {
-  //       vm.responseData = response.data.body
-  //       vm.data = roleListFilter(response.data.body)
-  //       console.log('vm.responseData_', vm.responseData)
-  //     })
-  //   })
-  // }
 }
 </script>
 <style lang="scss">

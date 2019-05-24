@@ -7,7 +7,9 @@
         @search="onSearch"
         class="float-left"
       />
-      <a-button type="primary" class="float-right">新建测评</a-button>
+      <a-button type="primary" @click="newScheme" class="float-right"
+        >+新建测评方案</a-button
+      >
       <div class="clear-both"></div>
     </div>
     <div class="main_content">
@@ -214,6 +216,15 @@ export default {
       shcemeList(requestFilter).then((response) => {
         this.responseData = response.data.body.assessmentPlans
         this.data = shcemeListFilter(response.data.body.assessmentPlans)
+      })
+    },
+    newScheme () {
+      this.$router.push({// 你需要接受路由的参数再跳转，最终跳转是在main函数里面
+        name: 'newScheme',
+        params: {
+          operate: '新建',
+          info: ''
+        }
       })
     }
   },
