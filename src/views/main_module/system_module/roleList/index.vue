@@ -127,8 +127,8 @@ export default {
   beforeRouteEnter (to, from, next) {
     roleList().then((response) => {
       next(vm => {
-        vm.responseData = response.data.body
-        vm.data = roleListFilter(response.data.body)
+        vm.responseData = response.data.body.pageList
+        vm.data = roleListFilter(response.data.body.pageList)
         console.log('vm.responseData_', vm.responseData)
       })
     })

@@ -208,8 +208,8 @@ export default {
       const requestFilter = getTargetObject(Object.assign(filterField, sort, filter), [''])
       console.log('requestFilter_', requestFilter)
       userQuery(requestFilter).then((response) => {
-        this.responseData = response.data.body.users
-        this.userList = userListFilter(response.data.body.users)
+        this.responseData = response.data.body.pageList
+        this.userList = userListFilter(response.data.body.pageList)
       })
     },
     onSearch (value) {
@@ -218,8 +218,8 @@ export default {
       }
       const requestFilter = Object.assign(name, filterFields)
       userQuery(requestFilter).then((response) => {
-        this.responseData = response.data.body.users
-        this.userList = userListFilter(response.data.body.users)
+        this.responseData = response.data.body.pageList
+        this.userList = userListFilter(response.data.body.pageList)
       })
     },
     onSelect (selectedKeys, info) {
@@ -229,8 +229,8 @@ export default {
       }
       const filter = Object.assign(filterFields, org)
       userQuery(filter).then((response) => {
-        this.responseData = response.data.body.users
-        this.userList = userListFilter(response.data.body.users)
+        this.responseData = response.data.body.pageList
+        this.userList = userListFilter(response.data.body.pageList)
       })
     },
     test () {
@@ -252,8 +252,8 @@ export default {
     console.log('organization_12312312_', organization)
     userQuery(filter).then((response) => {
       next(vm => {
-        vm.responseData = response.data.body.users
-        vm.userList = userListFilter(response.data.body.users)
+        vm.responseData = response.data.body.pageList
+        vm.userList = userListFilter(response.data.body.pageList)
         console.log('vm.responseData_', vm.userList)
         // vm.data = roleListFilter(response.data.body)
         // console.log('vm.responseData_', vm.responseData)

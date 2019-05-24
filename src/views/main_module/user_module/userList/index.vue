@@ -172,7 +172,7 @@ const filterFields = {
 function userListFilter (data) {
   const userList = []
   for (let item = 0; item < data.length; item++) {
-    const listItem = Object.assign({ index: item + 1,
+    const listItem = Object.assign({      index: item + 1,
       key: data[item]['uid']
     }, data[item], data[item]['doctorEntity'])
     userList.push(listItem)
@@ -276,7 +276,7 @@ export default {
       console.log('record_', record)
       const text = event.target.innerText
       if (text === '禁用' || text === '启用') {
-        updateDoctorStatus({ uid: 5, operation: 1 }).then((response) => {
+        updateDoctorStatus({ uid: record['uid'], operation: record['status'] === 1 ? 2 : 1 }).then((response) => {
           console.log('text_', text)
           record['status'] = record['status'] === 1 ? 2 : 1
         })
