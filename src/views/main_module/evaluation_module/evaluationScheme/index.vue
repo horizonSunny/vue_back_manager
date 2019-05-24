@@ -23,12 +23,12 @@
           slot-scope="text, record"
           @click.stop="operate($event, record)"
         >
-          <a :disabled="record['status'] === 0" href="javascript:;">编辑</a>
+          <a :disabled="record['status'] === 1" href="javascript:;">编辑</a>
           <a-divider type="vertical" />
-          <a :disabled="record['status'] === 0" href="javascript:;">查看</a>
+          <a :disabled="record['status'] === 1" href="javascript:;">查看</a>
           <a-divider type="vertical" />
           <a href="javascript:;" v-if="record['status'] === 0">禁用</a>
-          <a href="javascript:;" v-if="record['status'] !== 0">启用</a>
+          <a href="javascript:;" v-if="record['status'] === 1">启用</a>
           <a-divider type="vertical" />
         </span>
       </a-table>
@@ -38,7 +38,7 @@
 <script>
 import { getTargetObject } from '@/utils/tools'
 // import { patientsList } from '@/api/record_module/index'
-import { shcemeList } from '@/api/evaluation_module/index'
+import { shcemeList, planDisable } from '@/api/evaluation_module/index'
 const columns = [{
   title: '序号',
   dataIndex: 'index'
@@ -123,15 +123,6 @@ function shcemeListFilter (data) {
   }
   return shcemeList
 }
-// 依据patient信息中的uid,查询到对应后端数据中那一个患者数据，传到详情页面
-// 因为后端传回来的数据结构，所以要做数据过滤，未先定义好接口,responseData是回返数据中的patients
-// function patientDetails (uid, responseData) {
-//   for (let item = 0; item < responseData.length; item++) {
-//     if (responseData[item]['patient']['uid'] === uid) {
-//       return responseData[item]
-//     }
-//   }
-// }
 export default {
   data: function () {
     return {
@@ -179,9 +170,15 @@ export default {
     operate (event, record) {
       console.log('record_', record)
       const text = event.target.innerText
-      if (text === '编辑') {
+      if (text === '禁用' || text === '启用') {
+        planDisable({ uid: record['uid'] }).then((response) => {
+          console.log('text_', text)
+          record['status'] = record['status'] === 0 ? 1 : 0
+        })
+      };
+      if (text === '编辑' || text === '查看') {
         console.log('text_', text)
-        this.$router.push({// 你需要接受路由的参数再跳转，最终跳转是在main函数里面
+        this.$router.push({
           name: 'newScheme',
           params: {
             operate: text,
@@ -189,7 +186,6 @@ export default {
           }
         })
       }
-      if (text === '查看') { }
     },
     handleTableChange (pagination, filters, sorter) {
       // requst 数据整合
