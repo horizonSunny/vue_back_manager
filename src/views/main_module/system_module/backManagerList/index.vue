@@ -18,7 +18,7 @@
           @search="onSearch"
           class="float-left"
         />
-        <a-button type="primary" class="float-right marginLeft"
+        <a-button type="primary" class="float-right marginLeft" @click="newUser"
           >+新建后台用户</a-button
         >
         <a-button type="primary" class="float-right marginLeft"
@@ -130,7 +130,7 @@ const filterFields = {
 function userListFilter (data) {
   const userList = []
   for (let item = 0; item < data.length; item++) {
-    const listItem = Object.assign(data[item]['userRoles'][0], data[item], { organization: data[item]['organization']['title'],
+    const listItem = Object.assign(data[item]['userRoles'][0], data[item], {      organization: data[item]['organization']['title'],
       key: data[item]['uid'],
       index: item + 1
     })
@@ -178,10 +178,6 @@ export default {
           }
         })
       }
-      if (text === '查看') { }
-    },
-    onChange () {
-
     },
     handleTableChange (pagination, filters, sorter) {
       // requst 数据整合
@@ -231,6 +227,15 @@ export default {
       userQuery(filter).then((response) => {
         this.responseData = response.data.body.pageList
         this.userList = userListFilter(response.data.body.pageList)
+      })
+    },
+    newUser () {
+      this.$router.push({// 你需要接受路由的参数再跳转，最终跳转是在main函数里面
+        name: 'newBackUser',
+        params: {
+          operate: '新建',
+          info: ''
+        }
       })
     },
     test () {

@@ -53,49 +53,32 @@
           :label-col="{ span: 5 }"
           :wrapper-col="{ span: 12 }"
         >
-          <a-select
-            disabled
+          <a-input
             v-decorator="[
-              'gender',
+              'note',
               {
-                rules: [
-                  { required: true, message: 'Please select your gender!' }
-                ]
+                rules: [{ required: true, message: 'Please input your note!' }]
               }
             ]"
-            placeholder="Select a option and change input text above"
-          >
-            <a-select-option value="male">
-              male
-            </a-select-option>
-            <a-select-option value="female">
-              female
-            </a-select-option>
-          </a-select>
+          />
         </a-form-item>
         <a-form-item
           label="角色"
           :label-col="{ span: 5 }"
           :wrapper-col="{ span: 12 }"
         >
-          <a-select
+          <a-radio-group
             v-decorator="[
-              'gender',
+              'sex',
               {
-                rules: [
-                  { required: true, message: 'Please select your gender!' }
-                ]
+                initialValue: this.sex,
+                rules: [{ required: true, message: 'Please input your note!' }]
               }
             ]"
-            placeholder="Select a option and change input text above"
           >
-            <a-select-option value="male">
-              male
-            </a-select-option>
-            <a-select-option value="female">
-              female
-            </a-select-option>
-          </a-select>
+            <a-radio :value="1">女</a-radio>
+            <a-radio :value="0">男</a-radio>
+          </a-radio-group>
         </a-form-item>
         <a-form-item :wrapper-col="{ span: 12, offset: 5 }">
           <a-button @click="checkedInfo()">
