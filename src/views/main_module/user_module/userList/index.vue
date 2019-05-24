@@ -43,17 +43,17 @@
           slot-scope="text, record"
           @click.stop="operate($event, record)"
         >
-          <a :disabled="record['status'] === 0" href="javascript:;">编辑</a>
+          <a :disabled="record['status'] === 2" href="javascript:;">编辑</a>
           <a-divider type="vertical" />
-          <a :disabled="record['status'] === 0" href="javascript:;">查看</a>
+          <a :disabled="record['status'] === 2" href="javascript:;">查看</a>
           <a-divider type="vertical" />
           <a href="javascript:;" v-if="record['status'] === 1">禁用</a>
-          <a href="javascript:;" v-if="record['status'] === 0">启用</a>
+          <a href="javascript:;" v-if="record['status'] === 2">启用</a>
           <a-divider type="vertical" />
           <a
-            :disabled="record['status'] === 0"
+            :disabled="record['status'] === 2"
             href="javascript:;"
-            @click="showModal"
+            @click="showModal(record['uid'])"
             >同步数据</a
           >
         </span>
@@ -67,7 +67,7 @@
         @ok="handleOk"
       >
         <a-table
-          :rowSelection="rowSelection"
+          :rowSelection="rowSyncSelection"
           :columns="modalColumns"
           :dataSource="syncData"
           :pagination="false"
@@ -80,7 +80,7 @@
 </template>
 <script>
 import { getTargetObject } from '@/utils/tools'
-import { userList, exportUsers, exportTemplate } from '@/api/user_module/index'
+import { userList, exportUsers, exportTemplate, updateDoctorStatus } from '@/api/user_module/index'
 const columns = [{
   title: '姓名',
   dataIndex: 'fullname',
@@ -148,13 +148,7 @@ const modalColumns = [{
   dataIndex: 'recordsCount'
 }, {
   title: '状态',
-  dataIndex: 'status',
-  filterMultiple: false,
-  filters: [
-    { text: '不限', value: '' },
-    { text: '启用', value: '1' },
-    { text: '禁用', value: '0' }
-  ]
+  dataIndex: 'status'
 }]
 // mock 数据
 const data = []
@@ -190,11 +184,13 @@ export default {
     return {
       data,
       syncData: [],
+      syncDoctorUid: '',
       columns,
       modalColumns,
       pagination,
       filterFields,
       selectedRowKey: [],
+      selectedSyncRowKey: [],
       visible: false,
       responseData: {},
       headers: {
@@ -209,6 +205,21 @@ export default {
         onChange: (selectedRowKeys, selectedRows) => {
           console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows)
           _this.selectedRowKey = selectedRowKeys
+        },
+        getCheckboxProps: record => ({
+          props: {
+            disabled: record.name === 'Disabled User', // Column configuration not to be checked
+            name: record.name
+          }
+        })
+      }
+    },
+    rowSyncSelection () {
+      const _this = this
+      return {
+        onChange: (selectedRowKeys, selectedRows) => {
+          console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows)
+          _this.selectedSyncRowKey = selectedRowKeys
         },
         getCheckboxProps: record => ({
           props: {
@@ -265,10 +276,10 @@ export default {
       console.log('record_', record)
       const text = event.target.innerText
       if (text === '禁用' || text === '启用') {
-        // userDisable({ uid: record['uid'] }).then((response) => {
-        //   console.log('text_', text)
-        //   record['status'] = record['status'] === 1 ? 0 : 1
-        // })
+        updateDoctorStatus({ uid: 5, operation: 1 }).then((response) => {
+          console.log('text_', text)
+          record['status'] = record['status'] === 1 ? 2 : 1
+        })
       };
       if (text === '编辑') {
         console.log('text_', text)
@@ -282,16 +293,27 @@ export default {
       }
       if (text === '查看') { }
     },
-    showModal () {
+    showModal (uid) {
       console.log('this.data_', this.data)
+      console.log('this.uid_', uid)
+      this.syncDoctorUid = uid
       this.syncData = this.data.filter((item) => {
-        return item['status'] === 0
+        // return item['status'] === 2
+        return item['status'] === 2
       })
+      console.log('this.syncData_', this.syncData)
       this.visible = true
     },
-    handleOk (e) {
-      console.log(e)
-      this.visible = false
+    handleOk () {
+      console.log('this.selectedSyncRowKey_', this.selectedSyncRowKey)
+      console.log('this.syncDoctorUid_', this.syncDoctorUid)
+      // const data = {
+      //   formDoctorUids: this.selectedSyncRowKey,
+      //   toDoctorUid: this.syncDoctorUid
+      // }
+      // synchronousData(data).then((response) => {
+      //   this.visible = false
+      // })
     },
     exportTmp () {
       console.log(this.selectedRowKey)
