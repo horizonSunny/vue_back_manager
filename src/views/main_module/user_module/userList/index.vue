@@ -8,7 +8,12 @@
         class="float-left"
       />
       <a-button type="primary" class="float-right marginLeft">+新建</a-button>
-      <a-button type="primary" class="float-right marginLeft">+导出</a-button>
+      <a-button
+        type="primary"
+        @click="exportUser"
+        class="float-right marginLeft"
+        >+导出</a-button
+      >
       <!-- <a-button type="primary" class="float-right marginLeft">导入</a-button> -->
       <a-upload
         class="float-right marginLeft"
@@ -20,7 +25,7 @@
       >
         <a-button type="primary">导入</a-button>
       </a-upload>
-      <a-button type="primary" class="float-right marginLeft"
+      <a-button type="primary" @click="exportTmp" class="float-right marginLeft"
         >下载模版</a-button
       >
       <div class="clear-both"></div>
@@ -42,8 +47,8 @@
           <a-divider type="vertical" />
           <a :disabled="record['status'] === 0" href="javascript:;">查看</a>
           <a-divider type="vertical" />
-          <a href="javascript:;" v-if="record['status'] === 0">禁用</a>
-          <a href="javascript:;" v-if="record['status'] !== 0">启用</a>
+          <a href="javascript:;" v-if="record['status'] === 1">禁用</a>
+          <a href="javascript:;" v-if="record['status'] === 0">启用</a>
           <a-divider type="vertical" />
           <a
             :disabled="record['status'] === 0"
@@ -64,7 +69,7 @@
         <a-table
           :rowSelection="rowSelection"
           :columns="modalColumns"
-          :dataSource="data"
+          :dataSource="syncData"
           :pagination="false"
         >
           <a slot="name" slot-scope="text" href="javascript:;">{{ text }}</a>
@@ -75,7 +80,7 @@
 </template>
 <script>
 import { getTargetObject } from '@/utils/tools'
-import { userList } from '@/api/user_module/index'
+import { userList, exportUsers, exportTemplate } from '@/api/user_module/index'
 const columns = [{
   title: '姓名',
   dataIndex: 'fullname',
@@ -184,10 +189,12 @@ export default {
   data: function () {
     return {
       data,
+      syncData: [],
       columns,
       modalColumns,
       pagination,
       filterFields,
+      selectedRowKey: [],
       visible: false,
       responseData: {},
       headers: {
@@ -197,10 +204,11 @@ export default {
   },
   computed: {
     rowSelection () {
-      // const { selectedRowKeys } = this
+      const _this = this
       return {
         onChange: (selectedRowKeys, selectedRows) => {
           console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows)
+          _this.selectedRowKey = selectedRowKeys
         },
         getCheckboxProps: record => ({
           props: {
@@ -256,6 +264,12 @@ export default {
     operate (event, record) {
       console.log('record_', record)
       const text = event.target.innerText
+      if (text === '禁用' || text === '启用') {
+        // userDisable({ uid: record['uid'] }).then((response) => {
+        //   console.log('text_', text)
+        //   record['status'] = record['status'] === 1 ? 0 : 1
+        // })
+      };
       if (text === '编辑') {
         console.log('text_', text)
         this.$router.push({// 你需要接受路由的参数再跳转，最终跳转是在main函数里面
@@ -269,11 +283,30 @@ export default {
       if (text === '查看') { }
     },
     showModal () {
+      console.log('this.data_', this.data)
+      this.syncData = this.data.filter((item) => {
+        return item['status'] === 0
+      })
       this.visible = true
     },
     handleOk (e) {
       console.log(e)
       this.visible = false
+    },
+    exportTmp () {
+      console.log(this.selectedRowKey)
+      exportTemplate().then(res => {
+        let blob = new Blob([res], { type: 'application/vnd.ms-excel' })
+        let objectUrl = URL.createObjectURL(blob)
+        window.location.href = objectUrl
+      })
+    },
+    exportUser () {
+      exportUsers({ doctorIds: this.selectedRowKey }).then(res => {
+        let blob = new Blob([res], { type: 'application/vnd.ms-excel' })
+        let objectUrl = URL.createObjectURL(blob)
+        window.location.href = objectUrl
+      })
     },
     upLoad () { }
   },

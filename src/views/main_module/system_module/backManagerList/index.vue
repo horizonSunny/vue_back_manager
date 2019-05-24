@@ -165,7 +165,7 @@ export default {
       if (text === '禁用' || text === '启用') {
         userDisable({ uid: record['uid'] }).then((response) => {
           console.log('text_', text)
-          record['status'] = record['status'] === 1 ? 2 : 1
+          record['status'] = record['status'] === 1 ? 0 : 1
         })
       };
       if (text === '编辑' || text === '查看') {

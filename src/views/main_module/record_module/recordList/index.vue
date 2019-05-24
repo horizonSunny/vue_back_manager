@@ -207,13 +207,6 @@ export default {
         onChange: (selectedRowKeys, selectedRows) => {
           console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows)
           _this.selectedRowKey = selectedRowKeys
-
-          // const data = { 'patientIds': selectedRowKeys }
-          // exportPatient(data).then((response) => {
-          //   this.responseData = response.data.body.patients
-          //   this.data = patientListFilter(response.data.body.patients)
-          //   this.pagination.total = response.data.body.totalElements
-          // })
         },
         getCheckboxProps: record => ({
           props: {
