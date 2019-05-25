@@ -62,8 +62,19 @@
         >
           <a-cascader
             :options="options"
-            @change="onChange"
-            placeholder="Please select"
+            v-decorator="[
+              'hospitalName',
+              {
+                initialValue: hospitalName,
+                rules: [
+                  {
+                    type: 'array',
+                    required: true,
+                    message: 'Please select your habitual residence!'
+                  }
+                ]
+              }
+            ]"
           />
         </a-form-item>
         <a-form-item

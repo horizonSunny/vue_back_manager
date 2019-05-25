@@ -130,7 +130,7 @@ const filterFields = {
 function userListFilter (data) {
   const userList = []
   for (let item = 0; item < data.length; item++) {
-    const listItem = Object.assign(data[item]['userRoles'][0], data[item], {      organization: data[item]['organization']['title'],
+    const listItem = Object.assign(data[item]['userRoles'][0], data[item], { organization: data[item]['organization']['title'],
       key: data[item]['uid'],
       index: item + 1
     })

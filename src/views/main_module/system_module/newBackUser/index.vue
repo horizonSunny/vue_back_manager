@@ -14,10 +14,19 @@
         >
           <a-cascader
             :options="options"
-            :displayRender="displayRender"
-            @change="onChange"
-            changeOnSelect
-            :defaultValue="defaultDepartment"
+            v-decorator="[
+              'orgId',
+              {
+                initialValue: this.orgId,
+                rules: [
+                  {
+                    type: 'array',
+                    required: true,
+                    message: 'Please select your habitual residence!'
+                  }
+                ]
+              }
+            ]"
           />
         </a-form-item>
         <a-form-item
@@ -27,8 +36,9 @@
         >
           <a-input
             v-decorator="[
-              'note',
+              'fullname',
               {
+                initialValue: this.fullname,
                 rules: [{ required: true, message: 'Please input your note!' }]
               }
             ]"
@@ -41,8 +51,9 @@
         >
           <a-input
             v-decorator="[
-              'note',
+              'mobilenumber',
               {
+                initialValue: this.mobilenumber,
                 rules: [{ required: true, message: 'Please input your note!' }]
               }
             ]"
@@ -55,8 +66,9 @@
         >
           <a-input
             v-decorator="[
-              'note',
+              'email',
               {
+                initialValue: this.email,
                 rules: [{ required: true, message: 'Please input your note!' }]
               }
             ]"
@@ -69,15 +81,16 @@
         >
           <a-radio-group
             v-decorator="[
-              'sex',
+              'roleIds',
               {
-                initialValue: this.sex,
+                initialValue: this.roleIds,
                 rules: [{ required: true, message: 'Please input your note!' }]
               }
             ]"
           >
-            <a-radio :value="1">女</a-radio>
-            <a-radio :value="0">男</a-radio>
+            <a-radio :value="0">项目经理</a-radio>
+            <a-radio :value="1">销售经理</a-radio>
+            <a-radio :value="2">市场经理</a-radio>
           </a-radio-group>
         </a-form-item>
         <a-form-item :wrapper-col="{ span: 12, offset: 5 }">
@@ -95,6 +108,7 @@
 </template>
 <script>
 import { mapGetters } from 'vuex'
+import { userInsert, userUpdate } from '@/api/system_moudle/index'
 // 涌来循环options，添加label 和 value 值
 function selectOptions (source) {
   var sourceCopy = source instanceof Array ? [] : {}
@@ -114,10 +128,15 @@ export default {
     return {
       form: this.$form.createForm(this),
       operate: this.$route.params.operate,
-      checked: true,
-      hasChecked: [],
       options: [],
-      defaultDepartment: ['zhejiang', 'hangzhou']
+      email: this.$route.params['info']['email'] || '',
+      fullname: this.$route.params['info']['fullname'] || '',
+      mobilenumber: this.$route.params['info']['mobilenumber'] || '',
+      // 找不到
+      orgId: this.$route.params['info']['orgId'] || [],
+      roleIds: this.$route.params['info']['roleIds'] || '',
+      // 上面两个
+      uid: this.$route.params['info']['uid'] || ''
     }
   },
   computed: {
@@ -132,23 +151,31 @@ export default {
     onChange (value) {
       console.log(value)
     },
-    handleSubmit () { },
+    handleSubmit (e) {
+      e.preventDefault()
+      let backUser = {}
+      this.form.validateFieldsAndScroll((err, values) => {
+        if (!err) {
+          console.log('Received values of form: ', values)
+          Object.assign(backUser, values)
+        }
+      })
+      if (this.operate === '新建') {
+        userInsert(backUser).then((res) => { })
+      }
+      if (this.operate === '编辑') {
+        const updata = Object.assign(backUser, { uid: this.$route.params['info']['uid'] })
+        userUpdate(updata).then((res) => { })
+      }
+    },
     displayRender ({ labels }) {
       return labels[labels.length - 1]
     }
   },
   created () {
     this.options = selectOptions(this.organization)
+    console.log('this.$route.params_', this.$route.params['info'])
   }
-  // beforeRouteEnter (to, from, next) {
-  //   roleList().then((response) => {
-  //     next(vm => {
-  //       vm.responseData = response.data.body
-  //       vm.data = roleListFilter(response.data.body)
-  //       console.log('vm.responseData_', vm.responseData)
-  //     })
-  //   })
-  // }
 }
 </script>
 <style lang="scss">
