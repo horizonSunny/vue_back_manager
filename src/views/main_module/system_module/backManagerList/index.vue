@@ -153,7 +153,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['organization', 'user'])
+    ...mapGetters(['organization', 'user', 'hospitals'])
   },
   methods: {
     onShowSizeChange (current, pageSize) {
@@ -170,6 +170,7 @@ export default {
       };
       if (text === '编辑' || text === '查看') {
         console.log('text_', text)
+        record['orgId'] = this.orgId
         this.$router.push({// 你需要接受路由的参数再跳转，最终跳转是在main函数里面
           name: 'newBackUser',
           params: {
@@ -234,7 +235,9 @@ export default {
         name: 'newBackUser',
         params: {
           operate: '新建',
-          info: ''
+          info: {
+            orgId: this.orgId
+          }
         }
       })
     },
