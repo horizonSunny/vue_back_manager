@@ -7,135 +7,159 @@
     </div>
     <div class="content">
       <a-row>
-        <a-col class="marginTop" :span="20">
-          <span>*角色名称：</span>
-          <a-input
-            class="roleWidth"
-            v-decorator="[
-              'roleName',
-              {
-                initialValue: 'this.roleName',
-                rules: [{ required: true, message: 'Please input your note!' }]
-              }
-            ]"
-          />
-        </a-col>
-        <a-col class="marginTop" :span="20">
-          <span>*角色描述：</span>
-          <a-textarea
-            class="roleWidth"
-            v-decorator="[
-              'description',
-              {
-                initialValue: this.description,
-                rules: [{ required: true, message: 'Please input your note!' }]
-              }
-            ]"
-          />
-        </a-col>
-        <a-col class="marginTop tableLeft" :span="20">
-          <span>*分配权限：</span>
-          <!-- <span class="tableWidth"> -->
-          <a-checkbox-group
-            :value="hasChecked"
-            class="tableWidth"
-            @change="onChange"
+        <a-form :form="form" @submit="handleSubmit">
+          <a-form-item
+            label="角色名称"
+            :label-col="{ span: 5 }"
+            :wrapper-col="{ span: 12 }"
           >
-            <table style="text-align: center;width:100%">
-              <thead>
-                <tr>
-                  <th>一级模块</th>
-                  <th>二级模块</th>
-                  <th>三级模块</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>
-                    <a-checkbox value="1">患者档案</a-checkbox>
-                  </td>
-                  <td>
-                    <a-checkbox value="11">档案列表</a-checkbox>
-                  </td>
-                  <td>
-                    <a-checkbox value="111">基本信息</a-checkbox>
-                    <a-checkbox value="112">测评报告</a-checkbox>
-                    <a-checkbox value="113">导出</a-checkbox>
-                  </td>
-                </tr>
-                <tr>
-                  <td rowspan="2">
-                    <a-checkbox value="2">量表管理</a-checkbox>
-                  </td>
-                  <td>
-                    <a-checkbox value="21">测评量表</a-checkbox>
-                  </td>
-                  <td>
-                    <a-checkbox value="211">新建测评</a-checkbox>
-                    <a-checkbox value="212">编辑</a-checkbox>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <a-checkbox value="22">方案管理</a-checkbox>
-                  </td>
-                  <td>
-                    <a-checkbox value="221">新建测评方案</a-checkbox>
-                    <a-checkbox value="222">编辑</a-checkbox>
-                    <a-checkbox value="223">查看</a-checkbox>
-                    <a-checkbox value="224">禁用</a-checkbox>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <a-checkbox value="3">用户管理</a-checkbox>
-                  </td>
-                  <td>
-                    <a-checkbox value="31">脑健康师管理</a-checkbox>
-                  </td>
-                  <td>
-                    <a-checkbox value="311">导入</a-checkbox>
-                    <a-checkbox value="312">导出</a-checkbox>
-                    <a-checkbox value="313">新建</a-checkbox>
-                    <a-checkbox value="314">编辑</a-checkbox>
-                    <a-checkbox value="315">查看</a-checkbox>
-                    <a-checkbox value="316">禁用</a-checkbox>
-                    <a-checkbox value="317">同步数据</a-checkbox>
-                  </td>
-                </tr>
-                <tr>
-                  <td rowspan="2">
-                    <a-checkbox value="4">量表管理</a-checkbox>
-                  </td>
-                  <td>
-                    <a-checkbox value="41">角色管理</a-checkbox>
-                  </td>
-                  <td>
-                    <a-checkbox value="411">新增角色</a-checkbox>
-                    <a-checkbox value="412">编辑</a-checkbox>
-                    <a-checkbox value="413">查看</a-checkbox>
-                    <a-checkbox value="414">禁用</a-checkbox>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <a-checkbox value="42">后台用户</a-checkbox>
-                  </td>
-                  <td>
-                    <a-checkbox value="421">新建后台用户</a-checkbox>
-                    <a-checkbox value="422">编辑</a-checkbox>
-                    <a-checkbox value="423">查看</a-checkbox>
-                    <a-checkbox value="424">禁用</a-checkbox>
-                    <a-checkbox value="425">编辑部门</a-checkbox>
-                    <a-checkbox value="426">添加部门</a-checkbox>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </a-checkbox-group>
-          <a-checkbox @change="checkAll">全选</a-checkbox>
-          <!-- </span> -->
-        </a-col>
+            <a-input
+              v-decorator="[
+                'roleName',
+                {
+                  initialValue: 'this.roleName',
+                  rules: [
+                    { required: true, message: 'Please input your note!' }
+                  ]
+                }
+              ]"
+            />
+          </a-form-item>
+          <a-form-item
+            label="角色名称"
+            :label-col="{ span: 5 }"
+            :wrapper-col="{ span: 12 }"
+          >
+            <a-textarea
+              class="roleWidth"
+              v-decorator="[
+                'description',
+                {
+                  initialValue: this.description,
+                  rules: [
+                    { required: true, message: 'Please input your note!' }
+                  ]
+                }
+              ]"
+            />
+          </a-form-item>
+          <a-form-item
+            label="角色名称"
+            :label-col="{ span: 5 }"
+            :wrapper-col="{ span: 12 }"
+          >
+            <!-- <span class="tableWidth"> -->
+            <a-checkbox-group
+              :value="hasChecked"
+              class="tableWidth"
+              style="width:150%"
+              @change="onChange"
+            >
+              <table style="text-align: center;width:100%">
+                <thead>
+                  <tr>
+                    <th>一级模块</th>
+                    <th>二级模块</th>
+                    <th>三级模块</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>
+                      <a-checkbox value="1">患者档案</a-checkbox>
+                    </td>
+                    <td>
+                      <a-checkbox value="11">档案列表</a-checkbox>
+                    </td>
+                    <td>
+                      <a-checkbox value="111">基本信息</a-checkbox>
+                      <a-checkbox value="112">测评报告</a-checkbox>
+                      <a-checkbox value="113">导出</a-checkbox>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td rowspan="2">
+                      <a-checkbox value="2">量表管理</a-checkbox>
+                    </td>
+                    <td>
+                      <a-checkbox value="21">测评量表</a-checkbox>
+                    </td>
+                    <td>
+                      <a-checkbox value="211">新建测评</a-checkbox>
+                      <a-checkbox value="212">编辑</a-checkbox>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <a-checkbox value="22">方案管理</a-checkbox>
+                    </td>
+                    <td>
+                      <a-checkbox value="221">新建测评方案</a-checkbox>
+                      <a-checkbox value="222">编辑</a-checkbox>
+                      <a-checkbox value="223">查看</a-checkbox>
+                      <a-checkbox value="224">禁用</a-checkbox>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <a-checkbox value="3">用户管理</a-checkbox>
+                    </td>
+                    <td>
+                      <a-checkbox value="31">脑健康师管理</a-checkbox>
+                    </td>
+                    <td>
+                      <a-checkbox value="311">导入</a-checkbox>
+                      <a-checkbox value="312">导出</a-checkbox>
+                      <a-checkbox value="313">新建</a-checkbox>
+                      <a-checkbox value="314">编辑</a-checkbox>
+                      <a-checkbox value="315">查看</a-checkbox>
+                      <a-checkbox value="316">禁用</a-checkbox>
+                      <a-checkbox value="317">同步数据</a-checkbox>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td rowspan="2">
+                      <a-checkbox value="4">量表管理</a-checkbox>
+                    </td>
+                    <td>
+                      <a-checkbox value="41">角色管理</a-checkbox>
+                    </td>
+                    <td>
+                      <a-checkbox value="411">新增角色</a-checkbox>
+                      <a-checkbox value="412">编辑</a-checkbox>
+                      <a-checkbox value="413">查看</a-checkbox>
+                      <a-checkbox value="414">禁用</a-checkbox>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <a-checkbox value="42">后台用户</a-checkbox>
+                    </td>
+                    <td>
+                      <a-checkbox value="421">新建后台用户</a-checkbox>
+                      <a-checkbox value="422">编辑</a-checkbox>
+                      <a-checkbox value="423">查看</a-checkbox>
+                      <a-checkbox value="424">禁用</a-checkbox>
+                      <a-checkbox value="425">编辑部门</a-checkbox>
+                      <a-checkbox value="426">添加部门</a-checkbox>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </a-checkbox-group>
+            <a-checkbox @change="checkAll">全选</a-checkbox>
+          </a-form-item>
+          <a-form-item :wrapper-col="{ span: 12, offset: 5 }">
+            <a-button @click="checkedInfo()">
+              取消
+            </a-button>
+            <span style="display:inline-block;width:10%"></span>
+            <a-button type="primary" html-type="submit">
+              保存
+            </a-button>
+          </a-form-item>
+        </a-form>
+        <!-- 下面 -->
       </a-row>
     </div>
   </div>
@@ -181,6 +205,7 @@ function getPermission (permission, arr) {
 export default {
   data: function () {
     return {
+      form: this.$form.createForm(this),
       operate: this.$route.params.operate,
       checked: true,
       hasChecked: [],
@@ -234,7 +259,8 @@ export default {
       } else {
         this.$router.back(-1)
       }
-    }
+    },
+    handleSubmit () { }
   },
   created () {
     //  console.log('this.hospitals_', this.hospitals)
@@ -283,30 +309,27 @@ export default {
       width: 70%;
       vertical-align: middle;
     }
-    table {
-      border: 1px solid #ddd;
-      tr td {
-        border: 1px solid #ddd;
-        word-wrap: break-word;
-        word-break: break-all;
-        overflow: hidden;
-      }
-      td {
-        max-width: 150px;
-        padding-left: 20px;
-        .ant-checkbox-wrapper {
-          float: left;
-        }
-      }
-    }
     .tableWidth {
-      width: 85%;
+      width: 150%;
       vertical-align: middle;
       display: inline-block;
     }
   }
-  .tableLeft {
-    margin-left: 6%;
+  table {
+    border: 1px solid #ddd;
+    tr td {
+      border: 1px solid #ddd;
+      word-wrap: break-word;
+      word-break: break-all;
+      overflow: hidden;
+    }
+    td {
+      max-width: 150px;
+      padding-left: 20px;
+      .ant-checkbox-wrapper {
+        float: left;
+      }
+    }
   }
 }
 </style>

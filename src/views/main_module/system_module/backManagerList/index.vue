@@ -261,6 +261,7 @@ export default {
   },
   beforeRouteEnter (to, from, next) {
     const organization = store.getters.user['organization']
+    console.log('organization_backManager_', organization)
     const org = {
       orgId: organization['key']
     }

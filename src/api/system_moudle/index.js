@@ -7,6 +7,9 @@ import { queryHospitals } from './queryHospitals'
 import { userInsert } from './userInsert'
 import { userUpdate } from './userUpdate'
 import { roleDisable } from './roleDisable'
+
+import { roleInsert } from './roleInsert'
+import { roleUpdate } from './roleUpdate'
 export {
   roleList,
   orgQuery,
@@ -16,5 +19,7 @@ export {
   queryHospitals,
   userInsert,
   userUpdate,
-  roleDisable
+  roleDisable,
+  roleInsert,
+  roleUpdate
 }

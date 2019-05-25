@@ -113,8 +113,12 @@ import { userInsert, userUpdate } from '@/api/system_moudle/index'
 function selectOptions (source) {
   var sourceCopy = source instanceof Array ? [] : {}
   if (Array.isArray(sourceCopy)) { } else {
-    source = Object.assign(source, { value: source['key'],
-      label: source['title'] })
+    if (source) {
+      source = Object.assign(source, { value: source['key'],
+        label: source['title'] })
+    } else {
+      return
+    }
   }
 
   for (var item in source) {
@@ -133,7 +137,8 @@ export default {
       fullname: this.$route.params['info']['fullname'] || '',
       mobilenumber: this.$route.params['info']['mobilenumber'] || '',
       // 找不到
-      orgId: this.$route.params['info']['orgId'] || [],
+      // orgId: this.$route.params['info']['orgId'] || [],
+      orgId: [],
       roleIds: this.$route.params['info']['roleIds'] || '',
       // 上面两个
       uid: this.$route.params['info']['uid'] || ''
@@ -173,7 +178,9 @@ export default {
     }
   },
   created () {
+    console.log('organization_backManager_1', this.organization)
     this.options = selectOptions(this.organization)
+    console.log('organization_backManager_2', this.organization)
     console.log('this.$route.params_', this.$route.params['info'])
   }
 }

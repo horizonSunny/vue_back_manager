@@ -85,8 +85,12 @@ import { } from '@/api/system_moudle/index'
 function selectOptions (source) {
   var sourceCopy = source instanceof Array ? [] : {}
   if (Array.isArray(sourceCopy)) { } else {
-    source = Object.assign(source, { value: source['key'],
-      label: source['title'] })
+    if (source) {
+      source = Object.assign(source, { value: source['key'],
+        label: source['title'] })
+    } else {
+      return
+    }
   }
 
   for (var item in source) {
@@ -113,7 +117,8 @@ export default {
       form: this.$form.createForm(this),
       operate: this.$route.params.operate,
       options: [],
-      hospitalOptions: []
+      hospitalOptions: [],
+      parentOrgId: []
     }
   },
   computed: {
