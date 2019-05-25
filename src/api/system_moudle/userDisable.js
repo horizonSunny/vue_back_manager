@@ -1,9 +1,9 @@
 import http from '@/utils/http'
 
-export function userDisable (query) {
+export function userDisable (data) {
   return http({
     url: 'rest/backend/user/disable',
-    method: 'get',
-    params: query
+    method: 'post',
+    data: data
   })
 }

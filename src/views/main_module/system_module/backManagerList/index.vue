@@ -169,7 +169,7 @@ export default {
       console.log('record_', record)
       const text = event.target.innerText
       if (text === '禁用' || text === '启用') {
-        userDisable({ uid: record['uid'] }).then((response) => {
+        userDisable({ uid: record['uid'], status: record['status'] === 1 ? 0 : 1 }).then((response) => {
           console.log('text_', text)
           record['status'] = record['status'] === 1 ? 0 : 1
         })

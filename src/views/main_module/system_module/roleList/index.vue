@@ -115,7 +115,7 @@ export default {
       const text = event.target.innerText
       if (text === '禁用' || text === '启用') {
         console.log('text_', text)
-        roleDisable({ uid: record['uid'] }).then((response) => {
+        roleDisable({ uid: record['uid'], status: record['status'] === 1 ? 0 : 1 }).then((response) => {
           console.log('text_', text)
           record['status'] = record['status'] === 1 ? 0 : 1
         })

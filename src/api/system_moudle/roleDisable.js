@@ -1,9 +1,9 @@
 import http from '@/utils/http'
 
-export function roleDisable (query) {
+export function roleDisable (data) {
   return http({
     url: 'rest/backend/role/disable',
-    method: 'get',
-    params: query
+    method: 'post',
+    data: data
   })
 }
