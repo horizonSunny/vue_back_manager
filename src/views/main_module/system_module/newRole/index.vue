@@ -1,25 +1,36 @@
 <template>
   <div>
     <div class="titleContent">
-      <a class="float-left goBack" href="">返回</a>
-      <span class="float-left patientInfo" @click="test"
-        >{{ operate }}角色
-      </span>
+      <a class="float-left goBack" @click="reback">返回</a>
+      <span class="float-left patientInfo">{{ operate }}角色 </span>
       <div class="clear-both"></div>
     </div>
     <div class="content">
       <a-row>
         <a-col class="marginTop" :span="20">
           <span>*角色名称：</span>
-          <a-input class="roleWidth" placeholder="Basic usage" />
+          <a-input
+            class="roleWidth"
+            v-decorator="[
+              'roleName',
+              {
+                initialValue: 'this.roleName',
+                rules: [{ required: true, message: 'Please input your note!' }]
+              }
+            ]"
+          />
         </a-col>
         <a-col class="marginTop" :span="20">
           <span>*角色描述：</span>
           <a-textarea
-            style="vertical-align: middle;"
             class="roleWidth"
-            placeholder="Basic usage"
-            :rows="4"
+            v-decorator="[
+              'description',
+              {
+                initialValue: this.description,
+                rules: [{ required: true, message: 'Please input your note!' }]
+              }
+            ]"
           />
         </a-col>
         <a-col class="marginTop tableLeft" :span="20">
@@ -158,12 +169,24 @@ function splitString (str, arr) {
 function removeDuplicateItems (arr) {
   return [...new Set(arr)]
 }
+// 依据permission数据结构获取permission,三层数据结构
+function getPermission (permission, arr) {
+  for (let item = 0; item < permission.length; item++) {
+    arr.push(permission[item]['permissionIdentify'])
+    if (permission[item]['children']['length'] !== 0) {
+      getPermission(permission[item]['children'], arr)
+    }
+  }
+}
 export default {
   data: function () {
     return {
       operate: this.$route.params.operate,
       checked: true,
-      hasChecked: []
+      hasChecked: [],
+
+      description: this.$route.params['info']['description'] || '31312312',
+      roleName: this.$route.params['info']['roleName'] || ''
     }
   },
   methods: {
@@ -205,11 +228,24 @@ export default {
         this.hasChecked = []
       }
     },
-    test () {
-      const test = '1234'
-      const length = test.length
-      console.log('length_', length)
+    reback () {
+      if (this.$route.query.goindex === 'true') {
+        this.$router.push('/')
+      } else {
+        this.$router.back(-1)
+      }
     }
+  },
+  created () {
+    //  console.log('this.hospitals_', this.hospitals)
+    // this.options = this.hospitals
+    const permission = this.$route.params['info']['permissions']
+    let arr = []
+    getPermission(permission, arr)
+    // permissions获参
+    this.hasChecked = arr
+    console.log('this.$route.params_', this.$route.params)
+    console.log('arr_', arr)
   }
 }
 </script>

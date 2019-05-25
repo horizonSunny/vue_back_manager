@@ -10,6 +10,9 @@
 import zhCN from 'ant-design-vue/lib/locale-provider/zh_CN'
 export default {
   name: 'App',
+  activated: function () {
+    this.$setgoindex()
+  },
   data () {
     return {
       locale: zhCN
