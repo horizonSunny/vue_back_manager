@@ -17,7 +17,7 @@
               v-decorator="[
                 'roleName',
                 {
-                  initialValue: 'this.roleName',
+                  initialValue: this.roleName,
                   rules: [
                     { required: true, message: 'Please input your note!' }
                   ]
@@ -166,6 +166,7 @@
 </template>
 <script>
 import { permission } from '../permissionUid'
+import { roleInsert, roleUpdate } from '@/api/system_moudle/index'
 // 比较两个数组元素，获取不同的值
 function getArrDifference (arr1, arr2) {
   return arr1.concat(arr2).filter(function (v, i, arr) {
@@ -210,7 +211,7 @@ export default {
       checked: true,
       hasChecked: [],
 
-      description: this.$route.params['info']['description'] || '31312312',
+      description: this.$route.params['info']['description'] || '',
       roleName: this.$route.params['info']['roleName'] || ''
     }
   },
@@ -260,7 +261,34 @@ export default {
         this.$router.back(-1)
       }
     },
-    handleSubmit () { }
+    handleSubmit (e) {
+      e.preventDefault()
+      let roleUser = {}
+      this.form.validateFieldsAndScroll((err, values) => {
+        if (!err) {
+          console.log('Received values of form: ', values)
+          Object.assign(roleUser, values)
+        }
+      })
+      let permissionChecked = []
+      this.hasChecked.filter((item) => {
+        const allPermissions = Object.keys(permission)
+        if (allPermissions.indexOf(item) !== -1) {
+          // console.log('permission[item]_', permission[item])
+          permissionChecked.push(permission[item])
+        }
+      })
+      roleUser.permissions = permissionChecked
+      console.log('permissions_', permissionChecked)
+      console.log('roleUser_', roleUser)
+      if (this.operate === '新建') {
+        roleInsert(roleUser).then((res) => { })
+      }
+      if (this.operate === '编辑') {
+        const updata = Object.assign(roleUser, { uid: this.$route.params['info']['uid'] })
+        roleUpdate(updata).then((res) => { })
+      }
+    }
   },
   created () {
     //  console.log('this.hospitals_', this.hospitals)

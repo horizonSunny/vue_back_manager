@@ -7,7 +7,9 @@
         @search="onSearch"
         class="float-left"
       /> -->
-      <a-button type="primary" class="float-right">+新增角色</a-button>
+      <a-button type="primary" @click="newRoleUser" class="float-right"
+        >+新增角色</a-button
+      >
       <div class="clear-both"></div>
     </div>
     <div class="main_content">
@@ -129,6 +131,15 @@ export default {
         })
       }
       if (text === '查看') { }
+    },
+    newRoleUser () {
+      this.$router.push({// 你需要接受路由的参数再跳转，最终跳转是在main函数里面
+        name: 'newRole',
+        params: {
+          operate: '新建',
+          info: ''
+        }
+      })
     }
   },
   beforeRouteEnter (to, from, next) {
