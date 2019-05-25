@@ -31,7 +31,7 @@
   </div>
 </template>
 <script>
-import { roleList } from '@/api/system_moudle/index'
+import { roleList, roleDisable } from '@/api/system_moudle/index'
 const columns = [
   {
     title: '序号',
@@ -113,7 +113,10 @@ export default {
       const text = event.target.innerText
       if (text === '禁用' || text === '启用') {
         console.log('text_', text)
-        record['status'] = record['status'] === 0 ? 1 : 0
+        roleDisable({ uid: record['uid'] }).then((response) => {
+          console.log('text_', text)
+          record['status'] = record['status'] === 1 ? 0 : 1
+        })
       };
       if (text === '编辑' || text === '查看') {
         console.log('text_', text)

@@ -96,9 +96,17 @@ function selectOptions (source) {
   return sourceCopy
 }
 // 依据传过来的组织结构获取父级部门及当前部门，生成一个数组
-function queryParentOrg (orgId, orgization) {
-
-}
+// function queryParentOrg (orgId, orgization) {
+//   const arr = []
+//   for (let item = 0; item < orgization.length; item++) {
+//     if (orgization[item]['value'] === orgId) {
+//       arr.push(orgization[item]['value'])
+//       return arr
+//     } else {
+//       queryParentOrg(orgId, orgization[item]['children'])
+//     }
+//   }
+// }
 export default {
   data: function () {
     return {

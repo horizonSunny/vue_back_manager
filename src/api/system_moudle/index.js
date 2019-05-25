@@ -6,6 +6,7 @@ import { cityQuery } from './cityQuery'
 import { queryHospitals } from './queryHospitals'
 import { userInsert } from './userInsert'
 import { userUpdate } from './userUpdate'
+import { roleDisable } from './roleDisable'
 export {
   roleList,
   orgQuery,
@@ -14,5 +15,6 @@ export {
   cityQuery,
   queryHospitals,
   userInsert,
-  userUpdate
+  userUpdate,
+  roleDisable
 }
