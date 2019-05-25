@@ -21,10 +21,16 @@
         <a-button type="primary" class="float-right marginLeft" @click="newUser"
           >+新建后台用户</a-button
         >
-        <a-button type="primary" class="float-right marginLeft"
+        <a-button
+          type="primary"
+          class="float-right marginLeft"
+          @click="operateDepartment('添加')"
           >+添加部门</a-button
         >
-        <a-button type="primary" @click="test" class="float-right marginLeft"
+        <a-button
+          type="primary"
+          class="float-right marginLeft"
+          @click="operateDepartment('编辑')"
           >编辑部门</a-button
         >
         <div class="clear-both"></div>
@@ -220,7 +226,8 @@ export default {
       })
     },
     onSelect (selectedKeys, info) {
-      console.log('selectedKeys_', selectedKeys)
+      this.orgId = selectedKeys[0]
+      console.log('selectedKeys_', this.orgId)
       const org = {
         orgId: selectedKeys[0]
       }
@@ -241,12 +248,13 @@ export default {
         }
       })
     },
-    test () {
+    operateDepartment (operate) {
       console.log('this.user_', this.user)
       this.$router.push({// 你需要接受路由的参数再跳转，最终跳转是在main函数里面
         name: 'newDepartment',
         params: {
-          operate: '编辑'
+          operate: operate,
+          orgId: this.orgId
         }
       })
     }
@@ -262,9 +270,8 @@ export default {
       next(vm => {
         vm.responseData = response.data.body.pageList
         vm.userList = userListFilter(response.data.body.pageList)
+        vm.orgId = organization['key']
         console.log('vm.responseData_', vm.userList)
-        // vm.data = roleListFilter(response.data.body)
-        // console.log('vm.responseData_', vm.responseData)
       })
     })
   }

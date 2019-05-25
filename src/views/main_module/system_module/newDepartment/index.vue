@@ -14,7 +14,7 @@
         >
           <a-input
             v-decorator="[
-              'evaluationName',
+              'orgName',
               {
                 rules: [{ required: true, message: 'Please input your note!' }]
               }
@@ -26,25 +26,21 @@
           :label-col="{ span: 5 }"
           :wrapper-col="{ span: 12 }"
         >
-          <a-input
+          <a-cascader
+            :options="options"
             v-decorator="[
-              'evaluationName',
+              'parentOrgId',
               {
-                rules: [{ required: true, message: 'Please input your note!' }]
+                initialValue: this.parentOrgId,
+                rules: [
+                  {
+                    type: 'array',
+                    required: true,
+                    message: 'Please select your habitual residence!'
+                  }
+                ]
               }
             ]"
-          />
-        </a-form-item>
-        <a-form-item
-          label="地区"
-          :label-col="{ span: 5 }"
-          :wrapper-col="{ span: 12 }"
-        >
-          <a-cascader
-            :options="cityData"
-            @change="onChange"
-            changeOnSelect
-            :defaultValue="['1040000', '1040300']"
           />
         </a-form-item>
         <a-form-item
@@ -52,24 +48,22 @@
           :label-col="{ span: 5 }"
           :wrapper-col="{ span: 12 }"
         >
-          <a-select
+          <a-cascader
+            :options="hospitalOptions"
             v-decorator="[
-              'gender',
+              'hospitals',
               {
+                initialValue: this.hospitals,
                 rules: [
-                  { required: true, message: 'Please select your gender!' }
+                  {
+                    type: 'array',
+                    required: true,
+                    message: 'Please select your habitual residence!'
+                  }
                 ]
               }
             ]"
-            placeholder="Select a option and change input text above"
-          >
-            <a-select-option value="male">
-              male
-            </a-select-option>
-            <a-select-option value="female">
-              female
-            </a-select-option>
-          </a-select>
+          />
         </a-form-item>
         <a-form-item :wrapper-col="{ span: 12, offset: 5 }">
           <a-button @click="checkedInfo()">
@@ -86,7 +80,7 @@
 </template>
 <script>
 import { mapGetters } from 'vuex'
-import { cityQuery } from '@/api/system_moudle/index'
+import { } from '@/api/system_moudle/index'
 // 涌来循环options，添加label 和 value 值
 function selectOptions (source) {
   var sourceCopy = source instanceof Array ? [] : {}
@@ -101,27 +95,24 @@ function selectOptions (source) {
   }
   return sourceCopy
 }
-const cityData = []
+// 依据传过来的组织结构获取父级部门及当前部门，生成一个数组
+function queryParentOrg (orgId, orgization) {
+
+}
 export default {
   data: function () {
     return {
       form: this.$form.createForm(this),
       operate: this.$route.params.operate,
-      checked: true,
-      hasChecked: [],
       options: [],
-      defaultDepartment: ['zhejiang', 'hangzhou'],
-      cityData
+      hospitalOptions: []
     }
   },
   computed: {
-    ...mapGetters(['organization'])
+    ...mapGetters(['organization', 'hospitals'])
   },
   methods: {
     checkedInfo () {
-      // console.log('this.organization_', this.organization)
-      // const data = selectOptions(this.organization)
-      // console.log('this.organization_', data)
     },
     onChange (value) {
       console.log(value)
@@ -133,16 +124,9 @@ export default {
   },
   created () {
     this.options = selectOptions(this.organization)
-  },
-  beforeRouteEnter (to, from, next) {
-    cityQuery().then((response) => {
-      next(vm => {
-        vm.cityData = response.data.body
-        // vm.responseData = response.data.body
-        // vm.data = roleListFilter(response.data.body)
-        // console.log('vm.responseData_', vm.responseData)
-      })
-    })
+    this.hospitalOptions = this.hospitals
+    console.log('this.organization_', this.organization)
+    console.log('this.$route.params_', this.$route.params)
   }
 }
 </script>

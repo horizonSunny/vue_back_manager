@@ -68,8 +68,12 @@ const pagination = {
   defaultPageSize: 10,
   // pageSize: 20,
   pageSizeOptions: ['10', '20', '30', '40'],
-  total: 100,
+  total: 0,
   showQuickJumper: true
+}
+const filterFields = {
+  pageNumber: 0,
+  pageSize: 10
 }
 // 从后端传回来的结果过滤患者的list，产生真实的data
 function roleListFilter (data) {
@@ -125,7 +129,7 @@ export default {
     }
   },
   beforeRouteEnter (to, from, next) {
-    roleList().then((response) => {
+    roleList(filterFields).then((response) => {
       next(vm => {
         vm.responseData = response.data.body.pageList
         vm.data = roleListFilter(response.data.body.pageList)
