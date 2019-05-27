@@ -26,7 +26,7 @@
             />
           </a-form-item>
           <a-form-item
-            label="角色名称"
+            label="角色描述"
             :label-col="{ span: 5 }"
             :wrapper-col="{ span: 12 }"
           >
@@ -44,7 +44,7 @@
             />
           </a-form-item>
           <a-form-item
-            label="角色名称"
+            label="分配权限"
             :label-col="{ span: 5 }"
             :wrapper-col="{ span: 12 }"
           >
@@ -195,14 +195,14 @@ function removeDuplicateItems (arr) {
   return [...new Set(arr)]
 }
 // 依据permission数据结构获取permission,三层数据结构
-function getPermission (permission, arr) {
-  for (let item = 0; item < permission.length; item++) {
-    arr.push(permission[item]['permissionIdentify'])
-    if (permission[item]['children']['length'] !== 0) {
-      getPermission(permission[item]['children'], arr)
-    }
-  }
-}
+// function getPermission (permission, arr) {
+//   for (let item = 0; item < permission.length; item++) {
+//     arr.push(permission[item]['permissionIdentify'])
+//     if (permission[item]['children']['length'] !== 0) {
+//       getPermission(permission[item]['children'], arr)
+//     }
+//   }
+// }
 export default {
   data: function () {
     return {
@@ -293,13 +293,11 @@ export default {
   created () {
     //  console.log('this.hospitals_', this.hospitals)
     // this.options = this.hospitals
-    const permission = this.$route.params['info']['permissions']
-    let arr = []
-    getPermission(permission, arr)
+    this.hasChecked = this.$route.params['info']['permissions'] ? this.$route.params['info']['permissions'] : []
+    // let arr = []
+    // getPermission(permission, arr)
     // permissions获参
-    this.hasChecked = arr
-    console.log('this.$route.params_', this.$route.params)
-    console.log('arr_', arr)
+    // this.hasChecked = arr
   }
 }
 </script>

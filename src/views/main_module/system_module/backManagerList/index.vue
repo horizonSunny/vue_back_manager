@@ -242,9 +242,7 @@ export default {
         name: 'newBackUser',
         params: {
           operate: '新建',
-          info: {
-            orgId: this.orgId
-          }
+          info: ''
         }
       })
     },

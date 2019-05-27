@@ -63,9 +63,9 @@
           <a-cascader
             :options="options"
             v-decorator="[
-              'hospitalName',
+              'hospital',
               {
-                initialValue: hospitalName,
+                initialValue: hospital,
                 rules: [
                   {
                     type: 'array',
