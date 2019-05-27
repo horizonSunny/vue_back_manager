@@ -172,11 +172,15 @@ export default {
         }
       })
       if (this.operate === '新建') {
-        insertDoctor(assessment).then((res) => { })
+        insertDoctor(assessment).then((res) => {
+          this.reback()
+        })
       }
       if (this.operate === '编辑') {
         const updata = Object.assign(assessment, { uid: this.$route.params['info']['uid'] })
-        updateDoctor(updata).then((res) => { })
+        updateDoctor(updata).then((res) => {
+          this.reback()
+        })
       }
     },
     displayRender ({ labels }) {

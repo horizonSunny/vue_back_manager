@@ -166,11 +166,15 @@ export default {
         }
       })
       if (this.operate === '新建') {
-        userInsert(backUser).then((res) => { })
+        userInsert(backUser).then((res) => {
+          this.reback()
+        })
       }
       if (this.operate === '编辑') {
         const updata = Object.assign(backUser, { uid: this.$route.params['info']['uid'] })
-        userUpdate(updata).then((res) => { })
+        userUpdate(updata).then((res) => {
+          this.reback()
+        })
       }
     },
     displayRender ({ labels }) {

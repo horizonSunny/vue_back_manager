@@ -282,11 +282,15 @@ export default {
       console.log('permissions_', permissionChecked)
       console.log('roleUser_', roleUser)
       if (this.operate === '新建') {
-        roleInsert(roleUser).then((res) => { })
+        roleInsert(roleUser).then((res) => {
+          this.reback()
+        })
       }
       if (this.operate === '编辑') {
         const updata = Object.assign(roleUser, { uid: this.$route.params['info']['uid'] })
-        roleUpdate(updata).then((res) => { })
+        roleUpdate(updata).then((res) => {
+          this.reback()
+        })
       }
     }
   },

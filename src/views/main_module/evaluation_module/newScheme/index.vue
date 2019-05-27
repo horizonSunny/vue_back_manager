@@ -126,7 +126,7 @@
 </template>
 <script>
 import { mapGetters } from 'vuex'
-import { findAssitem } from '@/api/evaluation_module/index'
+import { findAssitem, assessmentPlanInsert, assessmentPlanUpdate } from '@/api/evaluation_module/index'
 // 涌来循环options，添加label 和 value 值
 export default {
   data: function () {
@@ -177,16 +177,22 @@ export default {
       this.form.validateFieldsAndScroll((err, values) => {
         if (!err) {
           console.log('Received values of form: ', values)
-          Object.assign(assessmentPlan, values)
+          const hospitalName = values['hospitalName']
+          const length = hospitalName.length
+          Object.assign(assessmentPlan, values, { hospitalUid: hospitalName[length - 1] })
         }
       })
-      // if (this.operate === '新建') {
-      //   insertDoctor(assessmentPlan).then((res) => { })
-      // }
-      // if (this.operate === '编辑') {
-      //   const updata = Object.assign(assessmentPlan, { uid: this.$route.params['info']['uid'] })
-      //   updateDoctor(updata).then((res) => { })
-      // }
+      if (this.operate === '新建') {
+        assessmentPlanInsert(assessmentPlan).then((res) => {
+          this.reback()
+        })
+      }
+      if (this.operate === '编辑') {
+        const updata = Object.assign(assessmentPlan, { uid: this.$route.params['info']['uid'] })
+        assessmentPlanUpdate(updata).then((res) => {
+          this.reback()
+        })
+      }
     },
     displayRender ({ labels }) {
       return labels[labels.length - 1]

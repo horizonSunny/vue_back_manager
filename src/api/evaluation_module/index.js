@@ -4,11 +4,16 @@ import { assessmentUpdata } from './assessmentUpdata'
 import { assessmentInsert } from './assessmentInsert'
 import { planDisable } from './planDisable'
 import { findAssitem } from './findAssitem'
+
+import { assessmentPlanInsert } from './assessmentPlanInsert'
+import { assessmentPlanUpdate } from './assessmentPlanUpdate'
 export {
   evaluationList,
   shcemeList,
   assessmentUpdata,
   assessmentInsert,
   planDisable,
-  findAssitem
+  findAssitem,
+  assessmentPlanInsert,
+  assessmentPlanUpdate
 }

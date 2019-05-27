@@ -119,11 +119,15 @@ export default {
         }
       })
       if (this.operate === '新建') {
-        assessmentInsert(assessment).then((res) => { })
+        assessmentInsert(assessment).then((res) => {
+          this.reback()
+        })
       }
       if (this.operate === '编辑') {
         const updata = Object.assign(assessment, { uid: this.$route.params['info']['uid'] })
-        assessmentUpdata(updata).then((res) => { })
+        assessmentUpdata(updata).then((res) => {
+          this.reback()
+        })
       }
     },
     displayRender ({ labels }) {
