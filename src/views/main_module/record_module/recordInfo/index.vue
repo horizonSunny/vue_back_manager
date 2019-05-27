@@ -11,7 +11,7 @@
       <p class="drawer">测评报告</p>
     </a-drawer>
     <div class="titleContent">
-      <a class="float-left goBack" href="">返回</a>
+      <a class="float-left goBack" @click="reback">返回</a>
       <span class="float-left patientInfo"
         >患者姓名：{{ patientInfo["patient"]["patientName"] }}</span
       >
@@ -194,6 +194,13 @@ export default {
     },
     onClose () {
       this.visible = false
+    },
+    reback () {
+      if (this.$route.query.goindex === 'true') {
+        this.$router.push('/')
+      } else {
+        this.$router.back(-1)
+      }
     }
   }
 }

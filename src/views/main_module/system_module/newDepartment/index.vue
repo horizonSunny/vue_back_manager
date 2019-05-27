@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="titleContent">
-      <a class="float-left goBack" href="">返回</a>
+      <a class="float-left goBack" @click="reback">返回</a>
       <span class="float-left patientInfo">{{ operate }}方案 </span>
       <div class="clear-both"></div>
     </div>
@@ -133,6 +133,13 @@ export default {
     handleSubmit () { },
     displayRender ({ labels }) {
       return labels[labels.length - 1]
+    },
+    reback () {
+      if (this.$route.query.goindex === 'true') {
+        this.$router.push('/')
+      } else {
+        this.$router.back(-1)
+      }
     }
   },
   created () {
