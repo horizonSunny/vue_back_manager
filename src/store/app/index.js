@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import { orgQuery, queryHospitals, queryWXHospitals } from '@/api/system_moudle/index'
+=======
+import { orgQuery, queryHospitals } from '@/api/system_moudle/index'
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
 // 省，市 医院三级级联菜单，将第三级医院的信息转为属性children，并添加label 和value
 function hospitalsTransition (data) {
   // 省，市，医院都会存在,一层省，二层市
@@ -28,6 +32,7 @@ const app = {
   state: {
     sidebar: {
       opened: true,
+<<<<<<< HEAD
       permission: [
         '1',
         '11',
@@ -51,6 +56,12 @@ const app = {
     // 需要保活的页面，动态变动
     canAlived: [],
     wxhospitals: []
+=======
+      permission: ['1', '11', '2', '21', '22', '3', '31', '4', '41', '42']
+    },
+    organization: [],
+    hospitals: []
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
   },
   mutations: {
     TOGGLE_SIDEBAR: state => {
@@ -59,6 +70,7 @@ const app = {
     // 查询这个人的组织结构
     SET_ORG: (state, organization) => {
       state.organization = organization
+<<<<<<< HEAD
       console.log('查询这个人的组织结构_123', state.organization)
     },
     SET_HOSPITALS: (state, hospitals) => {
@@ -80,18 +92,31 @@ const app = {
     },
     SET_WXHOSPITALS: (state, hospitals) => {
       state.wxhospitals = hospitals
+=======
+    },
+    SET_HOSPITALS: (state, hospitals) => {
+      state.hospitals = hospitals
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
     }
   },
   actions: {
     ToggleSideBar: ({ commit }) => {
       commit('TOGGLE_SIDEBAR')
     },
+<<<<<<< HEAD
     GetOrganization: ({ commit }, orgId) => {
       console.log('orgId_11231312312321_', orgId)
       orgQuery(orgId).then(response => {
         const org = response.data.body
         console.log('GetOrganization_', org)
         commit('SET_ORG', [org])
+=======
+    GetOrganization: ({ commit }) => {
+      orgQuery().then(response => {
+        const org = response.data.body
+        console.log('GetOrganization_', org)
+        commit('SET_ORG', org)
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
       })
     },
     GetHospitals: ({ commit }) => {
@@ -102,12 +127,15 @@ const app = {
         console.log('hospitalsTransition(response.data.body)_', hospitals)
         commit('SET_HOSPITALS', hospitals)
       })
+<<<<<<< HEAD
     },
     GetWXHospitals: ({ commit }) => {
       queryWXHospitals().then(response => {
         const hospitals = response.data.body
         commit('SET_WXHOSPITALS', hospitals)
       })
+=======
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
     }
   }
 }

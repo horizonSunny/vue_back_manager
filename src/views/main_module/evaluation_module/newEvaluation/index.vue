@@ -17,6 +17,7 @@
               'assessmentName',
               {
                 initialValue: this.assessmentName,
+<<<<<<< HEAD
                 rules: [
                   { required: true, message: '测评名称不能为空!' },
                   {
@@ -24,6 +25,9 @@
                     message: '请输入20位内的字符'
                   }
                 ]
+=======
+                rules: [{ required: true, message: 'Please input your note!' }]
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
               }
             ]"
           />
@@ -38,6 +42,7 @@
               'assessmentContent',
               {
                 initialValue: this.assessmentContent,
+<<<<<<< HEAD
                 rules: [{ required: true, message: '测评简介不能为空!' }]
               }
             ]"
@@ -54,6 +59,9 @@
               {
                 initialValue: this.testId,
                 rules: [{ required: true, message: '量表简称不能为空!' }]
+=======
+                rules: [{ required: true, message: 'Please input your note!' }]
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
               }
             ]"
           />
@@ -68,6 +76,7 @@
               'duration',
               {
                 initialValue: this.duration,
+<<<<<<< HEAD
                 rules: [
                   { required: true, message: '测评用时不能为空!' },
                   {
@@ -75,6 +84,9 @@
                     message: '请输入数字'
                   }
                 ]
+=======
+                rules: [{ required: true, message: 'Please input your note!' }]
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
               }
             ]"
           />
@@ -89,10 +101,19 @@
               'classify',
               {
                 initialValue: this.classify + '',
+<<<<<<< HEAD
                 rules: [{ required: true, message: '测评分类不能为空' }]
               }
             ]"
             placeholder="选择测评分类"
+=======
+                rules: [
+                  { required: true, message: 'Please select your gender!' }
+                ]
+              }
+            ]"
+            placeholder="Select a option and change input text above"
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
           >
             <a-select-option value="0">
               基础版
@@ -103,11 +124,19 @@
           </a-select>
         </a-form-item>
         <a-form-item :wrapper-col="{ span: 12, offset: 5 }">
+<<<<<<< HEAD
           <a-button @click="cancle()">
             取消
           </a-button>
           <span style="display:inline-block;width:10%"></span>
           <a-button type="primary" html-type="submit" :loading="loading">
+=======
+          <a-button>
+            取消
+          </a-button>
+          <span style="display:inline-block;width:10%"></span>
+          <a-button type="primary" html-type="submit">
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
             保存
           </a-button>
         </a-form-item>
@@ -125,6 +154,7 @@ export default {
       assessmentName: this.$route.params['info']['assessmentName'] || '',
       assessmentContent: this.$route.params['info']['assessmentDescribe'] || '',
       duration: this.$route.params['info']['duration'] || '',
+<<<<<<< HEAD
       testId: this.$route.params['info']['testId'] || '',
       loading: false
       // classify: this.$route.params['info']['classify'] || ''
@@ -140,6 +170,12 @@ export default {
         return ''
       }
     }
+=======
+      classify: this.$route.params['info']['classify'] || ''
+    }
+  },
+  computed: {
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
   },
   methods: {
     onChange (value) {
@@ -152,6 +188,7 @@ export default {
         if (!err) {
           console.log('Received values of form: ', values)
           Object.assign(assessment, values)
+<<<<<<< HEAD
           // 接口
           this.loading = true
           if (this.operate === '新建') {
@@ -169,6 +206,21 @@ export default {
           }
         }
       })
+=======
+        }
+      })
+      if (this.operate === '新建') {
+        assessmentInsert(assessment).then((res) => {
+          this.reback()
+        })
+      }
+      if (this.operate === '编辑') {
+        const updata = Object.assign(assessment, { uid: this.$route.params['info']['uid'] })
+        assessmentUpdata(updata).then((res) => {
+          this.reback()
+        })
+      }
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
     },
     displayRender ({ labels }) {
       return labels[labels.length - 1]
@@ -179,9 +231,12 @@ export default {
       } else {
         this.$router.back(-1)
       }
+<<<<<<< HEAD
     },
     cancle () {
       this.reback()
+=======
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
     }
   }
 }

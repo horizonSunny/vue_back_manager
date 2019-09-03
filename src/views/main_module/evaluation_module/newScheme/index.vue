@@ -13,11 +13,15 @@
           :wrapper-col="{ span: 12 }"
         >
           <a-input
+<<<<<<< HEAD
             :disabled="disabledInfo"
+=======
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
             v-decorator="[
               'assessmentPlanName',
               {
                 initialValue: this.assessmentPlanName,
+<<<<<<< HEAD
                 rules: [
                   { required: true, message: '请输入测评方案名称!' },
                   {
@@ -25,6 +29,9 @@
                     message: '请输入20位内的字符'
                   }
                 ]
+=======
+                rules: [{ required: true, message: 'Please input your note!' }]
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
               }
             ]"
           />
@@ -35,12 +42,19 @@
           :wrapper-col="{ span: 12 }"
         >
           <a-textarea
+<<<<<<< HEAD
             :disabled="disabledInfo"
+=======
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
             v-decorator="[
               'assessmentPlanDescribe',
               {
                 initialValue: this.assessmentPlanDescribe,
+<<<<<<< HEAD
                 rules: [{ required: true, message: '请输入测评方案简介!' }]
+=======
+                rules: [{ required: true, message: 'Please input your note!' }]
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
               }
             ]"
           />
@@ -51,15 +65,27 @@
           :wrapper-col="{ span: 12 }"
         >
           <a-select
+<<<<<<< HEAD
             :disabled="disabledInfo"
+=======
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
             v-decorator="[
               'classify',
               {
                 initialValue: this.classify + '',
+<<<<<<< HEAD
                 rules: [{ required: true, message: '请选择测评方案分类!' }]
               }
             ]"
             placeholder="选择测评分类"
+=======
+                rules: [
+                  { required: true, message: 'Please select your gender!' }
+                ]
+              }
+            ]"
+            placeholder="Select a option and change input text above"
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
           >
             <a-select-option value="0">
               基础版
@@ -73,6 +99,7 @@
           label="所属医院"
           :label-col="{ span: 5 }"
           :wrapper-col="{ span: 12 }"
+<<<<<<< HEAD
           required
         >
           <MultipleCascader
@@ -83,6 +110,24 @@
             select-function="hospital"
             @selectValues="hospitalSelectChange"
             :disabled-info="disabledInfo"
+=======
+        >
+          <a-cascader
+            :options="options"
+            v-decorator="[
+              'hospitalName',
+              {
+                initialValue: hospitalName,
+                rules: [
+                  {
+                    type: 'array',
+                    required: true,
+                    message: 'Please select your habitual residence!'
+                  }
+                ]
+              }
+            ]"
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
           />
         </a-form-item>
         <a-form-item
@@ -91,16 +136,28 @@
           :wrapper-col="{ span: 12 }"
         >
           <a-select
+<<<<<<< HEAD
             :disabled="disabledInfo"
+=======
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
             mode="multiple"
             v-decorator="[
               'items',
               {
                 initialValue: this.items,
+<<<<<<< HEAD
                 rules: [{ required: true, message: '请选择测评!' }]
               }
             ]"
             placeholder="请选择测评"
+=======
+                rules: [
+                  { required: true, message: 'Please select your gender!' }
+                ]
+              }
+            ]"
+            placeholder="Select a option and change input text above"
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
           >
             <a-select-option
               v-for="item in assessmentOptions"
@@ -112,6 +169,7 @@
           </a-select>
         </a-form-item>
         <a-form-item :wrapper-col="{ span: 12, offset: 5 }">
+<<<<<<< HEAD
           <a-button :disabled="disabledInfo" @click="cancle()">
             取消
           </a-button>
@@ -122,6 +180,13 @@
             html-type="submit"
             :loading="loading"
           >
+=======
+          <a-button>
+            取消
+          </a-button>
+          <span style="display:inline-block;width:10%"></span>
+          <a-button type="primary" html-type="submit">
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
             保存
           </a-button>
         </a-form-item>
@@ -132,6 +197,7 @@
 <script>
 import { mapGetters } from 'vuex'
 import { findAssitem, assessmentPlanInsert, assessmentPlanUpdate } from '@/api/evaluation_module/index'
+<<<<<<< HEAD
 // 引入封装的级联多选
 import MultipleCascader from '@/components/MultipleCascader'
 // 涌来循环options，添加label 和 value 值
@@ -139,6 +205,10 @@ export default {
   components: {
     MultipleCascader
   },
+=======
+// 涌来循环options，添加label 和 value 值
+export default {
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
   data: function () {
     return {
       form: this.$form.createForm(this),
@@ -148,10 +218,15 @@ export default {
       assessmentPlanDescribe: this.$route.params['info']['assessmentPlanDescribe'] || '',
       assessmentPlanName: this.$route.params['info']['assessmentPlanName'] || '',
       // 为0时候自动判断为false
+<<<<<<< HEAD
       // classify: this.$route.params['info']['classify'] || '',
       hasSelectOptions: this.$route.params['info']['hasHospitalsUid'] || [],
       disabledInfo: false,
       loading: false
+=======
+      classify: this.$route.params['info']['classify'] || ''
+      // items: this.$route.params['info']['items'] || ''
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
     }
   },
   computed: {
@@ -168,12 +243,23 @@ export default {
         return undefined
       }
     },
+<<<<<<< HEAD
     classify: function () {
       const item = this.$route.params['info']['classify']
       if (item === 0 || (item !== undefined && item !== null)) {
         return item
       } else {
         return ''
+=======
+    hospitalName: function () {
+      const items = this.$route.params['info']['items']
+      if (items) {
+        // 没看到hospatialId
+        const item = [items['provinceId'], items['cityId'], '']
+        return item
+      } else {
+        return undefined
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
       }
     }
   },
@@ -187,6 +273,7 @@ export default {
       this.form.validateFieldsAndScroll((err, values) => {
         if (!err) {
           console.log('Received values of form: ', values)
+<<<<<<< HEAD
           Object.assign(assessmentPlan, values, { hospitalUids: this.hasSelectOptions })
           // 接口
           this.loading = true
@@ -210,6 +297,24 @@ export default {
           }
         }
       })
+=======
+          const hospitalName = values['hospitalName']
+          const length = hospitalName.length
+          Object.assign(assessmentPlan, values, { hospitalUid: hospitalName[length - 1] })
+        }
+      })
+      if (this.operate === '新建') {
+        assessmentPlanInsert(assessmentPlan).then((res) => {
+          this.reback()
+        })
+      }
+      if (this.operate === '编辑') {
+        const updata = Object.assign(assessmentPlan, { uid: this.$route.params['info']['uid'] })
+        assessmentPlanUpdate(updata).then((res) => {
+          this.reback()
+        })
+      }
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
     },
     displayRender ({ labels }) {
       return labels[labels.length - 1]
@@ -220,12 +325,15 @@ export default {
       } else {
         this.$router.back(-1)
       }
+<<<<<<< HEAD
     },
     hospitalSelectChange (selectValue) {
       this.hasSelectOptions = selectValue
     },
     cancle () {
       this.reback()
+=======
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
     }
   },
   created () {
@@ -235,9 +343,12 @@ export default {
       console.log('resp_', resp.data.body)
       this.assessmentOptions = resp.data.body
     })
+<<<<<<< HEAD
     if (this.$route.params['operate'] === '查看') {
       this.disabledInfo = true
     }
+=======
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
   }
 }
 </script>

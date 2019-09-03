@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { asyncRouter, addMainRouter } from '@/router/index'
 import { deepCopy } from '@/utils/tools'
 // 对异步路由进行过滤
@@ -12,6 +13,16 @@ function filterAsyncRouter (asyncRouter, userPermission) {
       userPermission.indexOf(router.permissionCode) > -1 ||
       canPermission ||
       nullPermission
+=======
+import { asyncRouter } from '@/router/index'
+import { deepCopy } from '@/utils/tools'
+// 对异步路由进行过滤
+function filterAsyncRouter (asyncRouter, userPermission) {
+  const addRouters = asyncRouter.filter(router => {
+    const permission =
+      userPermission.indexOf(router.permissionCode) > -1 ||
+      router.permissionCode
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
     if (permission) {
       if (router.children && router.children.length) {
         router.children = filterAsyncRouter(router.children, userPermission)
@@ -61,6 +72,7 @@ const permission = {
   },
   actions: {
     AddRouter ({ commit, getters }) {
+<<<<<<< HEAD
       console.log('getters.getPermission_', getters.getPermission)
       const asyncRouters = deepCopy(asyncRouter)
       const addRouter = filterAsyncRouter(asyncRouters, getters.getPermission)
@@ -68,6 +80,11 @@ const permission = {
       addMainRouter[0].children = addRouter
       console.log('addRouter_', addMainRouter)
       commit('SET_ROUTERS', addMainRouter)
+=======
+      const addRouter = filterAsyncRouter(asyncRouter, getters.getPermission)
+      console.log('addRouter_', addRouter)
+      commit('SET_ROUTERS', addRouter)
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
     },
     PemissionRouter ({ commit, state }) {
       // 这边深拷贝一下main模块中的路由，然后改变路径+父级路径

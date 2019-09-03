@@ -7,6 +7,7 @@ export function roleList (query) {
     params: query
   })
 }
+<<<<<<< HEAD
 
 export function allRoleList (query) {
   return http({
@@ -21,3 +22,5 @@ export function allPermission (query) {
     method: 'get'
   })
 }
+=======
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77

@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 /* eslint-disable no-undef */
+=======
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
 <template>
   <div>
     <a-drawer
@@ -8,8 +11,13 @@
       @close="onClose"
       :visible="visible"
     >
+<<<<<<< HEAD
       <p class="drawer" @click="onShow('basic')">基本信息</p>
       <p class="drawer" @click="onShow('report')">测评报告</p>
+=======
+      <p class="drawer" @click="onClose">基本信息</p>
+      <p class="drawer">测评报告</p>
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
     </a-drawer>
     <div class="titleContent">
       <a class="float-left goBack" @click="reback">返回</a>
@@ -25,6 +33,7 @@
       <a-button
         type="primary"
         class="float-right patientInfo"
+<<<<<<< HEAD
         @click.stop="showDrawer"
         >筛选</a-button
       >
@@ -35,15 +44,26 @@
         v-show="!this.basePage"
         >打印</a-button
       >
+=======
+        @click="showDrawer"
+        >筛选</a-button
+      >
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
       <div class="clear-both"></div>
     </div>
     <div class="content">
       <span class="float-left dp_b"></span>
+<<<<<<< HEAD
       <span class="float-left contentTitle">{{
         this.basePage ? "基本信息" : "测评报告"
       }}</span>
       <div class="clear-both"></div>
       <div class="contentBody" v-show="this.basePage">
+=======
+      <span class="float-left contentTitle">基本信息</span>
+      <div class="clear-both"></div>
+      <div class="contentBody">
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
         <a-row class="contentRow">
           <a-col :span="8"
             >*基本姓名：<a-input
@@ -110,6 +130,7 @@
         <!-- <div class="medicineDetails"> -->
         <a-row class="contentRow medicineDetails borderBottom">
           <a-col :span="25">
+<<<<<<< HEAD
             <div>
               *是否确诊老年痴呆：
               <a-radio-group
@@ -129,6 +150,8 @@
             </div>
           </a-col>
           <a-col :span="25">
+=======
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
             <div>*是否用过痴呆药物：</div>
             <template
               v-for="item in patientInfo['medicalHistoryType'][0][
@@ -206,6 +229,7 @@
         </a-row>
         <!-- </div> -->
       </div>
+<<<<<<< HEAD
       <div v-show="!this.basePage">
         <template v-if="!noReport">
           <a-timeline
@@ -246,10 +270,13 @@
           </div>
         </template>
       </div>
+=======
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
     </div>
   </div>
 </template>
 <script>
+<<<<<<< HEAD
 import { records } from '@/api/record_module/index'
 import Print from 'print-js'
 // 依据time值获取对应data方案组中的对应方案
@@ -259,10 +286,13 @@ function getReportDetail (time, reportData) {
   })
   return assessment[0]
 }
+=======
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
 export default {
   data: function () {
     return {
       patientInfo: this.$route.params.patientInfo,
+<<<<<<< HEAD
       visible: false,
       basePage: true,
       timeCanSelect: [],
@@ -309,10 +339,19 @@ export default {
     showDrawer () {
       this.visible = true
       // this.basePage = !this.basePage
+=======
+      visible: false
+    }
+  },
+  methods: {
+    showDrawer () {
+      this.visible = true
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
     },
     onClose () {
       this.visible = false
     },
+<<<<<<< HEAD
     onShow (view) {
       if (view === 'basic') {
         this.basePage = true
@@ -321,12 +360,15 @@ export default {
       }
       this.onClose()
     },
+=======
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
     reback () {
       if (this.$route.query.goindex === 'true') {
         this.$router.push('/')
       } else {
         this.$router.back(-1)
       }
+<<<<<<< HEAD
     },
     checkReportTime (event) {
       // 判断一下，假如点击的不是圆圈，则什么都不做，让返回
@@ -401,6 +443,13 @@ export default {
 }
 </script>
 <style lang="scss" >
+=======
+    }
+  }
+}
+</script>
+<style lang="scss">
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
 .drawer {
   padding-left: 10px;
   padding-bottom: 10px;
@@ -467,6 +516,7 @@ export default {
       border-bottom: 1px solid rgba(128, 128, 128, 0.7);
     }
   }
+<<<<<<< HEAD
   .timeline {
     width: 15%;
     display: inline-block;
@@ -499,5 +549,7 @@ export default {
 }
 .ant-timeline-item /deep/ .ant-timeline-item-head-blue {
   border-color: grey;
+=======
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
 }
 </style>

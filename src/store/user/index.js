@@ -13,7 +13,10 @@ const user = {
       state.permissions = permissions
     },
     REMOVE_USRINFO: state => {
+<<<<<<< HEAD
       console.log('REMOVE_USRINFO_清除user和permissions')
+=======
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
       state.user = undefined
       state.permissions = undefined
     }
@@ -23,6 +26,7 @@ const user = {
       return new Promise((resolve, reject) => {
         userInfo()
           .then(response => {
+<<<<<<< HEAD
             if (response && response.data && response.data.body) {
               console.log(
                 'response.data.body.permissions_',
@@ -34,6 +38,11 @@ const user = {
             } else {
               reject(response)
             }
+=======
+            commit('SET_PERMISSIONS', response.data.body.permissions)
+            commit('SET_USER', response.data.body.user)
+            resolve()
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
           })
           .catch(error => {
             reject(error)

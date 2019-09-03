@@ -32,6 +32,10 @@ export default {
   color: #2c3e50;
   margin-top: 0px;
   width: 100%;
+<<<<<<< HEAD
   height: 100%;
+=======
+  height: 669px;
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
 }
 </style>

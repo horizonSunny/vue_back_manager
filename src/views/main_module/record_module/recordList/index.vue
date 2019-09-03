@@ -7,11 +7,15 @@
         @search="onSearch"
         class="float-left"
       />
+<<<<<<< HEAD
       <a-button
         type="primary"
         @click="exportPatient"
         class="float-right"
         :disabled="permissionIsTrue('113')"
+=======
+      <a-button type="primary" @click="exportPatient" class="float-right"
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
         >导出</a-button
       >
       <div class="clear-both"></div>
@@ -26,21 +30,28 @@
         @change="handleTableChange"
       >
         <a slot="name" slot-scope="text" href="javascript:;">{{ text }}</a>
+<<<<<<< HEAD
         <template slot="patientSex" slot-scope="patientSex">
           {{ patientSex | sexFilter }}
         </template>
         <template slot="medicalHistory" slot-scope="medicalHistory">
           {{ medicalHistory | medicalFilter }}
         </template>
+=======
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
       </a-table>
     </div>
   </div>
 </template>
 <script>
 import { getTargetObject } from '@/utils/tools'
+<<<<<<< HEAD
 import { patientsList } from '@/api/record_module/index'
 import { exportExcelPost } from '@/utils/exportExcel'
 import { permissionIsTrue } from '@/utils/permissionIsTrue'
+=======
+import { patientsList, exportPatients } from '@/api/record_module/index'
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
 
 const columns = [{
   title: '姓名',
@@ -51,16 +62,27 @@ const columns = [{
   dataIndex: 'patientSex',
   filterMultiple: false,
   filters: [
+<<<<<<< HEAD
     { text: '男', value: '0' },
     { text: '女', value: '1' }
   ],
   scopedSlots: { customRender: 'patientSex' }
+=======
+    { text: '不限', value: '' },
+    { text: '男', value: '0' },
+    { text: '女', value: '1' }
+  ]
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
 }, {
   title: '年龄',
   dataIndex: 'patientAge',
   filterMultiple: false,
   filters: [
+<<<<<<< HEAD
 
+=======
+    { text: '不限', value: '' },
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
     { text: '小于60', value: '0-60' },
     { text: '60-64', value: '60-64' },
     { text: '65-69', value: '65-69' },
@@ -78,9 +100,15 @@ const columns = [{
   dataIndex: 'education',
   filterMultiple: false,
   filters: [
+<<<<<<< HEAD
     { text: '小于7', value: '0-7' },
     { text: '7-9', value: '7-9' },
     { text: '10-12', value: '10-12' },
+=======
+    { text: '不限', value: '' },
+    { text: '小于7', value: '0-7' },
+    { text: '7-9', value: '7-9' },
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
     { text: '13-16', value: '13-16' },
     { text: '大于16', value: '16-1000' }
   ]
@@ -89,7 +117,11 @@ const columns = [{
   dataIndex: 'jobType',
   filterMultiple: false,
   filters: [
+<<<<<<< HEAD
 
+=======
+    { text: '不限', value: '' },
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
     { text: '公务员', value: '公务员' },
     { text: '专业技术人员', value: '专业技术人员' },
     { text: '工人', value: '工人' },
@@ -107,7 +139,11 @@ const columns = [{
   dataIndex: 'marrige',
   filterMultiple: false,
   filters: [
+<<<<<<< HEAD
 
+=======
+    { text: '不限', value: '' },
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
     { text: '已婚', value: '已婚' },
     { text: '未婚', value: '未婚' },
     { text: '分居', value: '分居' },
@@ -122,20 +158,33 @@ const columns = [{
   dataIndex: 'medicalHistory',
   filterMultiple: false,
   filters: [
+<<<<<<< HEAD
+=======
+    { text: '不限', value: '' },
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
     { text: 'MCI', value: '1' },
     { text: '早期', value: '2' },
     { text: '中期', value: '3' },
     { text: '晚期', value: '4' },
     { text: '其他', value: '5' },
+<<<<<<< HEAD
     { text: '不知道', value: '7' },
     { text: '否', value: '0' }
   ],
   scopedSlots: { customRender: 'medicalHistory' }
+=======
+    { text: '否', value: '0' }
+  ]
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
 }, {
   title: '是否用过痴呆药物',
   dataIndex: 'medicationName',
   filterMultiple: false,
   filters: [
+<<<<<<< HEAD
+=======
+    { text: '不限', value: '不限' },
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
     { text: '多奈哌齐', value: '多奈哌齐' },
     { text: '美金刚', value: '美金刚' },
     { text: '卡巴拉汀', value: '卡巴拉汀' },
@@ -153,7 +202,11 @@ const columns = [{
   sorter: true
 }, {
   title: '建档人',
+<<<<<<< HEAD
   dataIndex: 'creater'
+=======
+  dataIndex: 'testThree'
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
 }, {
   title: '更新时间',
   dataIndex: 'updateTime',
@@ -163,6 +216,7 @@ const columns = [{
 // mock 数据
 const data = []
 // 分页配置
+<<<<<<< HEAD
 // const pagination = {
 //   showSizeChanger: true,
 //   current: 1,
@@ -174,6 +228,23 @@ const data = []
 //   showQuickJumper: true
 // }
 
+=======
+const pagination = {
+  showSizeChanger: true,
+  // current: 10,
+  defaultCurrent: 1,
+  defaultPageSize: 10,
+  // pageSize: 20,
+  pageSizeOptions: ['10', '20', '30', '40'],
+  total: 0,
+  showQuickJumper: true
+}
+// 筛选条件初始化
+const filterFields = {
+  pageNumber: 0,
+  pageSize: 10
+}
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
 // 从后端传回来的结果过滤患者的list，产生真实的data
 function patientListFilter (data) {
   const patientList = []
@@ -181,8 +252,12 @@ function patientListFilter (data) {
     const listItem = Object.assign({
       medicationName: data[item]['medicationNames'],
       medicalHistory: data[item]['medicalHistoryType'][0]['medicalHistoryDegree'],
+<<<<<<< HEAD
       key: data[item]['patient']['uid'],
       creater: data[item]['creater']
+=======
+      key: data[item]['patient']['uid']
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
     }, data[item]['patient'])
     patientList.push(listItem)
   }
@@ -199,11 +274,15 @@ function patientDetails (uid, responseData) {
 }
 // const selectedRowKey = []
 export default {
+<<<<<<< HEAD
   name: 'recordList-alive',
+=======
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
   data: function () {
     return {
       data,
       columns,
+<<<<<<< HEAD
       pagination: {
         showSizeChanger: true,
         current: 1,
@@ -218,6 +297,10 @@ export default {
         pageNumber: 0,
         pageSize: 10
       },
+=======
+      pagination,
+      filterFields,
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
       selectedRowKey: [],
       responseData: {}
     }
@@ -243,6 +326,7 @@ export default {
     // 依据姓名进行筛选
     onSearch (value) {
       const name = {
+<<<<<<< HEAD
         patientName: value,
         pageNumber: 0,
         pageSize: 10
@@ -253,6 +337,15 @@ export default {
         this.responseData = response.data.body.patients
         this.data = patientListFilter(response.data.body.patients)
         this.pagination['total'] = response.data.body['totalElements']
+=======
+        patientName: value
+      }
+      const requestFilter = getTargetObject(Object.assign(name, filterFields), [''])
+      patientsList(requestFilter).then((response) => {
+        this.responseData = response.data.body.patients
+        this.data = patientListFilter(response.data.body.patients)
+        this.pagination.total = response.data.body.totalElements
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
       })
     },
     onShowSizeChange (current, pageSize) {
@@ -274,6 +367,7 @@ export default {
     handleTableChange (pagination, filters, sorter) {
       // requst 数据整合
       const filter = {}
+<<<<<<< HEAD
       this.pagination['current'] = pagination['current']
       for (let item in filters) {
         if (item === 'medicalHistory' || item === 'patientSex') {
@@ -290,6 +384,17 @@ export default {
       filter['educationTime'] = filter['education'] ? filter['education'] : null
       delete filter['education']
       // }
+=======
+      for (let item in filters) {
+        if ((item === 'medicalHistory' || item === 'patientSex') && filters[item][0] !== '') {
+          console.log('进入的')
+          filter[item] = Number(filters[item][0])
+        } else {
+          console.log('没进的')
+          filter[item] = filters[item][0]
+        }
+      }
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
       const sort = {}
       if (sorter['columnKey'] && sorter['order']) {
         sort['orderBy'] = sorter['order'] === 'descend' ? 'DESC' : 'ASC'
@@ -301,6 +406,7 @@ export default {
       }
       const requestFilter = getTargetObject(Object.assign(page, sort, filter), [''])
       console.log('requestFilter_', requestFilter)
+<<<<<<< HEAD
       const request = Object.assign(this.filterFields, requestFilter)
       patientsList(request).then((response) => {
         this.responseData = response.data.body.patients
@@ -388,6 +494,36 @@ export default {
       this.$store.commit('DELETE_ACTIVE', 'recordList-alive')
     }
     next()
+=======
+      patientsList(requestFilter).then((response) => {
+        this.responseData = response.data.body.patients
+        this.data = patientListFilter(response.data.body.patients)
+        this.pagination.total = response.data.body.totalElements
+      })
+    },
+    exportPatient () {
+      console.log(this.selectedRowKey)
+      exportPatients({ patientIds: this.selectedRowKey }).then(res => {
+        let blob = new Blob([res], { type: 'application/vnd.ms-excel' })
+        let objectUrl = URL.createObjectURL(blob)
+        window.location.href = objectUrl
+      })
+    }
+  },
+  beforeRouteEnter (to, from, next) {
+    const filterResult = getTargetObject(filterFields, [''])
+    console.log('filterResult_', filterResult)
+    patientsList(filterResult).then((response) => {
+      console.log('recordList_response', response)
+      next(vm => {
+        // vm.data = response.data.body.patients
+        vm.responseData = response.data.body.patients
+        vm.data = patientListFilter(response.data.body.patients)
+        vm.pagination.total = response.data.body.totalElements
+        console.log('vm.data_', vm.data)
+      })
+    })
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
   }
 }
 </script>
@@ -395,6 +531,7 @@ export default {
 .main_content {
   margin-top: 10px;
 }
+<<<<<<< HEAD
 .ant-table tr td {
   max-width: 200px;
   overflow: hidden;
@@ -406,6 +543,8 @@ export default {
 .ant-table tr th {
   text-align: center;
 }
+=======
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
 .ant-table-pagination.ant-pagination {
   float: none;
 }

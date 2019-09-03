@@ -13,6 +13,16 @@
         }"
       >
         <template>
+<<<<<<< HEAD
+=======
+          <!-- <a-cascader
+            :options="options"
+            :displayRender="displayRender"
+            @change="onChange"
+            changeOnSelect
+            :defaultValue="defaultDepartment"
+          /> -->
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
           <router-view></router-view>
         </template>
       </a-layout-content>
@@ -38,9 +48,12 @@ export default {
     displayRender ({ labels }) {
       return labels[labels.length - 1]
     }
+<<<<<<< HEAD
   },
   created () {
     console.log('重新走了一遍main模块函数')
+=======
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
   }
 }
 </script>

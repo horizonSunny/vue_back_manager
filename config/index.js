@@ -14,7 +14,11 @@ module.exports = {
     // Various Dev Server settings
     host: 'localhost', // can be overwritten by process.env.HOST
     port: 8080, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
+<<<<<<< HEAD
     autoOpenBrowser: true,
+=======
+    autoOpenBrowser: false,
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
     errorOverlay: true,
     notifyOnErrors: true,
     poll: false, // https://webpack.js.org/configuration/dev-server/#devserver-watchoptions-
@@ -49,13 +53,21 @@ module.exports = {
     // Paths
     assetsRoot: path.resolve(__dirname, '../dist'),
     assetsSubDirectory: 'static',
+<<<<<<< HEAD
     assetsPublicPath: './',
+=======
+    assetsPublicPath: '/',
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
 
     /**
      * Source Maps
      */
 
+<<<<<<< HEAD
     productionSourceMap: false,
+=======
+    productionSourceMap: true,
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
     // https://webpack.js.org/configuration/devtool/#production
     devtool: '#source-map',
 

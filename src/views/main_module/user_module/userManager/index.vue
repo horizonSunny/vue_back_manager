@@ -6,18 +6,26 @@
       <div class="clear-both"></div>
     </div>
     <div class="content">
+<<<<<<< HEAD
       <a-form :form="form" @submit="handleSubmit" disabled>
+=======
+      <a-form :form="form" @submit="handleSubmit">
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
         <a-form-item
           label="姓名"
           :label-col="{ span: 5 }"
           :wrapper-col="{ span: 12 }"
         >
           <a-input
+<<<<<<< HEAD
             :disabled="disabledInfo"
+=======
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
             v-decorator="[
               'fullname',
               {
                 initialValue: this.fullname,
+<<<<<<< HEAD
                 rules: [
                   { required: true, message: '请输入脑健康师姓名!' },
                   {
@@ -25,6 +33,9 @@
                     message: '请输英文和汉字的组合!'
                   }
                 ]
+=======
+                rules: [{ required: true, message: 'Please input your note!' }]
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
               }
             ]"
           />
@@ -35,11 +46,15 @@
           :wrapper-col="{ span: 12 }"
         >
           <a-input
+<<<<<<< HEAD
             :disabled="disabledInfo"
+=======
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
             v-decorator="[
               'mobilenumber',
               {
                 initialValue: this.mobilenumber,
+<<<<<<< HEAD
                 rules: [
                   { required: true, message: '请输入手机号!' },
                   {
@@ -47,6 +62,9 @@
                     message: '请校验手机格式是否正确!'
                   }
                 ]
+=======
+                rules: [{ required: true, message: 'Please input your note!' }]
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
               }
             ]"
           />
@@ -57,12 +75,19 @@
           :wrapper-col="{ span: 12 }"
         >
           <a-radio-group
+<<<<<<< HEAD
             :disabled="disabledInfo"
+=======
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
             v-decorator="[
               'sex',
               {
                 initialValue: this.sex,
+<<<<<<< HEAD
                 rules: [{ required: true, message: '请选择性别!' }]
+=======
+                rules: [{ required: true, message: 'Please input your note!' }]
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
               }
             ]"
           >
@@ -71,6 +96,7 @@
           </a-radio-group>
         </a-form-item>
         <a-form-item
+<<<<<<< HEAD
           label="出生日期"
           :label-col="{ span: 5 }"
           :wrapper-col="{ span: 12 }"
@@ -90,6 +116,23 @@
                   {
                     required: true,
                     message: '请输入出生日期!'
+=======
+          label="所属医院"
+          :label-col="{ span: 5 }"
+          :wrapper-col="{ span: 12 }"
+        >
+          <a-cascader
+            :options="options"
+            v-decorator="[
+              'hospital',
+              {
+                initialValue: hospital,
+                rules: [
+                  {
+                    type: 'array',
+                    required: true,
+                    message: 'Please select your habitual residence!'
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
                   }
                 ]
               }
@@ -97,6 +140,7 @@
           />
         </a-form-item>
         <a-form-item
+<<<<<<< HEAD
           label="所属医院"
           :label-col="{ span: 5 }"
           :wrapper-col="{ span: 12 }"
@@ -113,16 +157,22 @@
           />
         </a-form-item>
         <a-form-item
+=======
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
           label="邮箱"
           :label-col="{ span: 5 }"
           :wrapper-col="{ span: 12 }"
         >
           <a-input
+<<<<<<< HEAD
             :disabled="disabledInfo"
+=======
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
             v-decorator="[
               'registerEmail',
               {
                 initialValue: this.registerEmail,
+<<<<<<< HEAD
                 rules: [
                   { required: true, message: '请输入邮箱!' },
                   {
@@ -130,6 +180,9 @@
                     message: '邮箱格式错误'
                   }
                 ]
+=======
+                rules: [{ required: true, message: 'Please input your note!' }]
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
               }
             ]"
           />
@@ -140,11 +193,19 @@
           :wrapper-col="{ span: 12 }"
         >
           <a-input
+<<<<<<< HEAD
             :disabled="disabledInfo"
             v-decorator="[
               'idnumber',
               {
                 initialValue: this.idnumber
+=======
+            v-decorator="[
+              'idnumber',
+              {
+                initialValue: this.idnumber,
+                rules: [{ required: true, message: 'Please input your note!' }]
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
               }
             ]"
           />
@@ -155,16 +216,25 @@
           :wrapper-col="{ span: 12 }"
         >
           <a-textarea
+<<<<<<< HEAD
             :disabled="disabledInfo"
             v-decorator="[
               'workePerience',
               {
                 initialValue: this.workePerience
+=======
+            v-decorator="[
+              'workePerience',
+              {
+                initialValue: this.workePerience,
+                rules: [{ required: true, message: 'Please input your note!' }]
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
               }
             ]"
           />
         </a-form-item>
         <a-form-item :wrapper-col="{ span: 12, offset: 5 }">
+<<<<<<< HEAD
           <a-button :disabled="disabledInfo" @click="cancel()">
             取消
           </a-button>
@@ -175,6 +245,13 @@
             type="primary"
             html-type="submit"
           >
+=======
+          <a-button @click="cancel()">
+            取消
+          </a-button>
+          <span style="display:inline-block;width:10%"></span>
+          <a-button type="primary" html-type="submit">
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
             保存
           </a-button>
         </a-form-item>
@@ -184,6 +261,7 @@
 </template>
 <script>
 import { mapGetters } from 'vuex'
+<<<<<<< HEAD
 import moment from 'moment'
 import { insertDoctor, updateDoctor } from '@/api/user_module/index'
 import MultipleCascader from '@/components/MultipleCascader'
@@ -192,12 +270,18 @@ export default {
   components: {
     MultipleCascader
   },
+=======
+import { insertDoctor, updateDoctor } from '@/api/user_module/index'
+// 涌来循环options，添加label 和 value 值
+export default {
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
   data: function () {
     return {
       form: this.$form.createForm(this),
       operate: this.$route.params.operate,
       options: [],
       fullname: this.$route.params['info']['fullname'] || '',
+<<<<<<< HEAD
       idnumber: this.$route.params['info']['idnumber'] || '',
       mobilenumber: this.$route.params['info']['mobilenumber'] || '',
       registerEmail: this.$route.params['info']['registerEmail'] || '',
@@ -225,6 +309,21 @@ export default {
     cancel () {
       this.reback()
     },
+=======
+      hospital: [],
+      idnumber: this.$route.params['info']['idnumber'] || '',
+      mobilenumber: this.$route.params['info']['mobilenumber'] || '',
+      registerEmail: this.$route.params['info']['registerEmail'] || '',
+      sex: this.$route.params['info']['sex'] || '',
+      workePerience: this.$route.params['info']['workePerience'] || ''
+    }
+  },
+  computed: {
+    ...mapGetters(['hospitals'])
+  },
+  methods: {
+    cancel () { },
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
     onChange (value) {
       console.log(value)
     },
@@ -234,6 +333,7 @@ export default {
       this.form.validateFieldsAndScroll((err, values) => {
         if (!err) {
           console.log('Received values of form: ', values)
+<<<<<<< HEAD
           Object.assign(assessment, values, { hospitals: Array.isArray(this.hospital) ? this.hospital : [this.hospital] })
           if (this.hospital['length'] === 0) {
             this.$message.info('请选中所属医院')
@@ -257,6 +357,22 @@ export default {
           }
         }
       })
+=======
+          Object.assign(assessment, values)
+        }
+      })
+      if (this.operate === '新建') {
+        insertDoctor(assessment).then((res) => {
+          this.reback()
+        })
+      }
+      if (this.operate === '编辑') {
+        const updata = Object.assign(assessment, { uid: this.$route.params['info']['uid'] })
+        updateDoctor(updata).then((res) => {
+          this.reback()
+        })
+      }
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
     },
     displayRender ({ labels }) {
       return labels[labels.length - 1]
@@ -267,6 +383,7 @@ export default {
       } else {
         this.$router.back(-1)
       }
+<<<<<<< HEAD
     },
     dateChange (date, dateString) {
       console.log('date_', date)
@@ -283,6 +400,12 @@ export default {
     if (this.$route.params['operate'] === '查看') {
       this.disabledInfo = true
     }
+=======
+    }
+  },
+  created () {
+    console.log('this.hospitals_', this.hospitals)
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
     this.options = this.hospitals
   }
 }

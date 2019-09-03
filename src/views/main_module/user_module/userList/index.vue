@@ -7,23 +7,31 @@
         @search="onSearch"
         class="float-left"
       />
+<<<<<<< HEAD
       <a-button
         type="primary"
         @click="newUser"
         class="float-right marginLeft"
         :disabled="permissionIsTrue('313')"
+=======
+      <a-button type="primary" @click="newUser" class="float-right marginLeft"
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
         >+新建</a-button
       >
       <a-button
         type="primary"
         @click="exportUser"
         class="float-right marginLeft"
+<<<<<<< HEAD
         :disabled="permissionIsTrue('312')"
+=======
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
         >+导出</a-button
       >
       <!-- <a-button type="primary" class="float-right marginLeft">导入</a-button> -->
       <a-upload
         class="float-right marginLeft"
+<<<<<<< HEAD
         name="doctorfile"
         :multiple="true"
         :action="baseUrl + 'rest/backend/importDoctors?status=1'"
@@ -35,6 +43,15 @@
         <a-button type="primary" :disabled="permissionIsTrue('311')"
           >导入</a-button
         >
+=======
+        name="file"
+        :multiple="true"
+        action="//jsonplaceholder.typicode.com/posts/"
+        :headers="headers"
+        @change="upLoad"
+      >
+        <a-button type="primary">导入</a-button>
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
       </a-upload>
       <a-button type="primary" @click="exportTmp" class="float-right marginLeft"
         >下载模版</a-button
@@ -47,6 +64,7 @@
         :columns="columns"
         :dataSource="data"
         :pagination="pagination"
+<<<<<<< HEAD
         @change="handleTableChange"
         :scroll="{ x: true }"
       >
@@ -57,11 +75,16 @@
         <template slot="status" slot-scope="status">
           {{ status | roleFilter }}
         </template>
+=======
+      >
+        <a slot="name" slot-scope="text" href="javascript:;">{{ text }}</a>
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
         <span
           slot="action"
           slot-scope="text, record"
           @click.stop="operate($event, record)"
         >
+<<<<<<< HEAD
           <a
             :disabled="
               record['status'] === 3 ||
@@ -104,6 +127,17 @@
                 record['status'] === 2 ||
                 permissionIsTrue('317')
             "
+=======
+          <a :disabled="record['status'] === 2" href="javascript:;">编辑</a>
+          <a-divider type="vertical" />
+          <a :disabled="record['status'] === 2" href="javascript:;">查看</a>
+          <a-divider type="vertical" />
+          <a href="javascript:;" v-if="record['status'] === 1">禁用</a>
+          <a href="javascript:;" v-if="record['status'] === 2">启用</a>
+          <a-divider type="vertical" />
+          <a
+            :disabled="record['status'] === 2"
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
             href="javascript:;"
             @click="showModal(record['uid'])"
             >同步数据</a
@@ -124,12 +158,15 @@
           :dataSource="syncData"
           :pagination="false"
         >
+<<<<<<< HEAD
           <template slot="sex" slot-scope="sex">
             {{ sex | sexFilter }}
           </template>
           <template slot="status" slot-scope="status">
             {{ status | roleFilter }}
           </template>
+=======
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
           <a slot="name" slot-scope="text" href="javascript:;">{{ text }}</a>
         </a-table>
       </a-modal>
@@ -138,6 +175,7 @@
 </template>
 <script>
 import { getTargetObject } from '@/utils/tools'
+<<<<<<< HEAD
 import { exportExcelPost, exportExcelGet } from '@/utils/exportExcel'
 import { userList, updateDoctorStatus, synchronousData } from '@/api/user_module/index'
 import { permissionIsTrue } from '@/utils/permissionIsTrue'
@@ -155,6 +193,16 @@ const columns = [{
     { text: '女', value: '1' }
   ],
   scopedSlots: { customRender: 'sex' }
+=======
+import { userList, exportUsers, exportTemplate, updateDoctorStatus } from '@/api/user_module/index'
+const columns = [{
+  title: '姓名',
+  dataIndex: 'fullname',
+  scopedSlots: { customRender: 'name' }
+}, {
+  title: '性别',
+  dataIndex: 'sex'
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
 }, {
   title: '年龄',
   dataIndex: 'age'
@@ -172,8 +220,12 @@ const columns = [{
   dataIndex: 'recordsCount'
 }, {
   title: '状态',
+<<<<<<< HEAD
   dataIndex: 'status',
   scopedSlots: { customRender: 'status' }
+=======
+  dataIndex: 'status'
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
 }, {
   title: '创建时间',
   dataIndex: 'createTime',
@@ -184,9 +236,13 @@ const columns = [{
 }, {
   title: '操作',
   key: 'action',
+<<<<<<< HEAD
   scopedSlots: { customRender: 'action' },
   width: 250,
   fixed: 'right'
+=======
+  scopedSlots: { customRender: 'action' }
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
 }]
 const modalColumns = [{
   title: '姓名',
@@ -197,10 +253,17 @@ const modalColumns = [{
   dataIndex: 'sex',
   filterMultiple: false,
   filters: [
+<<<<<<< HEAD
     { text: '男', value: '0' },
     { text: '女', value: '1' }
   ],
   scopedSlots: { customRender: 'sex' }
+=======
+    { text: '不限', value: '' },
+    { text: '男', value: '0' },
+    { text: '女', value: '1' }
+  ]
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
 }, {
   title: '年龄',
   dataIndex: 'age'
@@ -218,6 +281,7 @@ const modalColumns = [{
   dataIndex: 'recordsCount'
 }, {
   title: '状态',
+<<<<<<< HEAD
   dataIndex: 'status',
   scopedSlots: { customRender: 'status' }
 }]
@@ -228,20 +292,51 @@ const data = []
 //   pageNumber: 0,
 //   pageSize: 10
 // }
+=======
+  dataIndex: 'status'
+}]
+// mock 数据
+const data = []
+// 分页配置
+const pagination = {
+  showSizeChanger: true,
+  // current: 10,
+  defaultCurrent: 1,
+  defaultPageSize: 10,
+  // pageSize: 20,
+  pageSizeOptions: ['10', '20', '30', '40'],
+  total: 0,
+  showQuickJumper: true
+}
+// 筛选条件初始化
+const filterFields = {
+  pageNumber: 0,
+  pageSize: 10
+}
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
 // 从后端传回来的结果过滤患者的list，产生真实的data
 function userListFilter (data) {
   const userList = []
   for (let item = 0; item < data.length; item++) {
+<<<<<<< HEAD
     const listItem = Object.assign({
       index: item + 1,
       key: data[item]['uid']
     }, data[item], { hospitals: data[item]['doctorHospital']['hospitalName'], hospitalUid: data[item]['doctorHospital']['hospitalUid'] })
+=======
+    const listItem = Object.assign({ index: item + 1,
+      key: data[item]['uid']
+    }, data[item], data[item]['doctorEntity'])
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
     userList.push(listItem)
   }
   return userList
 }
 export default {
+<<<<<<< HEAD
   name: 'userList-alive',
+=======
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
   data: function () {
     return {
       data,
@@ -249,6 +344,7 @@ export default {
       syncDoctorUid: '',
       columns,
       modalColumns,
+<<<<<<< HEAD
       pagination: {
         showSizeChanger: true,
         current: 1,
@@ -263,14 +359,23 @@ export default {
         pageNumber: 0,
         pageSize: 10
       },
+=======
+      pagination,
+      filterFields,
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
       selectedRowKey: [],
       selectedSyncRowKey: [],
       visible: false,
       responseData: {},
       headers: {
+<<<<<<< HEAD
         Token: getToken()
       },
       baseUrl
+=======
+        authorization: 'authorization-text'
+      }
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
     }
   },
   computed: {
@@ -308,6 +413,7 @@ export default {
   methods: {
     onSearch (value) {
       const name = {
+<<<<<<< HEAD
         fullname: value,
         pageNumber: 0,
         pageSize: 10
@@ -319,11 +425,20 @@ export default {
         this.responseData = response.data.body.pageList
         this.data = userListFilter(response.data.body.pageList)
         this.pagination['total'] = response.data.body['totalElements']
+=======
+        fullname: value
+      }
+      const requestFilter = Object.assign(name, filterFields)
+      userList(requestFilter).then((response) => {
+        this.responseData = response.data.body.doctors
+        this.data = userListFilter(response.data.body.doctors)
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
       })
     },
     handleTableChange (pagination, filters, sorter) {
       // requst 数据整合
       const filter = {}
+<<<<<<< HEAD
       this.pagination['current'] = pagination['current']
       // if (filters['sex'] && filters['sex']['length'] !== 0) {
       filter['doctorSex'] = (filters['sex'] && filters['sex']['length'] !== 0) ? Number(filters['sex'][0]) : null
@@ -333,17 +448,40 @@ export default {
         sort['orderBy'] = sorter['order'] === 'descend' ? 'DESC' : 'ASC'
         sort['sortKey'] = sorter['columnKey']
       }
+=======
+      // for (let item in filters) {
+      //   if (item === 'status' && filters[item][0] !== '') {
+      //     console.log('进入的')
+      //     filter[item] = Number(filters[item][0])
+      //   } else {
+      //     console.log('没进的')
+      //     filter[item] = filters[item][0]
+      //   }
+      // }
+      const sort = {}
+      // if (sorter['columnKey'] && sorter['order']) {
+      //   sort['orderBy'] = sorter['order'] === 'descend' ? 'DESC' : 'ASC'
+      //   sort['sortKey'] = sorter['columnKey']
+      // }
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
       const filterField = {
         pageNumber: pagination['current'] - 1,
         pageSize: pagination['pageSize']
       }
       const requestFilter = getTargetObject(Object.assign(filterField, sort, filter), [''])
+<<<<<<< HEAD
       const request = Object.assign(this['filterFields'], requestFilter)
       // console.log('requestFilter_', requestFilter)
       userList(request).then((response) => {
         this.responseData = response.data.body.pageList
         this.data = userListFilter(response.data.body.pageList)
         this.pagination['total'] = response.data.body['totalElements']
+=======
+      console.log('requestFilter_', requestFilter)
+      userList(requestFilter).then((response) => {
+        this.responseData = response.data.body.doctors
+        this.data = userListFilter(response.data.body.doctors)
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
       })
     },
     onShowSizeChange (current, pageSize) {
@@ -373,6 +511,7 @@ export default {
       console.log('this.data_', this.data)
       console.log('this.uid_', uid)
       this.syncDoctorUid = uid
+<<<<<<< HEAD
       const request = {
         'pageNumber': 0,
         'pageSize': 100000,
@@ -391,10 +530,19 @@ export default {
       //   // return item['status'] === 2
       //   return item['status'] === 2
       // })
+=======
+      this.syncData = this.data.filter((item) => {
+        // return item['status'] === 2
+        return item['status'] === 2
+      })
+      console.log('this.syncData_', this.syncData)
+      this.visible = true
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
     },
     handleOk () {
       console.log('this.selectedSyncRowKey_', this.selectedSyncRowKey)
       console.log('this.syncDoctorUid_', this.syncDoctorUid)
+<<<<<<< HEAD
       const data = {
         formDoctorUids: this.selectedSyncRowKey,
         toDoctorUid: this.syncDoctorUid
@@ -456,6 +604,32 @@ export default {
         this.$message.error(`${info.file.name} 文件上传失败.`)
       }
     },
+=======
+      // const data = {
+      //   formDoctorUids: this.selectedSyncRowKey,
+      //   toDoctorUid: this.syncDoctorUid
+      // }
+      // synchronousData(data).then((response) => {
+      //   this.visible = false
+      // })
+    },
+    exportTmp () {
+      console.log(this.selectedRowKey)
+      exportTemplate().then(res => {
+        let blob = new Blob([res], { type: 'application/vnd.ms-excel' })
+        let objectUrl = URL.createObjectURL(blob)
+        window.location.href = objectUrl
+      })
+    },
+    exportUser () {
+      exportUsers({ doctorIds: this.selectedRowKey }).then(res => {
+        let blob = new Blob([res], { type: 'application/vnd.ms-excel' })
+        let objectUrl = URL.createObjectURL(blob)
+        window.location.href = objectUrl
+      })
+    },
+    upLoad () { },
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
     newUser () {
       this.$router.push({// 你需要接受路由的参数再跳转，最终跳转是在main函数里面
         name: 'userManager',
@@ -464,6 +638,7 @@ export default {
           info: ''
         }
       })
+<<<<<<< HEAD
     },
     permissionIsTrue
   },
@@ -520,6 +695,21 @@ export default {
       this.$store.commit('DELETE_ACTIVE', 'userList-alive')
     }
     next()
+=======
+    }
+  },
+  beforeRouteEnter (to, from, next) {
+    const filterResult = getTargetObject(filterFields, [''])
+    console.log('filterResult_', filterResult)
+    userList(filterResult).then((response) => {
+      console.log('recordList_response', response)
+      next(vm => {
+        vm.responseData = response.data.body.doctors
+        vm.data = userListFilter(response.data.body.doctors)
+        console.log('vm.data_', vm.data)
+      })
+    })
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
   }
 }
 </script>
@@ -530,6 +720,7 @@ export default {
 .ant-table-pagination.ant-pagination {
   float: none;
 }
+<<<<<<< HEAD
 .ant-table tr td {
   max-width: 200px;
   overflow: hidden;
@@ -541,6 +732,8 @@ export default {
 .ant-table tr th {
   text-align: center;
 }
+=======
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
 .main_header {
   .marginLeft {
     margin-left: 10px;

@@ -1,8 +1,15 @@
 <template>
+<<<<<<< HEAD
   <div class="main-container">
     <div class="titleContent">
       <a class="float-left goBack" @click="reback">返回</a>
       <span class="float-left patientInfo">{{ operate }}后台用户 </span>
+=======
+  <div>
+    <div class="titleContent">
+      <a class="float-left goBack" @click="reback">返回</a>
+      <span class="float-left patientInfo">{{ operate }}角色 </span>
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
       <div class="clear-both"></div>
     </div>
     <div class="content">
@@ -10,6 +17,7 @@
         <a-form-item
           label="部门"
           :label-col="{ span: 5 }"
+<<<<<<< HEAD
           :wrapper-col="{ span: 16 }"
         >
           <!-- option-cascader:代表传入的组织结构
@@ -52,6 +60,26 @@
               >
             </a-popover>
           </a-col>
+=======
+          :wrapper-col="{ span: 12 }"
+        >
+          <a-cascader
+            :options="options"
+            v-decorator="[
+              'orgId',
+              {
+                initialValue: this.orgId,
+                rules: [
+                  {
+                    type: 'array',
+                    required: true,
+                    message: 'Please select your habitual residence!'
+                  }
+                ]
+              }
+            ]"
+          />
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
         </a-form-item>
         <a-form-item
           label="姓名"
@@ -59,12 +87,19 @@
           :wrapper-col="{ span: 12 }"
         >
           <a-input
+<<<<<<< HEAD
             :disabled="disabledInfo"
+=======
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
             v-decorator="[
               'fullname',
               {
                 initialValue: this.fullname,
+<<<<<<< HEAD
                 rules: [{ required: true, message: '请输入姓名!' }]
+=======
+                rules: [{ required: true, message: 'Please input your note!' }]
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
               }
             ]"
           />
@@ -75,11 +110,15 @@
           :wrapper-col="{ span: 12 }"
         >
           <a-input
+<<<<<<< HEAD
             :disabled="disabledInfo"
+=======
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
             v-decorator="[
               'mobilenumber',
               {
                 initialValue: this.mobilenumber,
+<<<<<<< HEAD
                 rules: [
                   { required: true, message: '请输入手机号!' },
                   {
@@ -87,6 +126,9 @@
                     message: '手机号格式不正确!'
                   }
                 ]
+=======
+                rules: [{ required: true, message: 'Please input your note!' }]
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
               }
             ]"
           />
@@ -97,11 +139,15 @@
           :wrapper-col="{ span: 12 }"
         >
           <a-input
+<<<<<<< HEAD
             :disabled="disabledInfo"
+=======
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
             v-decorator="[
               'email',
               {
                 initialValue: this.email,
+<<<<<<< HEAD
                 rules: [
                   { required: true, message: '请输入邮箱!' },
                   {
@@ -109,6 +155,9 @@
                     message: '邮箱格式错误!'
                   }
                 ]
+=======
+                rules: [{ required: true, message: 'Please input your note!' }]
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
               }
             ]"
           />
@@ -117,14 +166,20 @@
           label="角色"
           :label-col="{ span: 5 }"
           :wrapper-col="{ span: 12 }"
+<<<<<<< HEAD
           style="text-align: left"
         >
           <a-radio-group
             :disabled="disabledInfo"
+=======
+        >
+          <a-radio-group
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
             v-decorator="[
               'roleIds',
               {
                 initialValue: this.roleIds,
+<<<<<<< HEAD
                 rules: [{ required: true, message: '请输入角色!' }]
               }
             ]"
@@ -148,6 +203,23 @@
             html-type="submit"
             :loading="loading"
           >
+=======
+                rules: [{ required: true, message: 'Please input your note!' }]
+              }
+            ]"
+          >
+            <a-radio :value="0">项目经理</a-radio>
+            <a-radio :value="1">销售经理</a-radio>
+            <a-radio :value="2">市场经理</a-radio>
+          </a-radio-group>
+        </a-form-item>
+        <a-form-item :wrapper-col="{ span: 12, offset: 5 }">
+          <a-button @click="checkedInfo()">
+            取消
+          </a-button>
+          <span style="display:inline-block;width:10%"></span>
+          <a-button type="primary" html-type="submit">
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
             保存
           </a-button>
         </a-form-item>
@@ -157,8 +229,12 @@
 </template>
 <script>
 import { mapGetters } from 'vuex'
+<<<<<<< HEAD
 import { userInsert, userUpdate, hospitalFind } from '@/api/system_moudle/index'
 import MultipleCascader from '@/components/MultipleCascader'
+=======
+import { userInsert, userUpdate } from '@/api/system_moudle/index'
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
 // 涌来循环options，添加label 和 value 值
 function selectOptions (source) {
   var sourceCopy = source instanceof Array ? [] : {}
@@ -178,9 +254,12 @@ function selectOptions (source) {
   return sourceCopy
 }
 export default {
+<<<<<<< HEAD
   components: {
     MultipleCascader
   },
+=======
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
   data: function () {
     return {
       form: this.$form.createForm(this),
@@ -189,6 +268,7 @@ export default {
       email: this.$route.params['info']['email'] || '',
       fullname: this.$route.params['info']['fullname'] || '',
       mobilenumber: this.$route.params['info']['mobilenumber'] || '',
+<<<<<<< HEAD
       orgId: [this.$route.params['info']['orgId']] || [],
       roleIds: this.$route.params['info']['roleIds'] || '',
       // 上面两个
@@ -202,13 +282,28 @@ export default {
   },
   computed: {
     ...mapGetters(['user', 'organization'])
+=======
+      // 找不到
+      // orgId: this.$route.params['info']['orgId'] || [],
+      orgId: [],
+      roleIds: this.$route.params['info']['roleIds'] || '',
+      // 上面两个
+      uid: this.$route.params['info']['uid'] || ''
+    }
+  },
+  computed: {
+    ...mapGetters(['organization'])
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
   },
   methods: {
     checkedInfo () {
       // console.log('this.organization_', this.organization)
       // const data = selectOptions(this.organization)
       // console.log('this.organization_', data)
+<<<<<<< HEAD
       this.$router.back(-1)
+=======
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
     },
     onChange (value) {
       console.log(value)
@@ -219,6 +314,7 @@ export default {
       this.form.validateFieldsAndScroll((err, values) => {
         if (!err) {
           console.log('Received values of form: ', values)
+<<<<<<< HEAD
           Object.assign(backUser, values, {
             'roleIds': [values.roleIds],
             'orgId': this.orgId[0]
@@ -241,6 +337,22 @@ export default {
           return false
         }
       })
+=======
+          Object.assign(backUser, values)
+        }
+      })
+      if (this.operate === '新建') {
+        userInsert(backUser).then((res) => {
+          this.reback()
+        })
+      }
+      if (this.operate === '编辑') {
+        const updata = Object.assign(backUser, { uid: this.$route.params['info']['uid'] })
+        userUpdate(updata).then((res) => {
+          this.reback()
+        })
+      }
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
     },
     displayRender ({ labels }) {
       return labels[labels.length - 1]
@@ -251,6 +363,7 @@ export default {
       } else {
         this.$router.back(-1)
       }
+<<<<<<< HEAD
     },
     viewHospital (e) {
       // 点击气泡了
@@ -295,6 +408,13 @@ export default {
     if (this.$route.params['operate'] === '查看') {
       this.disabledInfo = true
     }
+=======
+    }
+  },
+  created () {
+    console.log('organization_backManager_1', this.organization)
+    this.options = selectOptions(this.organization)
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
     console.log('organization_backManager_2', this.organization)
     console.log('this.$route.params_', this.$route.params['info'])
   }
@@ -360,8 +480,11 @@ export default {
     margin-left: 6%;
   }
 }
+<<<<<<< HEAD
 .popoverHeight {
   max-height: 500px;
   overflow: auto;
 }
+=======
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
 </style>

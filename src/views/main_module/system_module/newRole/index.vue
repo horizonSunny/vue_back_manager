@@ -14,14 +14,23 @@
             :wrapper-col="{ span: 12 }"
           >
             <a-input
+<<<<<<< HEAD
               :disabled="disabledInfo"
               placeholder="请输入角色名称(限10个字以内)"
               maxlength="10"
+=======
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
               v-decorator="[
                 'roleName',
                 {
                   initialValue: this.roleName,
+<<<<<<< HEAD
                   rules: [{ required: true, message: '请填写角色名称!' }]
+=======
+                  rules: [
+                    { required: true, message: 'Please input your note!' }
+                  ]
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
                 }
               ]"
             />
@@ -32,15 +41,24 @@
             :wrapper-col="{ span: 12 }"
           >
             <a-textarea
+<<<<<<< HEAD
               :disabled="disabledInfo"
               placeholder="请输入角色名称(限50个字以内)"
               maxlength="50"
+=======
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
               class="roleWidth"
               v-decorator="[
                 'description',
                 {
                   initialValue: this.description,
+<<<<<<< HEAD
                   rules: [{ required: true, message: '请填写角色描述!' }]
+=======
+                  rules: [
+                    { required: true, message: 'Please input your note!' }
+                  ]
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
                 }
               ]"
             />
@@ -56,7 +74,10 @@
               class="tableWidth"
               style="width:150%"
               @change="onChange"
+<<<<<<< HEAD
               :disabled="disabledInfo"
+=======
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
             >
               <table style="text-align: center;width:100%">
                 <thead>
@@ -67,6 +88,7 @@
                   </tr>
                 </thead>
                 <tbody>
+<<<<<<< HEAD
                   <tr
                     v-for="permission in permissionList"
                     :key="permission.uid"
@@ -94,11 +116,92 @@
                         :value="thirdItem.uid.toString()"
                         >{{ thirdItem.permissionName }}</a-checkbox
                       >
+=======
+                  <tr>
+                    <td>
+                      <a-checkbox value="1">患者档案</a-checkbox>
+                    </td>
+                    <td>
+                      <a-checkbox value="11">档案列表</a-checkbox>
+                    </td>
+                    <td>
+                      <a-checkbox value="111">基本信息</a-checkbox>
+                      <a-checkbox value="112">测评报告</a-checkbox>
+                      <a-checkbox value="113">导出</a-checkbox>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td rowspan="2">
+                      <a-checkbox value="2">量表管理</a-checkbox>
+                    </td>
+                    <td>
+                      <a-checkbox value="21">测评量表</a-checkbox>
+                    </td>
+                    <td>
+                      <a-checkbox value="211">新建测评</a-checkbox>
+                      <a-checkbox value="212">编辑</a-checkbox>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <a-checkbox value="22">方案管理</a-checkbox>
+                    </td>
+                    <td>
+                      <a-checkbox value="221">新建测评方案</a-checkbox>
+                      <a-checkbox value="222">编辑</a-checkbox>
+                      <a-checkbox value="223">查看</a-checkbox>
+                      <a-checkbox value="224">禁用</a-checkbox>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <a-checkbox value="3">用户管理</a-checkbox>
+                    </td>
+                    <td>
+                      <a-checkbox value="31">脑健康师管理</a-checkbox>
+                    </td>
+                    <td>
+                      <a-checkbox value="311">导入</a-checkbox>
+                      <a-checkbox value="312">导出</a-checkbox>
+                      <a-checkbox value="313">新建</a-checkbox>
+                      <a-checkbox value="314">编辑</a-checkbox>
+                      <a-checkbox value="315">查看</a-checkbox>
+                      <a-checkbox value="316">禁用</a-checkbox>
+                      <a-checkbox value="317">同步数据</a-checkbox>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td rowspan="2">
+                      <a-checkbox value="4">量表管理</a-checkbox>
+                    </td>
+                    <td>
+                      <a-checkbox value="41">角色管理</a-checkbox>
+                    </td>
+                    <td>
+                      <a-checkbox value="411">新增角色</a-checkbox>
+                      <a-checkbox value="412">编辑</a-checkbox>
+                      <a-checkbox value="413">查看</a-checkbox>
+                      <a-checkbox value="414">禁用</a-checkbox>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <a-checkbox value="42">后台用户</a-checkbox>
+                    </td>
+                    <td>
+                      <a-checkbox value="421">新建后台用户</a-checkbox>
+                      <a-checkbox value="422">编辑</a-checkbox>
+                      <a-checkbox value="423">查看</a-checkbox>
+                      <a-checkbox value="424">禁用</a-checkbox>
+                      <a-checkbox value="425">编辑部门</a-checkbox>
+                      <a-checkbox value="426">添加部门</a-checkbox>
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
                     </td>
                   </tr>
                 </tbody>
               </table>
             </a-checkbox-group>
+<<<<<<< HEAD
             <a-checkbox
               :disabled="disabledInfo"
               @change="checkAll"
@@ -117,6 +220,16 @@
               html-type="submit"
               :loading="loading"
             >
+=======
+            <a-checkbox @change="checkAll">全选</a-checkbox>
+          </a-form-item>
+          <a-form-item :wrapper-col="{ span: 12, offset: 5 }">
+            <a-button @click="checkedInfo()">
+              取消
+            </a-button>
+            <span style="display:inline-block;width:10%"></span>
+            <a-button type="primary" html-type="submit">
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
               保存
             </a-button>
           </a-form-item>
@@ -127,6 +240,7 @@
   </div>
 </template>
 <script>
+<<<<<<< HEAD
 // import { permission } from '../permissionUid'
 import { roleInsert, roleUpdate, allPermission } from '@/api/system_moudle/index'
 import { deepCopy } from '@/utils/tools'
@@ -207,6 +321,46 @@ function removeArrItem (arr, item) {
   return arr
 }
 
+=======
+import { permission } from '../permissionUid'
+import { roleInsert, roleUpdate } from '@/api/system_moudle/index'
+// 比较两个数组元素，获取不同的值
+function getArrDifference (arr1, arr2) {
+  return arr1.concat(arr2).filter(function (v, i, arr) {
+    return arr.indexOf(v) === arr.lastIndexOf(v)
+  })
+}
+// 切割字符串，放进数组,用于权限操作
+function splitString (str, arr) {
+  // console.log('str_', str, 'arr_', arr)
+  const newStr = str.slice(0, str.length - 1)
+  // console.log('newStr_', newStr)
+  arr.push(newStr)
+  if (newStr.length !== 0) {
+    splitString(newStr, arr)
+  } else {
+    return arr
+  }
+  // 防止有空字符串数组
+  // const index = arr.indexOf('')
+  // console.log('index_', index)
+  // arr.splice(index, 1)
+  return arr
+}
+// 数组去重
+function removeDuplicateItems (arr) {
+  return [...new Set(arr)]
+}
+// 依据permission数据结构获取permission,三层数据结构
+// function getPermission (permission, arr) {
+//   for (let item = 0; item < permission.length; item++) {
+//     arr.push(permission[item]['permissionIdentify'])
+//     if (permission[item]['children']['length'] !== 0) {
+//       getPermission(permission[item]['children'], arr)
+//     }
+//   }
+// }
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
 export default {
   data: function () {
     return {
@@ -216,16 +370,21 @@ export default {
       hasChecked: [],
 
       description: this.$route.params['info']['description'] || '',
+<<<<<<< HEAD
       roleName: this.$route.params['info']['roleName'] || '',
       permissionList: [],
       allCheck: [],
       allChecked: false,
       disabledInfo: false,
       loading: false
+=======
+      roleName: this.$route.params['info']['roleName'] || ''
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
     }
   },
   methods: {
     onChange (checkedValues) {
+<<<<<<< HEAD
       let finalPermission = []
       // 判断是点击的哪一个权限
       if (this.hasChecked.length > checkedValues.length) {
@@ -288,6 +447,41 @@ export default {
       this.allChecked = e.target.checked
       if (e.target.checked) {
         this.hasChecked = this.allCheck
+=======
+      // 表示是选择还是取消
+      const checked = checkedValues.length > this.hasChecked.length
+      // 过滤后的添加或者取消的权限value值
+      // console.log('checkedValues_', checkedValues)
+      const operatedPermission = getArrDifference(checkedValues, this.hasChecked)[0]
+      // const operatedPermission = getArrDifference([1, 2, 3, 4, 5], [1, 2, 3])
+      console.log('operatedPermission_', operatedPermission)
+      console.log('this.hasChecked_', this.hasChecked)
+      if (checked) {
+        // 这个是选中
+        const arr = splitString(operatedPermission, []).filter((item) => { return item.length !== 0 })
+        arr.push(operatedPermission)
+        const newChecked = removeDuplicateItems(this.hasChecked.concat(arr))
+        console.log('newChecked_', newChecked)
+        this.hasChecked = newChecked
+      } else {
+        // 这个是取消
+        const newArr = this.hasChecked.filter((item) => {
+          const itemInfo = item.substring(0, operatedPermission.length)
+          console.log('itemInfo_', itemInfo)
+          if (itemInfo !== operatedPermission) {
+            return item
+          }
+        })
+        this.hasChecked = newArr
+      }
+    },
+    checkAll (e) {
+      const allChecked = Object.keys(permission)
+      const checked = e.target.checked
+      console.log('checked_', checked)
+      if (checked) {
+        this.hasChecked = allChecked
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
       } else {
         this.hasChecked = []
       }
@@ -304,6 +498,7 @@ export default {
       let roleUser = {}
       this.form.validateFieldsAndScroll((err, values) => {
         if (!err) {
+<<<<<<< HEAD
           Object.assign(roleUser, values)
           // 接口
           let permissionChecked = []
@@ -382,6 +577,40 @@ export default {
     if (this.$route.params['operate'] === '查看') {
       this.disabledInfo = true
     }
+=======
+          console.log('Received values of form: ', values)
+          Object.assign(roleUser, values)
+        }
+      })
+      let permissionChecked = []
+      this.hasChecked.filter((item) => {
+        const allPermissions = Object.keys(permission)
+        if (allPermissions.indexOf(item) !== -1) {
+          // console.log('permission[item]_', permission[item])
+          permissionChecked.push(permission[item])
+        }
+      })
+      roleUser.permissions = permissionChecked
+      console.log('permissions_', permissionChecked)
+      console.log('roleUser_', roleUser)
+      if (this.operate === '新建') {
+        roleInsert(roleUser).then((res) => {
+          this.reback()
+        })
+      }
+      if (this.operate === '编辑') {
+        const updata = Object.assign(roleUser, { uid: this.$route.params['info']['uid'] })
+        roleUpdate(updata).then((res) => {
+          this.reback()
+        })
+      }
+    }
+  },
+  created () {
+    //  console.log('this.hospitals_', this.hospitals)
+    // this.options = this.hospitals
+    this.hasChecked = this.$route.params['info']['permissions'] ? this.$route.params['info']['permissions'] : []
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
     // let arr = []
     // getPermission(permission, arr)
     // permissions获参

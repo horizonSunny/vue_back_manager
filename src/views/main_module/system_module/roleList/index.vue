@@ -7,16 +7,21 @@
         @search="onSearch"
         class="float-left"
       /> -->
+<<<<<<< HEAD
       <a-button
         type="primary"
         @click="newRoleUser"
         class="float-right"
         :disabled="permissionIsTrue('411')"
+=======
+      <a-button type="primary" @click="newRoleUser" class="float-right"
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
         >+新增角色</a-button
       >
       <div class="clear-both"></div>
     </div>
     <div class="main_content">
+<<<<<<< HEAD
       <a-table
         :columns="columns"
         :dataSource="data"
@@ -27,12 +32,16 @@
         <template slot="status" slot-scope="status">
           {{ status | roleFilter }}
         </template>
+=======
+      <a-table :columns="columns" :dataSource="data" :pagination="pagination">
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
         <a slot="name" slot-scope="text" href="javascript:;">{{ text }}</a>
         <span
           slot="action"
           slot-scope="text, record"
           @click.stop="operate($event, record)"
         >
+<<<<<<< HEAD
           <a
             :disabled="record['status'] === 0 || permissionIsTrue('411')"
             href="javascript:;"
@@ -57,6 +66,14 @@
             :disabled="permissionIsTrue('414')"
             >禁用</a
           >
+=======
+          <a :disabled="record['status'] === 0" href="javascript:;">编辑</a>
+          <a-divider type="vertical" />
+          <a :disabled="record['status'] === 0" href="javascript:;">查看</a>
+          <a-divider type="vertical" />
+          <a href="javascript:;" v-if="record['status'] === 0">禁用</a>
+          <a href="javascript:;" v-if="record['status'] !== 0">启用</a>
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
           <a-divider type="vertical" />
         </span>
       </a-table>
@@ -65,12 +82,18 @@
 </template>
 <script>
 import { roleList, roleDisable } from '@/api/system_moudle/index'
+<<<<<<< HEAD
 import { getTargetObject } from '@/utils/tools'
 import { permissionIsTrue } from '@/utils/permissionIsTrue'
 const columns = [
   {
     title: '序号',
     width: 60,
+=======
+const columns = [
+  {
+    title: '序号',
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
     dataIndex: 'roleIndex'
   },
   {
@@ -81,6 +104,7 @@ const columns = [
     dataIndex: 'description'
   }, {
     title: '状态',
+<<<<<<< HEAD
     dataIndex: 'status',
     scopedSlots: { customRender: 'status' }
   }, {
@@ -96,12 +120,42 @@ const columns = [
     key: 'action',
     width: 200,
     fixed: 'right',
+=======
+    dataIndex: 'status'
+  }, {
+    title: '创建时间',
+    dataIndex: 'createTime'
+  }, {
+    title: '更新时间',
+    dataIndex: 'updateTime'
+  }, {
+    title: '操作',
+    key: 'action',
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
     scopedSlots: { customRender: 'action' }
   }]
 
 // mock 数据
 const data = []
+<<<<<<< HEAD
 
+=======
+// 分页配置
+const pagination = {
+  showSizeChanger: true,
+  // current: 10,
+  defaultCurrent: 1,
+  defaultPageSize: 10,
+  // pageSize: 20,
+  pageSizeOptions: ['10', '20', '30', '40'],
+  total: 0,
+  showQuickJumper: true
+}
+const filterFields = {
+  pageNumber: 0,
+  pageSize: 10
+}
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
 // 从后端传回来的结果过滤患者的list，产生真实的data
 function roleListFilter (data) {
   const roleListList = []
@@ -121,11 +175,15 @@ function roleListFilter (data) {
 //   }
 // }
 export default {
+<<<<<<< HEAD
   name: 'roleList-alive',
+=======
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
   data: function () {
     return {
       data,
       columns,
+<<<<<<< HEAD
       pagination: {
         showSizeChanger: true,
         // current: 10,
@@ -140,6 +198,9 @@ export default {
         pageNumber: 0,
         pageSize: 10
       },
+=======
+      pagination,
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
       responseData: {}
     }
   },
@@ -179,6 +240,7 @@ export default {
           info: ''
         }
       })
+<<<<<<< HEAD
     },
     handleTableChange (pagination, filters, sorter) {
       // requst 数据整合
@@ -246,6 +308,18 @@ export default {
       this.$store.commit('DELETE_ACTIVE', 'roleList-alive')
     }
     next()
+=======
+    }
+  },
+  beforeRouteEnter (to, from, next) {
+    roleList(filterFields).then((response) => {
+      next(vm => {
+        vm.responseData = response.data.body.pageList
+        vm.data = roleListFilter(response.data.body.pageList)
+        console.log('vm.responseData_', vm.responseData)
+      })
+    })
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
   }
 }
 </script>
@@ -256,6 +330,7 @@ export default {
 .ant-table-pagination.ant-pagination {
   float: none;
 }
+<<<<<<< HEAD
 .ant-table tr td {
   max-width: 200px;
   overflow: hidden;
@@ -270,4 +345,6 @@ export default {
 .ant-table td {
   white-space: nowrap;
 }
+=======
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
 </style>

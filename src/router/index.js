@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import mainComponent from '../views/main_module/AppMain'
+<<<<<<< HEAD
 import moduleMainComponent from '../views/main_module/ModuleMain'
 import noPermission from '../views/main_module/NoPermission'
 // import HelloWorld from '@/view/HelloWorld'
@@ -8,6 +9,13 @@ import noPermission from '../views/main_module/NoPermission'
 // import loginComponent from '../views/login_module/login'
 // const _import = require('./import_' + process.env.NODE_ENV)
 const _import = require('./import_' + 'development')
+=======
+import noPermission from '../views/main_module/NoPermission'
+// import HelloWorld from '@/view/HelloWorld'
+// 必须设置node环境变量
+const _import = require('./import_' + process.env.NODE_ENV)
+// const _import = require('./import_' + 'developments')
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
 
 Vue.use(Router)
 
@@ -15,8 +23,13 @@ export const constRouter = [
   { path: '/', redirect: '/login' },
   {
     path: '/login',
+<<<<<<< HEAD
     component: _import('login_module/login/index')
     // component: loginComponent
+=======
+    component: _import('login_module/login/index'),
+    hidden: true
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
   },
   {
     path: '/forget',
@@ -33,11 +46,20 @@ export const constRouter = [
 export const asyncRouter = [
   // 档案模块
   {
+<<<<<<< HEAD
     path: 'record',
     permissionCode: '1',
     sideBarName: '患者档案',
     component: moduleMainComponent,
     children: [
+=======
+    path: '/record',
+    permissionCode: '1',
+    sideBarName: '档案',
+    component: mainComponent,
+    children: [
+      { path: '/', redirect: '/noPermission' },
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
       {
         path: 'noPermission',
         permissionCode: true,
@@ -52,14 +74,20 @@ export const asyncRouter = [
       },
       {
         path: 'recordList',
+<<<<<<< HEAD
         name: 'recordList',
+=======
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
         permissionCode: '11',
         sideBarName: '档案列表',
         component: _import('main_module/record_module/recordList/index')
       },
       {
         path: 'recordReport',
+<<<<<<< HEAD
         name: 'recordReport',
+=======
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
         permissionCode: '112',
         sideBarName: '测评报告',
         component: _import('main_module/record_module/recordReport/index')
@@ -68,6 +96,7 @@ export const asyncRouter = [
   },
   // 系统模块
   {
+<<<<<<< HEAD
     path: 'system',
     permissionCode: '4',
     sideBarName: '系统设置',
@@ -83,6 +112,16 @@ export const asyncRouter = [
       {
         path: 'backManagerList',
         name: 'backManagerList',
+=======
+    path: '/system',
+    permissionCode: '4',
+    sideBarName: '系统',
+    component: mainComponent,
+    children: [
+      // 后台管理
+      {
+        path: 'backManagerList',
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
         permissionCode: '42',
         sideBarName: '后台用户',
         component: _import('main_module/system_module/backManagerList/index')
@@ -120,6 +159,7 @@ export const asyncRouter = [
   },
   // 测评模块
   {
+<<<<<<< HEAD
     path: 'evaluation',
     permissionCode: '2',
     sideBarName: '量表管理',
@@ -135,6 +175,16 @@ export const asyncRouter = [
       {
         path: 'evaluationList',
         name: 'evaluationList',
+=======
+    path: '/evaluation',
+    permissionCode: '2',
+    sideBarName: '测评',
+    component: mainComponent,
+    children: [
+      // 测评量表
+      {
+        path: 'evaluationList',
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
         permissionCode: '21',
         sideBarName: '测评列表',
         component: _import('main_module/evaluation_module/evaluationList/index')
@@ -142,7 +192,10 @@ export const asyncRouter = [
       // 方案管理
       {
         path: 'evaluationScheme',
+<<<<<<< HEAD
         name: 'evaluationScheme',
+=======
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
         permissionCode: '22',
         sideBarName: '方案管理',
         component: _import(
@@ -169,17 +222,25 @@ export const asyncRouter = [
   },
   // 用户模块
   {
+<<<<<<< HEAD
     path: 'user',
     component: moduleMainComponent,
+=======
+    path: '/user',
+    component: mainComponent,
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
     permissionCode: '3',
     sideBarName: '用户管理',
     children: [
       {
+<<<<<<< HEAD
         path: 'noPermission',
         permissionCode: true,
         component: noPermission
       },
       {
+=======
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
         path: 'userList',
         permissionCode: '31',
         sideBarName: '脑健康管理师',
@@ -193,6 +254,7 @@ export const asyncRouter = [
         component: _import('main_module/user_module/userManager/index')
       }
     ]
+<<<<<<< HEAD
   },
   // 微信端管理
   {
@@ -345,3 +407,10 @@ export function _asyncAddRouter (path, name, componentPath) {
 }
 
 export default router
+=======
+  }
+]
+export default new Router({
+  routes: constRouter
+})
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77

@@ -9,6 +9,7 @@ import { getToken } from './utils/token'
 import store from './store'
 Vue.config.productionTip = false
 Vue.use(Antd)
+<<<<<<< HEAD
 let vm = new Vue()
 // 全局提示限制，报错只能1条
 vm.$message.config({
@@ -16,6 +17,8 @@ vm.$message.config({
   duration: 2,
   maxCount: 1
 })
+=======
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
 /* eslint-disable no-new */
 // 不需要token就能进入的页面白名单
 const whiteList = ['/login', '/forget']
@@ -27,7 +30,10 @@ router.beforeEach((to, from, next) => {
   // 路由前看是否拿到token值,没有的话返回登陆页请求拿到token
   if (token === undefined) {
     console.log('这里代表没有token')
+<<<<<<< HEAD
     console.log('process.env.NODE_ENV_', process.env.NODE_ENV)
+=======
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
     if (whiteList.indexOf(to.path) > -1) {
       next()
     } else {
@@ -35,7 +41,11 @@ router.beforeEach((to, from, next) => {
     }
   } else {
     console.log('这里代表拿到token了,看是否有userPermission权限')
+<<<<<<< HEAD
     if (to.path === '/login' || to.path === '/forget') {
+=======
+    if (to.path === '/login') {
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
       next()
     } else {
       // 这里代表拿到token了,看是否有userPermission权限
@@ -46,6 +56,7 @@ router.beforeEach((to, from, next) => {
         )
         store.dispatch('GetUserInfo').then(() => {
           store.dispatch('AddRouter').then(() => {
+<<<<<<< HEAD
             console.log('store.getters.addRouters_', store.getters.addRouters)
             router.addRoutes(store.getters.addRouters) // 动态添加可访问路由表
             // 这边是获取到用户信息后到最终跳转，二级页面作为预留
@@ -83,6 +94,16 @@ router.beforeEach((to, from, next) => {
             // const routerPath =
             //   store.getters.addRouters[0]['path'] + '/' + childrenPath
             next({ path: pointPath })
+=======
+            router.addRoutes(store.getters.addRouters) // 动态添加可访问路由表
+            // 这边是获取到用户信息后到最终跳转，二级页面作为预留
+            store.dispatch('PemissionRouter')
+            store.dispatch('GetOrganization')
+            store.dispatch('GetHospitals')
+            const routerPath =
+              store.getters.addRouters[0]['path'] + '/recordList'
+            next({ path: routerPath })
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
           })
         })
       } else {

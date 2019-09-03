@@ -13,7 +13,11 @@ export function getTargetObject (targetObject, propsArray) {
   }
   const result = {}
   Object.keys(targetObject)
+<<<<<<< HEAD
     .filter(key => targetObject[key] !== '' && targetObject[key] !== undefined)
+=======
+    .filter(key => targetObject[key] !== '')
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
     .forEach(key => {
       result[key] = targetObject[key]
     })

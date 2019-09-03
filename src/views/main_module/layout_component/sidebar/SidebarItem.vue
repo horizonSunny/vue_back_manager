@@ -10,6 +10,7 @@
     >
       <template v-for="item in menuMessage">
         <a-menu-item
+<<<<<<< HEAD
           :key="item.path"
           v-if="item.children.length === 0"
           class="text-aligin-left"
@@ -20,6 +21,9 @@
         </a-menu-item>
         <a-menu-item
           :key="item.path"
+=======
+          :key="item.permissionCode"
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
           v-if="item.children.length === 1"
           class="text-aligin-left"
           @click="toNextPath(item['children'][0]['path'])"
@@ -28,7 +32,11 @@
           <span>{{ item["sideBarName"] }}</span>
         </a-menu-item>
         <a-sub-menu
+<<<<<<< HEAD
           :key="item.path"
+=======
+          :key="item.permissionCode"
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
           v-if="item.children.length > 1"
           class="text-aligin-left"
         >
@@ -39,7 +47,11 @@
           >
           <template v-for="subItem in item.children">
             <a-menu-item
+<<<<<<< HEAD
               :key="subItem.path"
+=======
+              :key="subItem.permissionCode"
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
               @click="toNextPath(subItem['path'])"
               >{{ subItem["sideBarName"] }}</a-menu-item
             >

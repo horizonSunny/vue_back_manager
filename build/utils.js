@@ -50,7 +50,10 @@ exports.cssLoaders = function (options) {
     if (options.extract) {
       return ExtractTextPlugin.extract({
         use: loaders,
+<<<<<<< HEAD
         publicPath: '../../',
+=======
+>>>>>>> 175a699051bf061e7d6217a0a127867458381d77
         fallback: 'vue-style-loader'
       })
     } else {
